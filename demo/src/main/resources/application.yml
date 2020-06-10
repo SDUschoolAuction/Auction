@@ -1,0 +1,27 @@
+server:
+  port: 80
+  servlet:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+
+spring:
+
+  datasource:
+    username: ubuntu
+    password: SDUsw2020
+    url: jdbc:mysql://172.81.239.10:3306/data?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    tomcat:
+      max-active: 20
+      max-idle: 8
+      min-idle: 8
+    dbcp2:
+      initial-size: 10
+
+
+  mvc:
+    view:
+      prefix: /
+      suffix: .html
