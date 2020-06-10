@@ -1,0 +1,15 @@
+<view class="cu-bar tabbar bg-white foot">
+  <view class="action text-green">
+    <view class="cuIcon-homefill"></view> 首页
+  </view>
+  <view class="action text-gray add-action">
+    <button class="cu-btn cuIcon-add bg-green shadow"></button>
+    发布
+  </view>
+  <view class="action text-gray">
+    <view class="cuIcon-my">
+      <view class="cu-tag"></view>
+    </view>
+    我的
+  </view>
+</view>
