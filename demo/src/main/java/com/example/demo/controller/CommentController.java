@@ -55,5 +55,24 @@ public class CommentController {
         return commentService.getComments(itemId);
     }
 
+    /**
+     * @Description: 添加留言
+     * @Param: [itemId],[userId],[content],[time]
+     * @return: com.example.demo.util.Msg
+     * @Author: Li Ao
+     * @Date: 2020/6/15
+     */
+    @RequestMapping("/addComments")
+    public Msg addComments(int itemId,int userId,String content,String time){ return commentService.addComments(itemId,userId,content,time); }
+    /**
+     * @Description:添加留言回复
+     * @Param: [commentId],[content],[time],[fromUser],[toUser]
+     * @return: com.example.demo.util.Msg
+     * @Author: Li Ao
+     * @Date: 2020/6/15
+     */
+    @RequestMapping("/addReview")
+    public Msg addReview(int commentId,String content,String time,int fromUser,int toUser){ return commentService.addReview(commentId,content,time,fromUser,toUser); }
+
 
 }

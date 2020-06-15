@@ -6,4 +6,6 @@ public interface commentService {
     Msg deleteComment(int commentId);
     Msg deleteReview(int reviewId);
     Msg getComments(int itemId);
+    Msg addComments(int itemId,int userId,String content,String time);
+    Msg addReview(int commentId,String content,String time,int fromUser,int toUser);
 }

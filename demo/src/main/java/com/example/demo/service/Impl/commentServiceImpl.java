@@ -79,5 +79,39 @@ public class commentServiceImpl implements commentService {
         }
     }
 
+    @Override
+    /**
+     * @Description:添加留言
+     * @Param: [itemId],[userId],[content],[time]
+     * @return: com.example.demo.util.Msg
+     * @Author: Li Ao
+     * @Date: 2020/6/15
+     */
+    public Msg addComments(int itemId,int userId,String content,String time){
+        try {
+            commentDao.addComment(itemId,userId,content,time);
+            return Msg.ok("success");
+        }catch (Exception E){
+            return Msg.err("fail");
+        }
+    }
+    @Override
+    /**
+     * @Description:添加留言回复
+     * @Param: [commentId],[content],[time],[fromUser],[toUser]
+     * @return: com.example.demo.util.Msg
+     * @Author: Li Ao
+     * @Date: 2020/6/15
+     */
+    public Msg addReview(int commentId,String content,String time,int fromUser,int toUser){
+        try{
+            commentDao.addReview(commentId,content,time,fromUser,toUser);
+            return Msg.ok("success");
+        }catch (Exception e){
+            return Msg.err("fail");
+        }
+
+    }
+
 
 }
