@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.entity.Comment;
+import com.example.demo.entity.Review;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -21,8 +22,12 @@ public interface commentDao {
         @Delete("delete from review where reviewId = #{reviewId}")
          Integer deleteReview(@Param("reviewId") int reviewId);
 
-        @Select("select commentId, userId, name userName, userIcon, content, time from comment, user where comment.userId = user.userId and itemId = #{itemId} order by time")
+        @Select("select commentId, userId, content, time from comment, user where `itemId` = #{itemId} order by time")
          List<Comment> getComments(@Param("itemId") int itemId);
+
+        @Select("select * from review where `commentId` = #{commentId}")
+        List<Review> getReviews(@Param("commentId") int commentId);
+
 //         添加留言
         @Insert("insert into comment (itemId,userId,content,time) values (#{itemId},#{userId},#{content},#{time})")
         Integer addComment(@Param("itemId") int itemId,@Param("userId") int userId,@Param("content") String content,@Param("time") String time);

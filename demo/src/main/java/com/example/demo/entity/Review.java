@@ -3,7 +3,7 @@ package com.example.demo.entity;
 public class Review {
 
     private int reviewId;
-    private int replyId;
+    private int commentId;
     private String content;
     private String time;
     private int fromUser;
@@ -41,12 +41,12 @@ public class Review {
         this.content = content;
     }
 
-    public int getReplyId() {
-        return replyId;
+    public int getCommentId() {
+        return commentId;
     }
 
-    public void setReplyId(int replyId) {
-        this.replyId = replyId;
+    public void setCommentId(int commentId) {
+        this.commentId = commentId;
     }
 
     public int getReviewId() {

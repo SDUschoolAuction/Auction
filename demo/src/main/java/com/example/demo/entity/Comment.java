@@ -63,31 +63,6 @@ public class Comment {
     private String time;
     private int itemId;
 
-    private String userName ;
-    private String userIcon;
 
-    public String getUserName() {
-        return userName;
-    }
 
-    public Comment(int commentId, int userId, String content, String time, String userName, String userIcon) {
-        this.commentId = commentId;
-        this.userId = userId;
-        this.content = content;
-        this.time = time;
-        this.userName = userName;
-        this.userIcon = userIcon;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserIcon() {
-        return userIcon;
-    }
-
-    public void setUserIcon(String userIcon) {
-        this.userIcon = userIcon;
-    }
 }

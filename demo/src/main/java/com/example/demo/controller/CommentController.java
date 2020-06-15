@@ -47,13 +47,23 @@ public class CommentController {
     * @Description: 获取对应的商品的留言 
     * @Param: [itemId] 
     * @return: com.example.demo.util.Msg 
-    * @Author: Mr.Wang 
+    * @Author: Yao Yunzhi
     * @Date: 2020/6/15 
     */
     @RequestMapping("/getcomments")
     public Msg getComments(int itemId){
         return commentService.getComments(itemId);
     }
+
+    /** 
+    * @Description: 获取对应留言的回复 
+    * @Param: [commentId] 
+    * @return: com.example.demo.util.Msg 
+    * @Author: Yao Yunzhi
+    * @Date: 2020/6/15 
+    */
+    @RequestMapping("/getReviewsForComments")
+    public Msg getReviews(int commentId){ return commentService.getReviews(commentId);}
 
     /**
      * @Description: 添加留言
