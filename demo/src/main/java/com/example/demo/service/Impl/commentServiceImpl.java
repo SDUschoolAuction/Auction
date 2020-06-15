@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class commentServiceImpl implements commentService {
     @Autowired
-     commentDao commentDao;
+    commentDao commentDao;
 
     @Autowired
     UserDao userDao;

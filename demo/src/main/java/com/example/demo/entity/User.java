@@ -7,31 +7,20 @@ package com.example.demo.entity;
  * @create: 2020-06-15 14:46
  **/
 public class User {
-    private int userId;
+    private Integer userId;
     private String name;
     private String weChatId;
     private String telephoneNumber;
-    private int credit;
-    private int schoolId;
+    private Integer credit;
+    private Integer schoolId;
     private String userIcon;
     private String location;
 
-    public User(int userId, String name, String weChatId, String telephoneNumber, int credit, int schoolId, String userIcon, String location) {
-        this.userId = userId;
-        this.name = name;
-        this.weChatId = weChatId;
-        this.telephoneNumber = telephoneNumber;
-        this.credit = credit;
-        this.schoolId = schoolId;
-        this.userIcon = userIcon;
-        this.location = location;
-    }
-
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -59,19 +48,19 @@ public class User {
         this.telephoneNumber = telephoneNumber;
     }
 
-    public int getCredit() {
+    public Integer getCredit() {
         return credit;
     }
 
-    public void setCredit(int credit) {
+    public void setCredit(Integer credit) {
         this.credit = credit;
     }
 
-    public int getSchoolId() {
+    public Integer getSchoolId() {
         return schoolId;
     }
 
-    public void setSchoolId(int schoolId) {
+    public void setSchoolId(Integer schoolId) {
         this.schoolId = schoolId;
     }
 
@@ -91,14 +80,17 @@ public class User {
         this.location = location;
     }
 
-    public User(String name, String weChatId, String telephoneNumber, int credit, int schoolId, String userIcon, String location) {
-        this.name = name;
-        this.weChatId = weChatId;
-        this.telephoneNumber = telephoneNumber;
-        this.credit = credit;
-        this.schoolId = schoolId;
-        this.userIcon = userIcon;
-        this.location = location;
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", name='" + name + '\'' +
+                ", weChatId='" + weChatId + '\'' +
+                ", telephoneNumber='" + telephoneNumber + '\'' +
+                ", credit=" + credit +
+                ", schoolId=" + schoolId +
+                ", userIcon='" + userIcon + '\'' +
+                ", location='" + location + '\'' +
+                '}';
     }
-
 }
