@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.util.Msg;
+
 public interface commentService {
-    void deleteComment(int commentId);
-    void deleteReview(int reviewId);
+    Msg deleteComment(int commentId);
+    Msg deleteReview(int reviewId);
+    Msg getComments(int itemId);
 }
