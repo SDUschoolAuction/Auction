@@ -1,0 +1,186 @@
+#count_down{
+  padding:20rpx;
+  color:lightgray;
+  font-size: 30rpx;
+  width:750rpx;
+  height: 80rpx;
+  background-color: red;
+}
+#count_down_pre{
+  padding:20rpx;
+  color:white;
+  font-size: 30rpx;
+  width:750rpx;
+  height: 80rpx;
+  background-color: greenyellow;
+}
+
+#user_info,#body,#title,#description,#tags,#pics{
+  background-color: white;
+}
+
+#user_info{
+  background-color: white;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  height:140rpx;
+  border-bottom: 4rpx solid  lightgray;
+}
+
+#user_info_text{
+  font-size: 37rpx;
+  margin-left: 20rpx;
+  float:left;
+  width: 500rpx;
+}
+
+.user_info_dec{
+  margin-right: 10rpx;
+  font-size: 27rpx;
+  color:lightgray;
+}
+
+#user_info_img{
+  float: left;
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.user_info_imgg{
+  width: 100rpx;
+  height: 100rpx;
+}
+#title{
+  margin-top:15rpx;
+}
+.tags{
+  float:left;
+}
+
+.item_pics{
+  width: 700rpx;
+  height: auto;
+}
+
+#pics{
+  width: 700rpx;
+}
+
+.body_bottom{
+  width: 100%;
+}
+
+#deal_rule{
+  float:left;
+  color:gray;
+}
+
+#deal_num{
+  float:right;
+  color:gray;
+}
+
+.li {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  font-size: 34rpx;
+  width: 92%;
+  padding: 0 4%;
+  height: 100rpx;
+  line-height: 100rpx;
+  border-bottom: 1rpx solid #f1f1f1;
+}
+.bg-gray{
+    background-color: #ccc!important;
+    border-bottom: 1rpx solid  #fff!important;
+}
+
+.li .icon-xiala ,.icon-shangjiantou {
+  color: #999;
+  font-size: 28rpx;
+}
+
+#comment_title{
+  border-bottom: 3rpx solid  #f1f1f1;
+}
+
+#comment_title,#comment{
+  width: 100%;
+}
+#comment_button{
+  margin-top: -8rpx;
+  float: right;
+}
+
+.user_info_imgg1{
+  float: left;
+  width: 80rpx;
+  height: 80rpx;
+}
+.comment_text{
+  text-overflow:ellipsis;
+  word-wrap:break-word;
+}
+
+.comment{
+  border-bottom: 3rpx solid  #f1f1f1;
+}
+
+#comment_head{
+  height: 100rpx;
+  width: 100%;
+}
+
+#fixed_buttom{
+  border-top: 3rpx solid  #f1f1f1;
+  width: 100%;
+  position:fixed;
+  bottom:0;
+}
+#fixed_buttom_bid{
+  border-top: 8rpx solid  #f1f1f1;
+  width: 100%;
+  position:fixed;
+  height:300rpx;
+  bottom:0;
+}
+#bid_button_changeshow{
+  width: 100%;
+}
+
+#yourp{
+  border-bottom: 5rpx solid  #f1f1f1;
+}
+
+#no_comment{
+  width: 440rpx;
+  height: 316rpx;
+}
+
+#fixed_buttom_comment{
+  border-top: 4rpx solid  #f1f1f1;
+  width: 100%;
+  position:fixed;
+  bottom:0;
+}
+.input{
+  border: gray;
+  width: 80%;
+  height: 30rpx;
+}
+
+.subcomment{
+  border-top: 2rpx solid  #f1f1f1;
+}
+.subcomment_title{
+
+}
+
+.comment_time{
+  text-align: end;
+}
+
+.comment_time_sub{
+  text-align: end;
+}
