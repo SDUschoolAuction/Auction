@@ -1,3 +1,4 @@
+/* pages/school/school.wxss */
 .content {
   display: flex;
   flex-direction: row;

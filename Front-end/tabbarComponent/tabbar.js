@@ -19,13 +19,13 @@ Component({
             "text": "首页"
           },
           {
-            "pagePath": "/pages/middle/middle",
+            "pagePath": "/pages/public/public",
             "iconPath": "icon/icon_release.png",
             "isSpecial": true,
             "text": "发布"
           },
           {
-            "pagePath": "/pages/mine/mine",
+            "pagePath": "/pages/my/my",
             "iconPath": "icon/icon_mine.png",
             "selectedIconPath": "icon/icon_mine_HL.png",
             "text": "我的"

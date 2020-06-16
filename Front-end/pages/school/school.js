@@ -1,4 +1,4 @@
-// pages/mine/mine.js
+// pages/school/school.js
 //获取应用实例
 const app = getApp()
 var items = require('../../data/schoolData.js');//引入我们的城市列表资源

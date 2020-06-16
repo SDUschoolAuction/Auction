@@ -78,7 +78,7 @@ App({
           "text": "首页"
         },
         {
-          "pagePath": "/pages/middle/middle",
+          "pagePath": "/pages/public/public",
           "iconPath": "icon/icon_release.png",
           "isSpecial": true,
           "text": "发布"
