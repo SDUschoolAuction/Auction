@@ -1,0 +1,33 @@
+.searchbar-result:before{
+  display: none;
+}
+.weui-cell{
+  padding: 2px 5px 2px 25px;
+}
+.data_view{
+margin-top: 50px;
+width: 100%;
+overflow: hidden
+}
+.data_item{
+float: left;
+padding-top: 50rpx;
+width: 100%;
+padding-bottom: 10rpx;
+border: solid;
+border-width: 0.5rpx;
+border-color: gainsboro;
+}
+.item_text{
+font-size: 14px;
+margin-top: 5rpx;
+padding-left: 20rpx
+}
+.dataitem{
+text-align: center;
+padding-left: 10rpx;
+width: 100%;
+border: solid;
+border-width: 1rpx;
+border-color: gainsboro
+}

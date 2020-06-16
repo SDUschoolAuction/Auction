@@ -1,6 +1,10 @@
 //app.js
 App({
   onLaunch: function () {
+    //隐藏系统tabbar
+    wx.hideTabBar();
+    //获取设备信息
+    this.getSystemInfo();
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -33,7 +37,59 @@ App({
       }
     })
   },
+  onShow: function () {
+    //隐藏系统tabbar
+    wx.hideTabBar();
+  },
+  getSystemInfo: function () {
+    let t = this;
+    wx.getSystemInfo({
+      success: function (res) {
+        t.globalData.systemInfo = res;
+      }
+    });
+  },
+  editTabbar: function () {
+    let tabbar = this.globalData.tabBar;
+    let currentPages = getCurrentPages();
+    let _this = currentPages[currentPages.length - 1];
+    let pagePath = _this.route;
+    (pagePath.indexOf('/') != 0) && (pagePath = '/' + pagePath);
+    for (let i in tabbar.list) {
+      tabbar.list[i].selected = false;
+      (tabbar.list[i].pagePath == pagePath) && (tabbar.list[i].selected = true);
+    }
+    _this.setData({
+      tabbar: tabbar
+    });
+  },
   globalData: {
-    userInfo: null
+    systemInfo: null,//客户端设备信息
+    userInfo: null,
+    tabBar: {
+      "backgroundColor": "#ffffff",
+      "color": "#979795",
+      "selectedColor": "#1c1c1b",
+      "list": [
+        {
+          "pagePath": "/pages/switch/switch",
+          "iconPath": "icon/icon_home.png",
+          "selectedIconPath": "icon/icon_home_HL.png",
+          "text": "首页"
+        },
+        {
+          "pagePath": "/pages/middle/middle",
+          "iconPath": "icon/icon_release.png",
+          "isSpecial": true,
+          "text": "发布"
+        },
+        {
+          "pagePath": "/pages/my/my",
+          "iconPath": "icon/icon_mine.png",
+          "selectedIconPath": "icon/icon_mine_HL.png",
+          "text": "我的"
+        }
+      ]
+    }
   }
 })

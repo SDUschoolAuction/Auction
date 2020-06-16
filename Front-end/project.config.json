@@ -10,16 +10,25 @@
 		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
-		"autoAudits": false,
 		"coverView": true,
+		"autoAudits": false,
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false,
-		"useCompilerModule": true
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.11.1",
-	"appid": "wxb0ea8818667e0e4d",
-	"projectname": "Front-end",
+	"libVersion": "2.0.4",
+	"appid": "wxab42f0f3ce496fb3",
+	"projectname": "miniprogram1",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},

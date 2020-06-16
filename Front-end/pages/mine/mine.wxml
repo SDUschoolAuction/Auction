@@ -1,0 +1,39 @@
+
+<view class='content'>
+
+  <view class="cu-bar bg-white search fixed" style="top:{{CustomBar}}px;">
+    <view class="search-form round">
+      <text class="cuIcon-search"></text>
+      <input type="text" placeholder="输入搜索的关键词" confirm-type="search"></input>
+    </view>
+    <view class="action">
+      <button class="cu-btn bg-gradual-green shadow-blur round">搜索</button>
+    </view>
+  </view>
+
+  <scroll-view scroll-y='true' class='school-scroll' scroll-with-animation='true' scroll-into-view="{{toView}}">
+    <view class='school-content'>
+      <view wx:for='{{schools}}' class='school-item' bindtap='selectschool' data-orgid='{{item.id}}' data-orgname='{{item.schoolName}}'>
+        <text class='school-letter' wx:if='{{item.isshowletter}}'id='{{item.simplepinyin}}'>{{item.simplepinyin}}</text>
+          <text class='school-name'>{{item.schoolName}}</text>
+      </view>
+    </view>
+  </scroll-view>
+  
+  <view class='right' bindtouchstart='touchStart' bindtouchmove='touchMove' bindtouchend='touchEnd' id='right'>
+    <view wx:for="{{letters}}" class='letter' bindtap='letterclick' data-letter="{{item}}">{{item}}</view>
+  </view>
+  <dialog id='dialog'/>
+</view>
+
+
+  <view class='comfirm'>
+    <view class="comfirm-school">
+      <button type="default" bindtap="showModal" class="comfirm-school">确认</button>
+      <view>
+        <modal title="提示" hidden="{{modalHidden}}" confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirm" bindcancel="modalBindcancel">选择学校后不可更改，是否确定？</modal>
+      </view>
+    </view>
+  </view>
+  
+

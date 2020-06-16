@@ -1,15 +1,13 @@
-<view class="cu-bar tabbar bg-white foot">
-  <view class="action text-green">
-    <view class="cuIcon-homefill"></view> 首页
+<!--index.wxml-->
+<view class="container">
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
   </view>
-  <view class="action text-gray add-action">
-    <button class="cu-btn cuIcon-add bg-green shadow"></button>
-    发布
-  </view>
-  <view class="action text-gray">
-    <view class="cuIcon-my">
-      <view class="cu-tag"></view>
-    </view>
-    我的
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
   </view>
 </view>
