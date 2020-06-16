@@ -37,6 +37,46 @@ App({
       }
     })
   },
+  wxlogin:function(cb){
+    
+    var that=this;
+    if(that.globalData.openid){
+      typeof cb=="function"&&cb(that.globalData.openid)
+    }else{
+    // 调用登录接口
+    wx.login({
+      success: function(res) {
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        if(res.code){
+          //发起网络请求
+          wx.request({
+            url:that.globalData.apiurl+'c=xcxlogin',
+            data:{code:res.code},
+            success:function(e){
+              console.log(e);
+              if(e.data.code=="0"){
+                that.globalData.openid=e.data.data.openid;
+                
+                wx.setStorageSync('openid',that.globalData.openid)
+                typeof cb == "function"&&cb(that.globalData.openid)
+              }else{
+                that.wx.login(cb)
+              }
+            }
+          });
+        }else{
+          typeof cb =="function"&& cb("")
+          console.log('登陆失败'+res.msg)
+        }
+      }
+    })
+  }
+  },
+  globalData: {
+    apiurl:''+Math.random()+'&',
+    openid:null,
+    userInfo: null
+  },
   onShow: function () {
     //隐藏系统tabbar
     wx.hideTabBar();

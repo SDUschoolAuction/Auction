@@ -1,5 +1,6 @@
 {
   "pages":[
+    
     "pages/switch/switch",
     "pages/school/school",
     "pages/public/public",
