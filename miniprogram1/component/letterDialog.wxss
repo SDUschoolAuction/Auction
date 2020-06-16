@@ -1,0 +1,14 @@
+.letter-text {
+  background: white;
+  color: #888;
+  font-size: 100rpx;
+  font-weight: bold;
+  position: fixed;
+  width: 150rpx;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
+  top: 40%;
+  left: 300rpx;
+  text-align: center;
+  box-shadow:0px 2px 5px 5px gray;
+}

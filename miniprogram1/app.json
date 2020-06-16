@@ -1,0 +1,41 @@
+{
+  "pages":[
+    "pages/switch/switch",
+    "pages/mine/mine",
+    
+    "pages/middle/middle",
+    "pages/my/my",
+    "pages/schoolList/schoolList",
+    "pages/index/index",
+    "pages/search/search",
+    "pages/demo1/demo1",
+    "pages/logs/logs"
+    
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "我的小拍",
+    "navigationBarTextStyle":"white",
+    "navigationBarBackgroundColor":"#56BD5B",
+    "enablePullDownRefresh": true
+  },
+  
+"tabBar": {
+  "list": [{
+    "pagePath": "pages/switch/switch",
+    "text": "首页",
+    "iconPath": "tabbarComponent/icon/icon_home.png",
+    "selectedIconPath": "tabbarComponent/icon/icon_home_HL.png"
+    },
+    {
+      "pagePath": "pages/my/my",
+      "text": "我的",
+      "iconPath": "tabbarComponent/icon/icon_mine.png",
+      "selectedIconPath": "tabbarComponent/icon/icon_mine_HL.png"
+    }]
+},
+
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

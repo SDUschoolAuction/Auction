@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "dialog": "../../component/letterDialog"
+  },
+  "navigationBarTitleText": "选择学校"
+}
