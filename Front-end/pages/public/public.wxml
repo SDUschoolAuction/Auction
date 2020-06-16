@@ -1,5 +1,149 @@
-<view class="container">
-  <text>发布发布</text>
-  <tabbar tabbar="{{tabbar}}"></tabbar>
+<view class='weui-panel outside_border' wx:if="{{postThing}}">
+	<view class='tip'>
+		提示：请确保发布商品信息真实完整，这有利于提高您商品的成交率。
+	</view>
+
+	<view class="weui-cells__title"> </view>
+	<view class="weui-cells weui-cells_after-title">
+		<view class="weui-cell weui-cell_active">
+			<view class="weui-cell__bd">
+				<textarea class="weui-textarea" placeholder="请输入物品详情，最多200字" style="height: 8em" />
+				<view class="weui-textarea-counter">  </view>
+                </view>
+            </view>
+        </view>
+
+
+<view class="photo_box">
+     <view class="weui-uploader__bd">                  
+     <view class="weui-uploader__files" id="uploaderFiles">
+          <block wx:for="{{files}}" wx:key="*this">
+               <view class="weui-uploader__file" bindtap="previewImage" bindlongpress="deleteImage"id="{{item}}">
+                     <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                </view>
+          </block>
+      </view>
+       <view class="weui-uploader__input-box">
+            <view class="weui-uploader__input" bindtap="chooseImage"></view>
+             </view>
+        </view>
 </view>
-<text>发布发布发布发布发布发布发布发布发布发布发布发布</text>
+
+	    
+
+	
+	<view class="title_right">
+		 <view class="weui-cell weui-cell_active">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">物品名称</view>
+                </view>
+                <view class="weui-cell__bd">
+				<input class="weui-input" placeholder="请输入物品名称" bindinput="bindThingNameInput" value="{{thingName}}" />
+			</view>
+		</view>
+		<view class="weui-cell weui-cell_active">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">物品成色</view>
+                </view>
+                <view class="weui-cell__bd">
+				<picker bindchange="bindThingConditionsInput" value="{{thingConditionIndex}}" range="{{thingConditions}}">
+					<view class="weui-select weui-select_in-select-after">{{thingConditions[thingConditionIndex]}}</view>
+				</picker>
+			</view>
+		</view>
+		 <view class="weui-cell weui-cell_active">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">起拍价格</view>
+                </view>
+			<view class="weui-cell__bd">
+				<input class="weui-input" placeholder="请输入出售价格" bindinput="bindThingPriceInput" value="{{thingPrice}}" />
+			</view>
+		</view>
+
+	<view class="weui-cell weui-cell_active">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">加价幅度</view>
+                </view>
+                <view class="weui-cell__bd">
+				<picker bindchange="bindThingCampusInput" value="{{thingCampusIndex}}" range="{{thingCampus}}">
+					<view class="weui-select weui-select_in-select-after">{{thingCampus[thingCampusIndex]}}</view>
+				</picker>
+			</view>
+		</view>
+
+	</view>
+
+
+		 
+
+
+	<view class="weui-cell weui-cell_active">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">起拍日期</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <picker mode="date" value="{{date}}" start="2020-01-01" end="2030-09-01" bindchange="bindDateChange">
+                        <view class="weui-input">{{date}}</view>
+                    </picker>
+                </view>
+            </view>
+
+	<view class="weui-cell weui-cell_active">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">起拍时间</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindTimeChange">
+                        <view class="weui-input">{{time}}</view>
+                    </picker>
+                </view>
+            </view>
+
+	<view class="weui-cell weui-cell_active">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">结束日期</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+                        <view class="weui-input">{{date1}}</view>
+                    </picker>
+                </view>
+            </view>
+
+	<view class="weui-cell weui-cell_active">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">结束时间</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindTimeChange">
+                        <view class="weui-input">{{time1}}</view>
+                    </picker>
+                </view>
+            </view>
+
+<view class="weui-cell weui-cell_active">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">联系方式</view>
+                </view>
+			<view class="weui-cell__bd">
+				<input class="weui-input" placeholder="请输入您的电话号码" bindinput="bindThingPhoneNumberInput" value="{{thingPhoneNumber}}" type="digit" />
+			</view>
+		</view>
+
+
+
+	<view class="section">
+			<view class="section__title"> </view>
+			<picker mode="region" bindchange="bindRegionChange" value="" custom-item="">
+				<view class="picker">
+					发货地区：
+					<view wx:if="{{region}}">{{region[0]}}，{{region[1]}}，{{region[2]}}</view>
+				</view>
+			</picker>
+	</view>
+
+	<view class="weui-panel">
+	<button type="primary" size="default" disabled="{{thingName == ''||thingPhoneNumber == ''|| thingImage == '' || thingDescribe == '' ||thingPrice ==''||buttonLoadingThing ? true : false}}" loading="{{buttonLoadingThing}}" bindtap="bindSubmitThing">
+		立即发布 </button>
+    	</view>
+</view>
