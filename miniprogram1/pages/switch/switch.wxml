@@ -1,4 +1,0 @@
-<view class="container">
-  <text>首页</text>
-  <tabbar tabbar="{{tabbar}}"></tabbar>
-</view>

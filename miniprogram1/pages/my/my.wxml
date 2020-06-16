@@ -1,4 +1,0 @@
-<view class="container">
-  <text>我的</text>
-  <tabbar tabbar="{{tabbar}}"></tabbar>
-</view>

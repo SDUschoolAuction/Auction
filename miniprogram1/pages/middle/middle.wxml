@@ -1,5 +1,0 @@
-<view class="container">
-  <text>发布发布</text>
-  <tabbar tabbar="{{tabbar}}"></tabbar>
-</view>
-<text>发布发布发布发布发布发布发布发布发布发布发布发布</text>
