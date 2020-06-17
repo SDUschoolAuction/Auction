@@ -1,4 +1,6 @@
-{
+{  "usingComponents": {
+  "date-time-picker": "/colorui/components/date-time-picker/index"
+},
   "usingComponents": {
     "tabbar": "../../tabbarComponent/tabbar"
   }

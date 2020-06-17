@@ -1,4 +1,5 @@
 /* pages/middle/middle.wxss *//* post.wxss */
+/* post.wxss */
 .wrapper {
   display: flex;
   justify-content: space-around;
@@ -70,18 +71,20 @@ border: 1px solid #d3d3d3;
   width: 90%;
   margin: 0rpx auto;
   margin-bottom: 600rpx;
-  
 }
 .section{
-  padding: 20rpx;
+  padding: 35rpx;
   border-bottom: 1px solid #aaaaaa;
-  background-color: #ececec;
 }
 
 
 /*照片区域*/
 .photo_box{
   margin: 20rpx;
-  background-color: #ececec;
+  background-color: white;
 }
 .button-sp-area{padding-top:15px;text-align:center}.weui-btn_mini{margin-right:4px}
+
+.show-date-time-box {
+  padding: 30rpx 35rpx;
+}

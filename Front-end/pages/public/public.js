@@ -1,9 +1,33 @@
-// pages/middle/middle.js
+// post.js
+
+
 var Bmob = require('../../utils/bmob.js');
 var util = require('../../utils/util.js')
 var app = getApp()
 Page({
-  mixins: [require('../../mixin/themeChanged')],
+
+  data: {
+    dateMinute: '',
+    dateSecond: ''
+  },
+  /**
+   * 年月日时分选择类型的回调函数，可以在该函数得到选择的时间
+   */
+  selectDateMinuteChange(ev) {
+    this.setData({
+      dateMinute: ev.detail.value
+    })
+  },
+  /**
+   * 年月日时分秒选择类型的回调函数，可以在该函数得到选择的时间
+   */
+  selectDateSecondChange(ev) {
+    this.setData({
+      dateSecond: ev.detail.value
+    })
+  },
+
+
 
   data: {
     /*照片文件
@@ -16,12 +40,14 @@ Page({
    chooseImage:function(e) {
      var that = this;
      wx.chooseImage({
+       count:4,
        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
        success: function (res) {
          // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+         var thingImage = res.tempFilePaths;
          that.setData({
-           files: that.data.files.concat(res.tempFilePaths)
+           thingImage: thingImage
          });
        }
      })
@@ -59,8 +85,7 @@ Page({
 
   data: {
     region: "",
-    time: "",
-    datea: ""
+ 
   },
   bindRegionChange(e) {
     let { value } = e.detail;
@@ -69,20 +94,7 @@ Page({
       region: value
     })
   },
-  bindTimeChange(e) {
-    let { value } = e.detail;
-    console.log("时间改变:", value);
-    this.setData({
-      time: value
-    })
-  },
-  bindDateChange(e) {
-    let { value } = e.detail;
-    console.log("日期改变:", value);
-    this.setData({
-      date: value
-    })
-  },
+  
 
 
   /**
@@ -183,37 +195,23 @@ Page({
 
   },
   //导航栏的响应事件
-  choosePostBook: function(e) {
-    var that = this;
-    that.setData({
-      postBook: true,
-      postThing: false,
-      postJob: false
-    })
-  },
+
   choosePostThing: function(e) {
     var that = this;
     that.setData({
-      postBook: false,
-      postThing: true,
-      postJob: false
+    
+      postThing: true
+     
     })
   },
-  choosePostJob: function(e) {
-    var that = this;
-    that.setData({
-      postBook: false,
-      postThing: false,
-      postJob: true
-    })
-  },
+
 
 
   //响应事件
   bindThingImageInput: function() { //商品图片选择
     var that = this;
     wx.chooseImage({
-      count: 1,
+      count: 4,
       sourceType: ['album', 'camera'],
       success: function(res) {
         var thingImage = res.tempFilePaths;
@@ -239,7 +237,7 @@ Page({
       thingPrice: e.detail.value
     })
   },
-  bindThingCampusInput: function(e) { //校区
+  bindThingCampusInput: function(e) { //地区
     this.setData({
       thingCampusIndex: e.detail.value
     })
@@ -282,7 +280,7 @@ Page({
       var thingName = that.data.thingName; //名字
       var thingConditionIndex = that.data.thingConditionIndex; //成色索引值
       var thingConditions = that.data.thingConditions[thingConditionIndex]; //成色
-      var thingCampusIndex = that.data.thingCampusIndex; //校区索引值
+      var thingCampusIndex = that.data.thingCampusIndex; //地区索引值
       var thingCampus = that.data.thingCampus[thingCampusIndex]; //校区
       var thingDescribe = that.data.thingDescribe || '无备注或描述'; //备注
       var thingPhoneNumber = that.data.thingPhoneNumber; //电话
