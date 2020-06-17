@@ -7,8 +7,6 @@ import com.example.demo.util.Msg;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.websocket.server.PathParam;
-
 @RestController
 public class UserController{
 

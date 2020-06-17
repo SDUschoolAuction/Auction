@@ -1,5 +1,6 @@
 server:
-  port: 8083
+  port: 8083 #访问端口号
+
   servlet:
     encoding:
       enabled: true

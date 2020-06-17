@@ -1,14 +1,14 @@
 {
   "pages":[
-    
+    "pages/detail/detail",
+    "pages/public/public",
     "pages/switch/switch",
     "pages/school/school",
-    "pages/public/public",
     "pages/my/my",
     "pages/index/index",
     "pages/search/search",
-    "pages/logs/logs",
-    "pages/detail/detail"
+    "pages/logs/logs"
+   
   ],
   "window":{
     "backgroundTextStyle":"light",
