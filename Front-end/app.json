@@ -1,8 +1,9 @@
 {
   "pages":[
+    "pages/switch/switch",
     "pages/detail/detail",
     "pages/public/public",
-    "pages/switch/switch",
+   
     "pages/school/school",
     "pages/my/my",
     "pages/index/index",
