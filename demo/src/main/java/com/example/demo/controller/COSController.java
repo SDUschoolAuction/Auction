@@ -24,8 +24,8 @@ import java.util.Date;
 @RestController
 public class COSController {
     // 初始化永久密钥信息
-    String secretId = "AKIDK3WhmZBueqka9SvFi0lyrWt8DCtIsaGX";
-    String secretKey = "8zbvyNT5WcV6dx7GB0Zv2vXw7zh7GAl4";
+    String secretId = "";
+    String secretKey = "";
     COSCredentials cred = new BasicCOSCredentials(secretId, secretKey);
     COSSigner signer = new COSSigner();
     //设置过期时间为1个小时
