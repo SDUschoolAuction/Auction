@@ -1,1 +1,60 @@
-/* pages/my/my.wxss */
+.wx-info {
+  padding: 40rpx;
+  border-bottom: 1rpx solid rgba(221,221,221,0.5);
+}
+
+.user-avatar {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 70rpx;
+  vertical-align: middle;
+}
+
+.user-nickname {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 1em;
+}
+
+.stu-info {
+  padding: 0 35rpx;
+}
+
+.info {
+  padding: 0.7em 0;
+  border-bottom: 1rpx solid rgba(221,221,221,0.5);
+}
+
+.smallicon {
+  width: 1em;
+  height: 1em;
+  padding-right: 0.8em;
+  vertical-align: middle;
+}
+
+.labletext {
+  vertical-align: middle;
+}
+
+.content {
+  float: right;
+  line-height: 1.4em;
+}
+
+.about {
+  border-top: 15rpx solid rgb(242,244,245);
+  border-bottom: 15rpx solid rgb(242,244,245);
+  padding: 0 35rpx;
+}
+
+.TDCodeicon {
+  float: right;
+  width: 0.9em;
+  height: 0.9em;
+  padding: 0.1em;
+}
+
+button {
+  border: 1rpx solid rgb(251,44,32);
+  background-color: #fff;
+}

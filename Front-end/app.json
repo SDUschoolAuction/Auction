@@ -6,6 +6,8 @@
    
     "pages/school/school",
     "pages/my/my",
+    "pages/myparticipation/myparticipation",
+    "pages/myproducts/myproducts",
     "pages/index/index",
     "pages/search/search",
     "pages/logs/logs"

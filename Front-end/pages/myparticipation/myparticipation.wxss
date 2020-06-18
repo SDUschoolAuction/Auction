@@ -1,0 +1,5 @@
+/* pages/mypart/mypart.wxss */
+.bg-red{
+  height:20px;
+  width:100%
+}
