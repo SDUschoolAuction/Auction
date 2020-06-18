@@ -2,9 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.service.Impl.commentServiceImpl;
 import com.example.demo.util.Msg;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Description;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.text.SimpleDateFormat;
 
 @RestController
 @RequestMapping("/comments")
@@ -25,7 +30,7 @@ public class CommentController {
     * @Author: Yao Yunzhi, Xu Yingliang.
     * @Date: 2020/6/15
     */
-    @RequestMapping("/deleteComment")
+    @DeleteMapping("/deleteComment")
     public Msg deleteComments(int commentId){
         return commentService.deleteComment(commentId);
     }
@@ -38,11 +43,12 @@ public class CommentController {
     * @Author: Yao Yunzhi, Xu Yingliang.
     * @Date: 2020/6/15
     */
-    @RequestMapping("/deleteReviewsForComments")
+    @DeleteMapping("/deleteReviewsForComments")
     public Msg deleteReviews(int reviewId){
         return commentService.deleteReview(reviewId);
     }
-    
+
+
     /** 
     * @Description: 获取对应的商品的留言 
     * @Param: [itemId] 
@@ -81,6 +87,7 @@ public class CommentController {
      * @Author: Li Ao
      * @Date: 2020/6/15
      */
+
     @RequestMapping("/addReview")
     public Msg addReview(int commentId,String content,String time,int fromUser,int toUser){ return commentService.addReview(commentId,content,time,fromUser,toUser); }
 
