@@ -14,17 +14,17 @@ Page({
     var that = this;
     
     //获取openid
-    app.wxlogin(function (res){
-      console.log("1222");
-      console.log("获取openid："+res);
-      //判断有无openid
-      if(res){
-        that.setData({
-          str_openid:res
-        })
-        //+++
-      }
-    });
+    // app.wxlogin(function (res){
+    //   console.log("1222");
+    //   console.log("获取openid："+res);
+    //   //判断有无openid
+    //   if(res){
+    //     that.setData({
+    //       str_openid:res
+    //     })
+    //     //+++
+    //   }
+    // });
   },
   //获取用户授权信息
   auth:function(e){

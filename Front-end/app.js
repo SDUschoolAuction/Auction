@@ -9,11 +9,33 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
     // 登录
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        if(res.code){
+          //发起网络请求
+          var that = this
+          wx.request({
+            url:that.globalData.apiurl+"/openid",
+            data:{code:res.code},
+            success:function(e){
+              console.log(e);
+              if(e.statusCode=="200"){
+                that.globalData.openid=e.data.openid;
+                console.log(that.globalData)
+               // wx.setStorageSync('openid',this.globalData.openid)
+               // typeof cb == "function"&&cb(this.globalData.openid)
+              }else{
+                console.log("dlsb")
+                //that.wx.login(cb)
+              }
+            }
+          });
+        }else{
+          typeof cb =="function"&& cb("")
+          console.log('登陆失败'+res.msg)
+        }
       }
     })
     // 获取用户信息
@@ -25,7 +47,6 @@ App({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = res.userInfo
-
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
               // 所以此处加入 callback 以防止这种情况
               if (this.userInfoReadyCallback) {
@@ -36,46 +57,6 @@ App({
         }
       }
     })
-  },
-  wxlogin:function(cb){
-    
-    var that=this;
-    if(that.globalData.openid){
-      typeof cb=="function"&&cb(that.globalData.openid)
-    }else{
-    // 调用登录接口
-    wx.login({
-      success: function(res) {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        if(res.code){
-          //发起网络请求
-          wx.request({
-            url:that.globalData.apiurl+'c=xcxlogin',
-            data:{code:res.code},
-            success:function(e){
-              console.log(e);
-              if(e.data.code=="0"){
-                that.globalData.openid=e.data.data.openid;
-                
-                wx.setStorageSync('openid',that.globalData.openid)
-                typeof cb == "function"&&cb(that.globalData.openid)
-              }else{
-                that.wx.login(cb)
-              }
-            }
-          });
-        }else{
-          typeof cb =="function"&& cb("")
-          console.log('登陆失败'+res.msg)
-        }
-      }
-    })
-  }
-  },
-  globalData: {
-    apiurl:''+Math.random()+'&',
-    openid:null,
-    userInfo: null
   },
   onShow: function () {
     //隐藏系统tabbar
@@ -104,6 +85,8 @@ App({
     });
   },
   globalData: {
+    apiurl:'https://yyzcowtodd.cn/Auction',
+    openid:null,
     systemInfo: null,//客户端设备信息
     userInfo: null,
     tabBar: {

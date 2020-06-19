@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/index/index",
     "pages/switch/switch",
     "pages/detail/detail",
     "pages/public/public",
@@ -8,7 +9,7 @@
     "pages/my/my",
     "pages/myparticipation/myparticipation",
     "pages/myproducts/myproducts",
-    "pages/index/index",
+    
     "pages/search/search",
     "pages/logs/logs"
    

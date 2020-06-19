@@ -20,7 +20,7 @@ Page({
     app.editTabbar();
     var that=this;
     that.countDown()
-    wx.request({
+   /* wx.request({
       url: 'https://api-hmugo-web.itheima.net/api/public/v1/goods/search',
       data: this.Queryparams,
       success: (result) => {
@@ -29,7 +29,7 @@ Page({
           goodsList:result.data.message.goods
         })
       },
-    })
+    })*/
   },
 
   // 倒计时
