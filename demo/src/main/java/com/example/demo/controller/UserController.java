@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 import com.example.demo.util.Msg;
@@ -22,7 +23,7 @@ public class UserController{
 
     @RequestMapping("/openid")
     private String login(String code) throws Exception {
-        String AppID = "自己的AppID";
+        String AppID = "wx4af9dcf37a5a32bc";
         String AppSecret="6c56fb6f23a5cd567db096ab4050e337";//这两个都可以从微信公众平台中查找
         String url = "https://api.weixin.qq.com/sns/jscode2session?appid="
                 + AppID + "&secret=" + AppSecret + "&js_code="
@@ -45,7 +46,17 @@ public class UserController{
         String result = builder.toString();
         in.close();
         openConnection.disconnect();
-        return result;
+        JSONObject rowData = JSONObject.parseObject(result);
+        System.out.println(rowData);
+        String openid = (String)rowData.get("openid");
+        User user=userService.getUserByWechatId(openid);
+        if(user!=null){
+            rowData.put("login",1);
+            rowData.put("userId",user.getUserId());
+        }else{
+            rowData.put("login",0);
+        }
+        return rowData.toJSONString();
     }
 
 

@@ -7,4 +7,5 @@ public interface UserService {
     Msg addUser(User user);
 
     User getUserById(int userId);
+    User getUserByWechatId(String openid);
 }

@@ -16,8 +16,10 @@ App({
         if(res.code){
           //发起网络请求
           var that = this
+          console.log(res.code)
           wx.request({
             url:that.globalData.apiurl+"/openid",
+            //url:"http://localhost:8083/openid",
             data:{code:res.code},
             success:function(e){
               console.log(e);

@@ -27,6 +27,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByWechatId(String openid) {
+        return userDao.getUserByWechatId(openid);
+    }
+
+    @Override
     public User getUserById(int userId) {
         return userDao.getUser(userId);
     }

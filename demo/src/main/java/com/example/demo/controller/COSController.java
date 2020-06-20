@@ -42,10 +42,10 @@ public class COSController {
     * @return com.example.demo.util.Msg
     **/
     @GetMapping("/uploadFile")
-    public Msg upload(String key){
+    public String upload(String key){
         // 要签名的 key, 生成的签名只能用于对应此 key 的上传
         String sign = signer.buildAuthorizationStr(HttpMethodName.PUT, key, cred, expiredTime);
-        return Msg.ok(sign);
+        return sign;
     }
 
     /**
@@ -56,9 +56,9 @@ public class COSController {
      * @return com.example.demo.util.Msg
      **/
     @GetMapping("downloadFile")
-    public Msg download(String key){
+    public String download(String key){
         String sign = signer.buildAuthorizationStr(HttpMethodName.GET, key, cred, expiredTime);
-        return Msg.ok(sign);
+        return sign;
     }
 
     /**
@@ -69,8 +69,8 @@ public class COSController {
      * @return com.example.demo.util.Msg
      **/
     @GetMapping("deleteFile")
-    public Msg deleteFile(String key){
+    public String deleteFile(String key){
         String sign = signer.buildAuthorizationStr(HttpMethodName.DELETE, key, cred, expiredTime);
-        return Msg.ok(sign);
+        return sign;
     }
 }
