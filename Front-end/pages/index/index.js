@@ -12,7 +12,6 @@ Page({
   myopenid:function(){
    // console.log("111");
     var that = this;
-    
     //获取openid
     // app.wxlogin(function (res){
     //   console.log("1222");
@@ -28,13 +27,12 @@ Page({
   },
   //获取用户授权信息
   auth:function(e){
-
-  var userInfo = JSON.stringify(e.detail.userInfo);
-   console.log(userInfo);
-   this.setData({
-     userInfo:e.detail.userInfo,
-     needauth:false
-     });
+    var userInfo = JSON.stringify(e.detail.userInfo);
+    console.log(userInfo);
+    this.setData({
+      userInfo:e.detail.userInfo,
+      needauth:false
+      });
   },
   onLoad:function(){
     var that=this;

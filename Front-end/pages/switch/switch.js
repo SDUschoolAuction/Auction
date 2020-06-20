@@ -20,6 +20,7 @@ Page({
     app.editTabbar();
     var that=this;
     that.countDown()
+<<<<<<< Updated upstream
    /* wx.request({
       url: 'https://api-hmugo-web.itheima.net/api/public/v1/goods/search',
       data: this.Queryparams,
@@ -30,6 +31,18 @@ Page({
         })
       },
     })*/
+=======
+    // wx.request({
+    //   url: 'https://api-hmugo-web.itheima.net/api/public/v1/goods/search',
+    //   data: this.Queryparams,
+    //   success: (result) => {
+    //     console.log(result)
+    //     this.setData({
+    //       goodsList:result.data.message.goods
+    //     })
+    //   },
+    // })
+>>>>>>> Stashed changes
   },
 
   // 倒计时

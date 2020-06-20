@@ -23,7 +23,7 @@ public class UserController{
     @RequestMapping("/openid")
     private String login(String code) throws Exception {
         String AppID = "自己的AppID";
-        String AppSecret="自己的AppSecret";//这两个都可以从微信公众平台中查找
+        String AppSecret="6c56fb6f23a5cd567db096ab4050e337";//这两个都可以从微信公众平台中查找
         String url = "https://api.weixin.qq.com/sns/jscode2session?appid="
                 + AppID + "&secret=" + AppSecret + "&js_code="
                 + code + "&grant_type=authorization_code";
@@ -38,8 +38,7 @@ public class UserController{
 
         StringBuilder builder = new StringBuilder();
         BufferedReader bufreader = new BufferedReader(new InputStreamReader(in));
-        for (String temp = bufreader.readLine(); temp != null; temp = bufreader
-                .readLine()) {
+        for (String temp = bufreader.readLine(); temp != null; temp = bufreader.readLine()) {
             builder.append(temp);
         }
 
