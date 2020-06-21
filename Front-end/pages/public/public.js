@@ -131,6 +131,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
+    app.hidetabbar()
 
   },
 
@@ -138,6 +139,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    app.hidetabbar()
+
     var that = this;
     var studentId = that.data.studentId;
     var nickName = that.data.nickName;

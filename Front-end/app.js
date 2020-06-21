@@ -2,7 +2,7 @@
 App({
   onLaunch: function () {
     //隐藏系统tabbar
-    wx.hideTabBar();
+    this.hidetabbar();
     //获取设备信息
     this.getSystemInfo();
     // 展示本地存储能力
@@ -16,18 +16,29 @@ App({
         if(res.code){
           //发起网络请求
           var that = this
-          console.log(res.code)
+          //console.log(res.code)
           wx.request({
             url:that.globalData.apiurl+"/openid",
             //url:"http://localhost:8083/openid",
             data:{code:res.code},
             success:function(e){
               console.log(e);
+              
+        
+              
               if(e.statusCode=="200"){
                 that.globalData.openid=e.data.openid;
+
                 console.log(that.globalData)
                // wx.setStorageSync('openid',this.globalData.openid)
                // typeof cb == "function"&&cb(this.globalData.openid)
+               if(e.data.login==1){
+                 that.globalData.userId=e.data.userId;
+                wx.switchTab({
+                  url: '/pages/switch/switch',
+                })
+              }
+
               }else{
                 console.log("dlsb")
                 //that.wx.login(cb)
@@ -64,6 +75,16 @@ App({
     //隐藏系统tabbar
     wx.hideTabBar();
   },
+  hidetabbar() {
+    wx.hideTabBar({
+      fail: function() {
+        setTimeout(function() { // 做了个延时重试一次，作为保底。
+          wx.hideTabBar()
+        }, 500)
+      }
+    });
+  },
+
   getSystemInfo: function () {
     let t = this;
     wx.getSystemInfo({
@@ -89,6 +110,7 @@ App({
   globalData: {
     apiurl:'https://yyzcowtodd.cn/Auction',
     openid:null,
+    userId:null,
     systemInfo: null,//客户端设备信息
     userInfo: null,
     tabBar: {

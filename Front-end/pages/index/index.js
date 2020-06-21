@@ -9,6 +9,11 @@ Page({
     needauth:true,
     str_openid:""
   },
+  jumpPage:function(){
+    wx.redirectTo({
+      url: '/pages/school/school',
+    })
+  },
   myopenid:function(){
    // console.log("111");
     var that = this;
@@ -28,7 +33,7 @@ Page({
   //获取用户授权信息
   auth:function(e){
     var userInfo = JSON.stringify(e.detail.userInfo);
-    console.log(userInfo);
+    //console.log(userInfo);
     this.setData({
       userInfo:e.detail.userInfo,
       needauth:false

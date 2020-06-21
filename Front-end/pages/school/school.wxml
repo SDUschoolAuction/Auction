@@ -1,4 +1,3 @@
-
 <view class='content'>
 
   <view class="cu-bar bg-white search fixed" style="top:{{CustomBar}}px;">
@@ -27,13 +26,4 @@
 </view>
 
 
-  <view class='comfirm'>
-    <view class="comfirm-school">
-      <button type="default" bindtap="showModal" class="comfirm-school">确认</button>
-      <view>
-        <modal title="提示" hidden="{{modalHidden}}" confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirm" bindcancel="modalBindcancel">选择学校后不可更改，是否确定？</modal>
-      </view>
-    </view>
-  </view>
   
-

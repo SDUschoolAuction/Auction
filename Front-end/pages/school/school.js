@@ -46,9 +46,9 @@ Page({
     query.select('#right').boundingClientRect()
     query.exec(function (res) {
       //res就是 所有标签为mjltest的元素的信息 的数组
-      console.log(res);
+      //console.log(res);
       //取高度
-      console.log("height : "+res[0].height);
+      //console.log("height : "+res[0].height);
       rightheight = res[0].height;
     })
   },
@@ -89,16 +89,53 @@ Page({
   selectschool: function(e) {
     var orgid = e.currentTarget.dataset.orgid
     var orgname = e.currentTarget.dataset.orgname
+    
+    //console.log(e)
+    /*
     wx.showToast({
       title: 'orgid : ' + orgid + ' orgname : ' + orgname,
       icon: 'none'
     })
+    */
+    wx.showModal({
+      title: '你选择的是：'+ orgname,
+      content: '选择学校后不可更改，是否确定？',
+      cancelText: '取消',
+      cancelColor:'#56BD5B',
+      confirmText: '确定',
+      confirmColor: '#56BD5B',
+      success: function(res) {
+        if(res.cancel){
+        //这个跳转是左边按钮“取消”的跳转链接
+          // wx.navigateTo({
+          //   url: '/pages/school/school'
+          // })
+        }else{
+        //这里是右边按钮“确定”的跳转链接
+          wx.switchTab({
+            url: '/pages/switch/switch',
+          })
+          //发送学校信息到后端
+          wx.request({
+            url: 'https://yyzcowtodd.cn/Auction/addUser',
+            method: 'post',
+            data:{
+                  name:app.globalData.userInfo.nickName,
+                  userIcon:app.globalData.userInfo.avatarUrl,
+                  schoolId:orgid,
+                  weChatId:app.globalData.openid,
+                  location:app.globalData.userInfo.city
+                },
+                success:function(e){
+                  console.log(e);}
+          })
+          //console.log(orgid)
+
+        }
+      }
+    })
   },
-  showModal:function(){
-   this.setData({
-    modalHidden:!this.data.modalHidden
-   })
-  },
+  
   modalBindaconfirm:function(){
     this.setData({
     modalHidden:!this.data.modalHidden,
