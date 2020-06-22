@@ -1,25 +1,5 @@
-/* pages/middle/middle.wxss *//* post.wxss */
-/* post.wxss */
-.wrapper {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  height: 80rpx;
-}
-.tab-content {
-  width: 240rpx;
-  height: 76rpx;
-  text-align: center;
-  line-height: 76rpx;
-}
-.select {
-  border-bottom-width: 2rpx;
-  border-bottom-style: solid;
-  border-bottom-color: blue;
-  color: blue;
-}
-.noSelect {
-  color: #666;
+.cu-form-group .title {
+  min-width: calc(4em + 30rpx);
 }
 .tip {
   width: 100%;
@@ -27,64 +7,46 @@
   font-size: 28rpx;
   background-color: #e6e6e6;
 }
-.title{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around
-}
-
-.title_right{
-    display: flex;
-    flex-direction: column;
-}
-.title_image {
-  margin: auto 0rpx;
-  border: 1rpx solid #d3d3d3;
-}
-.title_image image {
-  width: 185rpx;
-  height: 220rpx;
-}
-
-.weui-cell_input {
-  margin-top: 4rpx;
-}
-.weui-label {
-  width: 100%;
-}
-.describe {
-  border: 1px solid #d3d3d3;
-  height: 340rpx;
-  line-height: 28rpx;
-  width: 535rpx;
-  margin-bottom: 5rpx;
-}
-.describe_thing {
-border: 1px solid #d3d3d3;
-  height: 320rpx;
-  line-height: 28rpx;
-  width: 535rpx;
-  margin-bottom: 5rpx;
-  margin-top: 5rpx;
-}
-.outside_border {
-  width: 90%;
-  margin: 0rpx auto;
-  margin-bottom: 600rpx;
-}
-.section{
-  padding: 35rpx;
-  border-bottom: 1px solid #aaaaaa;
-}
 
 
-/*照片区域*/
-.photo_box{
-  margin: 20rpx;
-  background-color: white;
+/*主容器*/
+.stepper {
+  width:80px;
+  height:26px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 3px;
 }
-.button-sp-area{padding-top:15px;text-align:center}.weui-btn_mini{margin-right:4px}
+/*加号和减号*/
+.stepper text {
+  float: left;
+  width: 19px;
+  line-height: 26px;
+  text-align: center;
+}
+/*数值*/
+.stepper input {
+  width: 40px;
+  height: 26px;
+  float: left;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 12px;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+/*普通样式*/
+.stepper .normal {
+  color:black;
+}
+/*禁用样式*/
+.stepper .disable {
+  color: #ccc;
+}
+.box {  
+  margin: 20rpx 0; 
+}
 
-.show-date-time-box {
-  padding: 30rpx 35rpx;
+.box view.cu-bar {
+  margin-top: 20rpx; 
 }

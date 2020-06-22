@@ -1,121 +1,100 @@
-<view class='weui-panel outside_border' wx:if="{{postThing}}">
-	<view class='tip'>
-		提示：请确保发布商品信息真实完整，这有利于提高您商品的成交率。
+
+<view class="padding center">
+	<view class="cu-form-group margin-top">
+		<textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaInput" placeholder="请输入物品简介"></textarea>
+	</view>
+	<view class="cu-bar bg-white ">
+		<view class="action">
+		</view>
+		<view class="action">
+			{{imgList.length}}/4
+		</view>
+	</view>
+	<view class="cu-form-group">
+		<view class="grid col-4 grid-square flex-sub">
+			<view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
+				<image src='{{imgList[index]}}' mode='aspectFill'></image>
+				<view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+					<text class="cuIcon-close"></text>
+				</view>
+			</view>
+			<view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<4}}">
+				<text class="cuIcon-cameraadd"></text>
+			</view>
+		</view>
 	</view>
 
-	<view class="weui-cells__title"> </view>
-	<view class="weui-cells weui-cells_after-title">
-		<view class="weui-cell weui-cell_active">
-			<view class="weui-cell__bd">
-				<textarea class="weui-textarea" placeholder="请输入物品详情，最多200字" style="height: 8em" />
-				<view class="weui-textarea-counter">  </view>
-                </view>
-            </view>
-        </view>
 
 
-<view class="photo_box">
-     <view class="weui-uploader__bd">                  
-     <view class="weui-uploader__files" id="uploaderFiles">
-          <block wx:for="{{files}}" wx:key="*this">
-               <view class="weui-uploader__file" bindtap="previewImage" bindlongpress="deleteImage"id="{{item}}">
-                     <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-                </view>
-          </block>
-      </view>
-       <view class="weui-uploader__input-box">
-            <view class="weui-uploader__input" bindtap="chooseImage"></view>
-						<image src="{{thingImage}}" mode="aspectFit" />
-             </view>
-        </view>
-</view>
 
-	    
+
+	<view class="cu-form-group margin-top">
+		<view class="title">物品名称</view>
+		<input placeholder="请输入物品名称及型号" bindinput="bindThingNameInput" value="{{thingName}}" ></input>
+	</view>
+	<view class="cu-form-group">
+		<view class="title">物品价格</view>
+		<input placeholder="请输入物品价格" bindinput="bindThingPriceInput" value="{{thingPrice}}" ></input>
+	</view>
+	<view class="cu-form-group">
+		<view class="title">联系方式</view>
+		<input placeholder="请输入与您的联系方式" bindinput="bindthingPhoneNumberInput" value="{{thingPhoneNumber}}" type="digit" ></input>
+	</view>
+		<view class="cu-form-group">
+		<view class="title">发货地区</view>
+		<picker mode="region" bindchange="RegionChange" value="{{region}}" custom-item="{{customItem}}">
+			<view class="picker">
+				{{region[0]}}，{{region[1]}}，{{region[2]}}
+			</view>
+		</picker>
+	</view>
+	<view class="cu-form-group margin-top">
+		<view class="title">物品成色</view>
+		<picker bindchange="thingConditionsChange" value="{{thingConditionsIndex}}" range="{{thingConditions}}">
+			<view class="picker">
+				{{thingConditionsIndex?thingConditions[thingConditionsIndex]:'请输入物品损坏度'}}
+			</view>
+		</picker>
+	</view>
+	<view class="cu-form-group ">
+		<view class="title">加价幅度</view>
+		<picker bindchange="thingCampusChange" value="{{thingCampusIndex}}" range="{{thingCampus}}">
+			<view class="picker">
+				{{thingCampusIndex?thingCampus[thingCampusIndex]:'请输入拍卖最低加价/元'}}
+			</view>
+		</picker>
+	</view>
 
 	
-	<view class="title_right">
-		 <view class="weui-cell weui-cell_active">
-                <view class="weui-cell__hd">
-                    <view class="weui-label">物品名称</view>
-                </view>
-                <view class="weui-cell__bd">
-				<input class="weui-input" placeholder="请输入物品名称" bindinput="bindThingNameInput" value="{{thingName}}" />
-			</view>
+
+
+ <date-time-picker mode="datetime" value="{{dateSecond}}" bindchange="selectDateSecondChange"> 
+  <view class="cu-form-group margin-top">
+	<view class="title">起拍时间</view>
+	<view class="picker"> {{dateSecond}}</view>
 		</view>
-		<view class="weui-cell weui-cell_active">
-                <view class="weui-cell__hd">
-                    <view class="weui-label">物品成色</view>
-                </view>
-                <view class="weui-cell__bd">
-				<picker bindchange="bindThingConditionsInput" value="{{thingConditionIndex}}" range="{{thingConditions}}">
-					<view class="weui-input">{{thingConditions[thingConditionIndex]}}</view>
-				</picker>
-			</view>
-		</view>
-		 <view class="weui-cell weui-cell_active">
-                <view class="weui-cell__hd">
-                    <view class="weui-label">起拍价格</view>
-                </view>
-			<view class="weui-cell__bd">
-				<input class="weui-input" placeholder="请输入出售价格" bindinput="bindThingPriceInput" value="{{thingPrice}}" />
-			</view>
-		</view>
-
-	<view class="weui-cell weui-cell_active">
-                <view class="weui-cell__hd">
-                    <view class="weui-label">加价幅度</view>
-                </view>
-                <view class="weui-cell__bd">
-				<picker bindchange="bindThingCampusInput" value="{{thingCampusIndex}}" range="{{thingCampus}}">
-					<view class="weui-input">{{thingCampus[thingCampusIndex]}}</view>
-				</picker>
-			</view>
-		</view>
-
-	</view>
-
-
-
-<view class="weui-cell weui-cell_active">
-                <view class="weui-cell__hd">
-                    <view class="weui-label">联系方式</view>
-                </view>
-			<view class="weui-cell__bd">
-				<input class="weui-input" placeholder="请输入您的电话号码" bindinput="bindThingPhoneNumberInput" value="{{thingPhoneNumber}}" type="digit" />
-			</view>
-		</view>
-
-
-<date-time-picker
-   mode="dateminute" 
-   value="{{dateMinute}}"
-   bindchange="selectDateMinuteChange"> 
-  <view class="show-date-time-box">结束时间 {{dateMinute}}</view>
 </date-time-picker>
- 
- <date-time-picker
-   mode="datetime" 
-   value="{{dateSecond}}"
-   bindchange="selectDateSecondChange"> 
-  <view class="show-date-time-box">起拍时间 {{dateSecond}}</view>
+
+
+<date-time-picker mode="dateminute" value="{{dateMinute}}" bindchange="selectDateMinuteChange"> 
+  <view class="cu-form-group ">
+  <view class="title">结束时间</view>
+	<view class="picker">{{dateMinute}}</view>
+	</view>
 </date-time-picker>
 
 
 
 
-	<view class="section">
-			<view class="weui-label"> </view>
-       
-			<picker mode="region" bindchange="bindRegionChange" value="" custom-item="">
-				<view class="weui-input">
-					发货地区
-					<view wx:if="{{region}}">{{region[0]}}，{{region[1]}}，{{region[2]}}</view>
-				</view>
-			</picker>
-	</view>
 
-	<view class="weui-panel">
-	<button type="primary" size="default" disabled="{{thingName == ''||thingPhoneNumber == ''|| thingImage == '' || thingDescribe == '' ||thingPrice ==''||buttonLoadingThing ? true : false}}" loading="{{buttonLoadingThing}}" bindtap="bindSubmitThing">
-		立即发布 </button>
-    	</view>
+<view class="box">
+  <view class="cu-bar btn-group">
+    <button class="cu-btn bg-green shadow-blur round lg" type="primary" size="default" disabled="{{thingName == ''||thingPhoneNumber == ''|| imgList == '' || textareaValue == '' ||thingPrice ==''||region ==''||buttonLoadingThing ? true : false}}" loading="{{buttonLoadingThing}}" bindtap="bindSubmitThing">发布</button>
+  </view>
 </view>
+
+
+
+</view>
+	
+

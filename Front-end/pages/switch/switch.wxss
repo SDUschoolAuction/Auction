@@ -1,11 +1,12 @@
-/* pages/switch/switch.wxss */
 .first_tab{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   background-color: #f1f1f1;
-  justify-content:center;
+  justify-content:left;
   align-items: center;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
 }
 .goods_item{
   justify-content: center;
@@ -13,9 +14,10 @@
   width: 340rpx;
   background-color: white;
   border-radius: 10rpx;
-  margin:20rpx 10rpx 0rpx 10rpx ;
+  margin:12.5rpx;
   font-family:  sans-serif;
 }
+
 
 .goods_image_wrap{
   display: flex;
