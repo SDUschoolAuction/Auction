@@ -8,9 +8,10 @@ Page({
    */
   data: {
     tabbar: {},
-    endTime: '2020-6-23 10:43:50',//2018/11/22 10:40:30这种格式也行
+    endTime: '2020-6-30 10:43:50',//2018/11/22 10:40:30这种格式也行
     showView: true,
     goodsList:[],
+    m:10
   },
 
   /**
@@ -19,19 +20,23 @@ Page({
   onLoad: function (options) {
     app.editTabbar();
     var that=this;
-    that.countDown()
-    // wx.request({
-    //   url: 'https://api-hmugo-web.itheima.net/api/public/v1/goods/search',
-    //   data: this.Queryparams,
-    //   success: (result) => {
-    //     console.log(result)
-    //     this.setData({
-    //       goodsList:result.data.message.goods
-    //     })
-    //   },
-    // })
+    that.countDown(),
+    that.get_goodsList()
+   
   },
 
+  get_goodsList(){
+    wx.request({
+      url: 'https://yyzcowtodd.cn/Auction/itemList',
+      success: (result) => {
+        console.log(result)
+        this.setData({
+          goodsList:result.data
+        })
+      },
+    })
+    wx.stopPullDownRefresh();
+  },
   // 倒计时
   countDown:function(){
     var that=this;
@@ -126,5 +131,26 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+   //滚动条触底事件
+   onReachBottom(){
+    console.log("触底")
+    if (1*this.data.m<this.data.goodsList.length) {
+      console.log("hei")
+    }
+    else{
+      this.setData({
+    
+        m:this.data.m+1,
+      });
+    }
+
+  },
+  //下拉刷新事件
+  onPullDownRefresh(){
+    this.setData({
+      goodsList:[],
+    })
+    this.get_goodsList()
   }
 })

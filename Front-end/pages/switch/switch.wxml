@@ -2,11 +2,15 @@
 <!-- 首页 -->
 <view class="first_tab">
   <navigator 
-  class="goods_item" url="/pages/detail/detail" >
+  class="goods_item" url="/pages/detail/detail"
+  wx:for="{{goodsList}}" 
+  wx:for-index="i"
+  wx:key="itemId"
+  wx:if="{{i<m}}" >
 
     <!-- 图片容器 -->
     <view class="goods_image_wrap">
-      <image src="https://pics.images.ac.cn/image/5ee894cd01dc6.html" mode="aspextFit"></image>
+      <image src="{{item.itemImg1}}" mode="aspextFit"></image>
     </view>
     <!-- 倒计时 -->
     <view class="one {{showView?'show':'hide'}}" >
@@ -32,11 +36,11 @@
     <!-- 商品容器 -->
     <view class="goods_info_wrap">
       <!-- 商品名称 -->
-      <view class="goods_name">二手手机</view>
+      <view class="goods_name">{{item.itemInfo}}</view>
       <view class="goods_pri_num">
         <!-- 商品的当前价 -->
         <text decode="{{true}}" space="{{true}}" class="goods_top_price">当前价&nbsp;</text>
-        <view class="goods_top_price1">¥1228</view>
+        <view class="goods_top_price1">¥{{item.finalPrice}}</view>
         <!-- 商品的想要人数 -->
       
         <view class="goods_num_participants">11人想要</view>
@@ -45,137 +49,6 @@
   </navigator>
    
 
-
-     <navigator 
-  class="goods_item" url="/pages/detail/detail" >
-
-    <!-- 图片容器 -->
-    <view class="goods_image_wrap">
-      <image src="https://pics.images.ac.cn/image/5ee894cd01dc6.html" mode="aspextFit"></image>
-    </view>
-    <!-- 倒计时 -->
-    <view class="one {{showView?'show':'hide'}}" >
-        <!-- <view class="count_down"> -->
-                  <text class="time_end" decode="{{true}}" space="{{true}}">距离拍卖结束 &nbsp;&nbsp;</text>
-                <!--  <view class="time">5天11小时23分</view> -->
-                      <view wx:if="{{day>1}}" class="cu bg-black radius text-yellow">{{day}}</view>
-                      <view wx:if="{{day>1}}" class="bolder1">天</view>
-                      <view class="cu bg-black radius text-yellow" >{{hou}}</view>
-                      <view class="bolder">:</view>
-                      <view class="cu bg-black radius text-yellow" >{{min}}</view>
-                      <view class="bolder">:</view>
-                      <view class="cu bg-black radius text-yellow" >{{sec}}</view>
-        <!-- </view> -->
-    </view>
-    <view class="two {{showView?'hide':'show'}}">
-        <view class="count_down_end"> 
-              <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;拍卖已结束</text>
-        </view>
-    </view>
-
-    
-    <!-- 商品容器 -->
-    <view class="goods_info_wrap">
-      <!-- 商品名称 -->
-      <view class="goods_name">二手手机</view>
-      <view class="goods_pri_num">
-        <!-- 商品的当前价 -->
-        <text decode="{{true}}" space="{{true}}" class="goods_top_price">当前价&nbsp;</text>
-        <view class="goods_top_price1">¥1228</view>
-        <!-- 商品的想要人数 -->
-      
-        <view class="goods_num_participants">11人想要</view>
-      </view>
-    </view>
-  </navigator>
-
-
-    <navigator 
-  class="goods_item" url="/pages/detail/detail" >
-
-    <!-- 图片容器 -->
-    <view class="goods_image_wrap">
-      <image src="https://pics.images.ac.cn/image/5ee894cd01dc6.html" mode="aspextFit"></image>
-    </view>
-    <!-- 倒计时 -->
-    <view class="one {{showView?'show':'hide'}}" >
-        <!-- <view class="count_down"> -->
-                  <text class="time_end" decode="{{true}}" space="{{true}}">距离拍卖结束 &nbsp;&nbsp;</text>
-                <!--  <view class="time">5天11小时23分</view> -->
-                      <view wx:if="{{day>1}}" class="cu bg-black radius text-yellow">{{day}}</view>
-                      <view wx:if="{{day>1}}" class="bolder1">天</view>
-                      <view class="cu bg-black radius text-yellow" >{{hou}}</view>
-                      <view class="bolder">:</view>
-                      <view class="cu bg-black radius text-yellow" >{{min}}</view>
-                      <view class="bolder">:</view>
-                      <view class="cu bg-black radius text-yellow" >{{sec}}</view>
-        <!-- </view> -->
-    </view>
-    <view class="two {{showView?'hide':'show'}}">
-        <view class="count_down_end"> 
-              <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;拍卖已结束</text>
-        </view>
-    </view>
-
-    
-    <!-- 商品容器 -->
-    <view class="goods_info_wrap">
-      <!-- 商品名称 -->
-      <view class="goods_name">二手手机</view>
-      <view class="goods_pri_num">
-        <!-- 商品的当前价 -->
-        <text decode="{{true}}" space="{{true}}" class="goods_top_price">当前价&nbsp;</text>
-        <view class="goods_top_price1">¥1228</view>
-        <!-- 商品的想要人数 -->
-      
-        <view class="goods_num_participants">11人想要</view>
-      </view>
-    </view>
-  </navigator>
-
-
-    <navigator 
-  class="goods_item" url="/pages/detail/detail" >
-
-    <!-- 图片容器 -->
-    <view class="goods_image_wrap">
-      <image src="https://pics.images.ac.cn/image/5ee894cd01dc6.html" mode="aspextFit"></image>
-    </view>
-    <!-- 倒计时 -->
-    <view class="one {{showView?'show':'hide'}}" >
-        <!-- <view class="count_down"> -->
-                  <text class="time_end" decode="{{true}}" space="{{true}}">距离拍卖结束 &nbsp;&nbsp;</text>
-                <!--  <view class="time">5天11小时23分</view> -->
-                      <view wx:if="{{day>1}}" class="cu bg-black radius text-yellow">{{day}}</view>
-                      <view wx:if="{{day>1}}" class="bolder1">天</view>
-                      <view class="cu bg-black radius text-yellow" >{{hou}}</view>
-                      <view class="bolder">:</view>
-                      <view class="cu bg-black radius text-yellow" >{{min}}</view>
-                      <view class="bolder">:</view>
-                      <view class="cu bg-black radius text-yellow" >{{sec}}</view>
-        <!-- </view> -->
-    </view>
-    <view class="two {{showView?'hide':'show'}}">
-        <view class="count_down_end"> 
-              <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;拍卖已结束</text>
-        </view>
-    </view>
-
-    
-    <!-- 商品容器 -->
-    <view class="goods_info_wrap">
-      <!-- 商品名称 -->
-      <view class="goods_name">二手手机</view>
-      <view class="goods_pri_num">
-        <!-- 商品的当前价 -->
-        <text decode="{{true}}" space="{{true}}" class="goods_top_price">当前价&nbsp;</text>
-        <view class="goods_top_price1">¥1228</view>
-        <!-- 商品的想要人数 -->
-      
-        <view class="goods_num_participants">11人想要</view>
-      </view>
-    </view>
-  </navigator>
 
 
   
