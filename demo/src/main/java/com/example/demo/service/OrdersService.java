@@ -1,16 +1,16 @@
 package com.example.demo.service;
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.entity.Order;
+import com.example.demo.util.Msg;
 
 import java.util.List;
 
 
 public interface OrdersService {
-    List<Order> getbuyerOrders(int buyerId);
+    Msg getbuyerOrders(int buyerId);
 
-    List<Order> getsellerOrders(int sellerId);
+    Msg getsellerOrders(int sellerId);
 
-    List<JSONObject> getItemListBySellerId(int sellerId);
+    Msg getItemListBySellerId(int sellerId);
 
-    List<JSONObject> getItemListByCustomerId(int customerId);
+    Msg getItemListByCustomerId(int customerId);
 }

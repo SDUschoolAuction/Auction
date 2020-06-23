@@ -11,14 +11,11 @@ import java.util.List;
 @Mapper
 public interface OrdersDao {
 
-    @Select ("SELECT * FROM orders WHERE buyerId = #{buyerId}")
-    List<Order> getbuyerOrders(int buyerId);
+    @Select ("SELECT * FROM orders,item WHERE buyerId = #{buyerId} and orders.itemId=item.itemId")
+    List<JSONObject> getbuyerOrders(int buyerId);
 
-    @Select ("SELECT itemId FROM item WHERE sellerId = #{sellerId}")
-    List<Integer> getsellerItems(int sellerId);
-
-    @Select("SELECT * FROM orders WHERE itemId= #{itemId}")
-    Order getsellerOrders (int itemId);
+    @Select("SELECT * FROM orders,item WHERE orders.itemId=item.itemId and item.sellerId=#{sellerId}")
+    List<JSONObject> getsellerOrders (int sellerId);
 
     @Select("select * from (item left join type1 on item.itemId=type1.itemId) left join type2 on item.itemId=type2.itemId where item.sellerId=#{sellerId}\n" +
             "union\n" +
