@@ -5,7 +5,9 @@ const util = require('../../utils/util.js')
 const Time = require('../../utils/time.js')
 Page({
   data: {
+    xxxx:[],
     item_id_fromSwitch: '-1',
+    comment_length:0,
 
     buyout_show: false,
     time_now: '',
@@ -389,17 +391,215 @@ Page({
     imageheight: imageize.imageHeight
     })
   },
-  getIteminfo: function (IDID) {
+  // getIteminfo: function (IDID) {
+  //   var that = this;
+  //   var status = 'item.item_status';
+  //   var quality = 'item.item_quality';
+  //   wx.request({
+  //     url: 'https://yyzcowtodd.cn/Auction/getItemById/'+IDID,
+  //     method: 'GET',
+  //     header: {
+  //       'content-type': 'application/json'
+  //     },
+  //     success: function (res) {
+  //       var tags = res.data.itemTag.split(",");
+  //       var info = res.data.itemInfo.split("$"); 
+  //       console.log("info"+info);
+  //       that.setData({ 
+  //         textdata: res.data,
+  //         list:tags,
+  //         item_image1:res.data.itemImg1,
+  //         item_image2:res.data.itemImg2,
+  //         item_image3:res.data.itemImg3,
+  //         item_image4:res.data.itemImg4,
+  //         item:{
+  //           item_id:res.data.itemId,
+  //           current_price:res.data.finalPrice,//当前此商品的最高出价
+  //           item_title:info[0],//商品的标题
+  //           //item_quality:"ninnew",//商品的色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
+  //           item_description:info[2],
+  //           item_buyout_price:15000,
+  //         }
+  //       });
+  //       if(res.data.status=='-1'){
+  //         that.setData({ 
+  //           [status]: "preparing"//标记当前商品的拍卖状态，有selling正在拍卖和sold已拍卖
+  //         });
+  //       }
+  //       if(res.data.status == '0'){
+  //         that.setData({ 
+  //           [status]: "selling"//标记当前商品的拍卖状态，有selling正在拍卖和sold已拍卖
+  //         });
+  //       }
+  //       if(res.data.status=='1'){
+  //         that.setData({ 
+  //           [status]: "sold"//标记当前商品的拍卖状态，有selling正在拍卖和sold已拍卖
+  //         });
+  //       }
+  //       if(info[1]=='全新'){
+  //         that.setData({ 
+  //           [quality]:'brdnew'//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
+  //         })
+  //       }
+  //       if(info[1]=='九新'){
+  //         that.setData({ 
+  //           [quality]:'ninnew'//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
+  //         })
+  //       }
+  //       if(info[1]=='磨损'){
+  //         that.setData({ 
+  //           [quality]:'notnew'//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
+  //         })
+  //       }
+  //       if(info[1]==null){
+  //         that.setData({ 
+  //           [quality]:''//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
+  //         })
+  //       }
+  //       console.log("项目传来的数据"+res.data);
+  //     },
+  //     fail: function () {
+  //       // fail
+  //     },
+  //     complete: function () {
+  //       console.log("d");
+  //     }
+  //   })
+  // },
+
+
+
+
+
+
+  // getSellerinfo: function (itemID) {
+  //   var that = this;
+  //   var seller_name = 'user.seller_name';
+  //   var seller_info1 = 'user.seller_info1';
+  //   var seller_info2 = 'user.seller_info2';
+  //   var seller_url = 'user.seller_url';
+  //   wx.request({
+  //     url: 'https://yyzcowtodd.cn/Auction/user/'+itemID,
+  //     method: 'GET',
+  //     header: {
+  //       'content-type': 'application/json'
+  //     },
+  //     success: function (res) {
+  //       that.setData({ 
+  //         textdata1: res.data,
+  //         [seller_id]:res.data.userId,
+  //         [seller_name]:res.data.name,
+  //         [seller_info1]:res.data.telephoneNumber,
+  //         [seller_info2]:res.data.location,
+  //         [seller_url]:res.data.userIcon,
+  //       });   
+  //       console.log("项目传来的数据"+res.data);
+  //     },
+  //     fail: function () {
+  //       // fail
+  //     },
+  //     complete: function () {
+  //       console.log("d");
+  //     }
+  //   })
+  // },
+
+
+
+
+  // getComments: function (itemID) {
+  //   var that = this;
+  //   wx.request({
+  //     url: 'https://yyzcowtodd.cn/Auction/comments/getcomments?itemId='+itemID,
+  //     method: 'GET',
+  //     header: {
+  //       'content-type': 'application/json'
+  //     },
+  //     success: function (res) {
+  //       var length = res.data.obj.data.length;
+  //       console.log("length:"+length);
+  //       var count = 0;
+  //       that.setData({ 
+  //         comments: res.data.obj.data,
+  //       });    
+  //       while(length>0){
+  //         var list = 'commentList['+count+']';
+  //         console.log("list:"+list);
+  //         that.setData({
+  //           [list]:{ 
+  //             item_id: that.data.item.item_id, 
+  //             id:res.data.obj.data[count].commentId,
+  //             name:res.data.obj.data[count].userName,
+  //             text:res.data.obj.data[count].content,
+  //             url:res.data.obj.data[count].userIcon,
+  //             role:'buyer',
+  //             time:res.data.obj.data[count].time,
+  //             sub_comments:[
+  //             //{  name:'我是用户1号',
+  //             //   target:'我是用户2号',
+  //             //   text:'你是不是傻，不喜欢评论啥',
+  //             //   role:'buyer',
+  //             //   father:'2',
+  //             //   time:'2010-08-01 10:30:00'}that.data.xxxx[countx]
+  //           ]
+  //           }
+  //         });
+  //         count += 1;
+  //         length -= 1;
+  //       }
+  //       console.log("项目传来的数据"+res.data);
+  //       return count;
+  //     },
+  //     fail: function () {
+  //       // fail
+  //     },
+  //     complete: function () {
+  //       console.log("d");
+  //     }
+  //   })
+  // },
+  // getSubcomment: function (subID) {
+  //   var that = this;
+  //   wx.request({
+  //     url: 'https://yyzcowtodd.cn/Auction/comments/getReviewsForComments?commentId='+subID,
+  //     method: 'GET',
+  //     header: {
+  //       'content-type': 'application/json'
+  //     },
+  //     success: function (res) {
+  //       console.log("子评论"+res.data);
+  //       that.setData({
+  //         subsub:res.data.obj.data
+  //       });
+  //     },
+  //     fail: function () {
+  //       // fail
+  //     },
+  //     complete: function () {
+  //       console.log("d");
+  //     }
+  //   })
+  // },
+
+
+  getInfo: function(itemID){
+    var sellerID=0;
     var that = this;
     var status = 'item.item_status';
     var quality = 'item.item_quality';
+    var seller_id = 'user.seller_id';
+    var seller_name = 'user.seller_name';
+    var seller_info1 = 'user.seller_info1';
+    var seller_info2 = 'user.seller_info2';
+    var seller_url = 'user.seller_url';
     wx.request({
-      url: 'https://yyzcowtodd.cn/Auction/getItemById/'+IDID,
+      url: 'https://yyzcowtodd.cn/Auction/getItemById/'+itemID,
       method: 'GET',
       header: {
         'content-type': 'application/json'
       },
       success: function (res) {
+        sellerID = res.data.sellerId;
         var tags = res.data.itemTag.split(",");
         var info = res.data.itemInfo.split("$"); 
         console.log("info"+info);
@@ -455,6 +655,30 @@ Page({
           })
         }
         console.log("项目传来的数据"+res.data);
+        wx.request({
+          url: 'https://yyzcowtodd.cn/Auction/user/'+sellerID,
+          method: 'GET',
+          header: {
+            'content-type': 'application/json'
+          },
+          success: function (res) {
+            that.setData({ 
+              textdata1: res.data,
+              [seller_id]:res.data.userId,
+              [seller_name]:res.data.name,
+              [seller_info1]:res.data.telephoneNumber,
+              [seller_info2]:res.data.location,
+              [seller_url]:res.data.userIcon,
+            });   
+            console.log("项目传来的数据"+res.data);
+          },
+          fail: function () {
+            // fail
+          },
+          complete: function () {
+            console.log("d");
+          }
+        })
       },
       fail: function () {
         // fail
@@ -463,39 +687,7 @@ Page({
         console.log("d");
       }
     })
-  },
-  getSellerinfo: function (itemID) {
-    var that = this;
-    var seller_name = 'user.seller_name';
-    var seller_info1 = 'user.seller_info1';
-    var seller_info2 = 'user.seller_info2';
-    var seller_url = 'user.seller_url';
-    wx.request({
-      url: 'https://yyzcowtodd.cn/Auction/user/'+itemID,
-      method: 'GET',
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-        that.setData({ 
-          textdata1: res.data,
-          [seller_name]:res.data.name,
-          [seller_info1]:res.data.telephoneNumber,
-          [seller_info2]:res.data.location,
-          [seller_url]:res.data.userIcon,
-        });   
-        console.log("项目传来的数据"+res.data);
-      },
-      fail: function () {
-        // fail
-      },
-      complete: function () {
-        console.log("d");
-      }
-    })
-  },
-  getComments: function (itemID) {
-    var that = this;
+
     wx.request({
       url: 'https://yyzcowtodd.cn/Auction/comments/getcomments?itemId='+itemID,
       method: 'GET',
@@ -515,30 +707,116 @@ Page({
           that.setData({
             [list]:{ 
               item_id: that.data.item.item_id, 
+              id:res.data.obj.data[count].commentId,
               name:res.data.obj.data[count].userName,
               text:res.data.obj.data[count].content,
               url:res.data.obj.data[count].userIcon,
               role:'buyer',
               time:res.data.obj.data[count].time,
-              sub_comments:[]
+              sub_comments:[
+              // { name:'我是用户1号',
+              //   target:'我是用户2号',
+              //   text:'你是不是傻，不喜欢评论啥',
+              //   role:'buyer',
+              //   father:'2',
+              //   time:'2010-08-01 10:30:00'}
+              ]}
+              });
+              wx.request({
+                  url: 'https://yyzcowtodd.cn/Auction/comments/getReviewsForComments?commentId='+res.data.obj.data[count].commentId,
+                  method: 'GET',
+                  header: {
+                    'content-type': 'application/json'
+                  },
+                  success: function (res) {
+                    var countx=0;
+                    var lengthx=res.data.obj.data.length;
+                    that.setData({ 
+                      subsub_comments: res.data.obj.data,
+                    });  
+                    while(lengthx>0){
+                      console.log("aaaaaaaaaaaaaaaa");
+                      var list_sub = list+'.sub_comments['+countx+']';
+                      //console.log("list:"+list);
+                      that.setData({
+                        [list_sub]:{
+                            name:res.data.obj.data[countx].fromUserName,
+                            target:res.data.obj.data[countx].toUserName,
+                            text:res.data.obj.data[countx].content,
+                            role:'buyer',
+                            father:res.data.obj.data[countx].commentId,
+                            time:res.data.obj.data[countx].time
+                            // name:"res.data.obj.data.fromUserName",
+                            // target:"res.data.obj.data.toUserName",
+                            // text:"res.data.obj.data.content",
+                            // role:'buyer',
+                            // father:"res.data.obj.data.commentId",
+                            // time:"ime.formatTime(new Date())"
+                        }
+                      });
+                      lengthx--;
+                      countx++;
+                    }
+                  },
+                  fail: function () {
+                    // fail
+                  },
+                  complete: function () {
+                    console.log("d");
+                  }
+                })
+              count += 1;
+              length -= 1;
             }
-          });
-          count += 1;
-          length -= 1;
-        }
-        console.log("项目传来的数据"+res.data);
-      },
-      fail: function () {
-        // fail
-      },
-      complete: function () {
-        console.log("d");
-      }
-    })
+            console.log("项目传来的数据"+res.data);
+            return count;
+          },
+          fail: function () {
+            // fail
+          },
+          complete: function () {
+            console.log("d");
+          }
+        })
+
+
   },
   onLoad: function (options) {
-    this.getIteminfo('3');
-    this.getSellerinfo('1');
-    this.getComments('3');
+    this.getInfo('3');
+    // this.getIteminfo('3');
+    // this.getSellerinfo(this.data.textdata1.userId);
+    // this.getComments('3');
+    // var count=0;
+    // while(count<3){
+    //   console.log("cccccccccc"+length);
+    //   count++;
+    // }
+
+    //this.getSubcomment(1);
   }
 })
+
+
+
+// var xxxx = that.getSubcomment(that.data.commentList[count].id);
+//           console.log("type"+typeof(xxxx));
+//           console.log("type"+typeof(xxxx));
+//           console.log("type"+typeof(xxxx));
+//           console.log("type"+typeof(xxxx));
+//           var lengthx = xxxx.length;
+//           var countx = 0;
+//           while(lengthx>0){
+//             var list_sub = 'commentList['+count+'].sub_comments['+countx+']';
+//             that.setData({
+//               [list_sub]:{
+//                 name:that.data.xxxx[countx].fromUserName,
+//                 target:that.data.xxxx[countx].toUserName,
+//                 text:that.data.xxxx[countx].content,
+//                 role:'buyer',
+//                 father:that.data.xxxx[countx].commentId,
+//                 time:Time.formatTime(data.xxxx[countx].time)
+//               }
+//             });
+//             lengthx--;
+//             countx++;
+//           }

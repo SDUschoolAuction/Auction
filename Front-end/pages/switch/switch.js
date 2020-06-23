@@ -22,7 +22,6 @@ Page({
     var that=this;
     that.countDown(),
     that.get_goodsList()
-   
   },
 
   get_goodsList(){
