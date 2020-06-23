@@ -22,10 +22,10 @@ public interface commentDao {
         @Delete("delete from review where reviewId = #{reviewId}")
          Integer deleteReview(@Param("reviewId") int reviewId);
 
-        @Select("select commentId, userId, content, time from comment, user where `itemId` = #{itemId} order by time")
+        @Select("select * from comment where `itemId` = #{itemId} order by time")
          List<Comment> getComments(@Param("itemId") int itemId);
 
-        @Select("select * from review where `commentId` = #{commentId}")
+        @Select("select * from review where `commentId` = #{commentId} order by time")
         List<Review> getReviews(@Param("commentId") int commentId);
 
 //         添加留言

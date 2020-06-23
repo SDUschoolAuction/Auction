@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp()
-
+import { get, wxPromise } from "../../utils/util";
 Page({
   data: {
     motto: 'Hello World',
@@ -15,20 +15,6 @@ Page({
     })
   },
   myopenid:function(){
-   // console.log("111");
-    var that = this;
-    //获取openid
-    // app.wxlogin(function (res){
-    //   console.log("1222");
-    //   console.log("获取openid："+res);
-    //   //判断有无openid
-    //   if(res){
-    //     that.setData({
-    //       str_openid:res
-    //     })
-    //     //+++
-    //   }
-    // });
   },
   //获取用户授权信息
   auth:function(e){
@@ -39,8 +25,33 @@ Page({
       needauth:false
       });
   },
+  getOpenID:function(){
+    //console.log(app.globalData)
+    wx.showLoading({
+      title: '正在登录',
+      });
+      wxPromise(wx.login)()
+      .then(res => get("/openid", { code: res.code }))
+      .then(e =>{
+          console.log(e)
+          wx.hideLoading();
+          if(e.statusCode=="200"){
+            app.globalData.openid=e.data.openid;
+            if(e.data.login==1){
+              app.globalData.userId=e.data.userId;
+              wx.switchTab({
+                url: '/pages/switch/switch',
+              })
+            }
+          }else{
+            console.log("dlsb")
+          }
+         wx.setStorageSync("openID", e.data.openid)
+      })
+  },
   onLoad:function(){
-    var that=this;
+    var that=this;  
+    this.getOpenID();
     wx.getSetting({
       success(res){
         if(res.authSetting['scope.address.userInfo']){
@@ -51,7 +62,6 @@ Page({
                  needauth:false
               })
             }
-            
           })
         }
       }

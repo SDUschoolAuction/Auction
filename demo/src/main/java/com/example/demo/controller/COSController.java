@@ -12,10 +12,7 @@ import com.qcloud.cos.model.GeneratePresignedUrlRequest;
 import com.qcloud.cos.region.Region;
 import org.apache.ibatis.annotations.Param;
 import org.json.JSONObject;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.net.URL;

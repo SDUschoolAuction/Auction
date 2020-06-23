@@ -17,6 +17,7 @@ public class Item {
     private String telephoneNumber;
     private Integer type;
     private String itemTag;
+    private String itemHead;
 
     public Integer getItemId() {
         return itemId;
@@ -120,6 +121,14 @@ public class Item {
 
     public void setItemTag(String itemTag) {
         this.itemTag = itemTag;
+    }
+
+    public String getItemHead() {
+        return itemHead;
+    }
+
+    public void setItemHead(String itemHead) {
+        this.itemHead = itemHead;
     }
 
     @Override
