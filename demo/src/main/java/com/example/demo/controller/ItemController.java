@@ -1,19 +1,28 @@
 package com.example.demo.controller;
 
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.entity.Item;
+import com.example.demo.factory.FactoryForTypeService;
 import com.example.demo.service.ItemService;
+import com.example.demo.util.JsonXMLUtils;
 import com.example.demo.util.Msg;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ItemController {
 
     @Resource
     private ItemService itemService;
+
+    @Resource
+    private FactoryForTypeService factoryForTypeService;
+
 
     /**
      * @Description: 添加新的商品
@@ -37,7 +46,7 @@ public class ItemController {
      * @Date: 2020/6/15 5:29
      */
     @RequestMapping("/getItemById/{itemId}")
-    public Item getItemById(@PathVariable int itemId){
+    public JSONObject getItemById(@PathVariable int itemId){
         return itemService.getItemById(itemId);
     }
 
@@ -76,9 +85,24 @@ public class ItemController {
      * @Date: 2020/6/16 1:31
      */
     @RequestMapping("/itemList")
-    public List<Item> getItemList(){
+    public List<JSONObject> getItemList(){
         return itemService.getItemList();
     }
+
+
+    @RequestMapping("/addItemType/{key}")
+    public Msg addItemType(@PathVariable String key,@RequestBody Map<String,Object> map) throws Exception {
+        Item item=JsonXMLUtils.map2obj((Map<String, Object>) map.get("item"),Item.class);
+        JSONObject jsonObject= JsonXMLUtils.map2obj((Map<String, Object>) map.get("type"),JSONObject.class);
+        try {
+            itemService.addItem(item);
+            factoryForTypeService.getTypeService(key).addType(jsonObject);
+            return Msg.ok("success");
+        }catch (Exception e){
+            return Msg.err(e.toString());
+        }
+    }
+
 
 
 

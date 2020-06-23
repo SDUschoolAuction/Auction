@@ -16,6 +16,7 @@ public class Item {
     private String itemLocation;
     private String telephoneNumber;
     private Integer type;
+    private String itemTag;
 
     public Integer getItemId() {
         return itemId;
@@ -113,6 +114,14 @@ public class Item {
         this.type = type;
     }
 
+    public String getItemTag() {
+        return itemTag;
+    }
+
+    public void setItemTag(String itemTag) {
+        this.itemTag = itemTag;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -128,6 +137,7 @@ public class Item {
                 ", itemLocation='" + itemLocation + '\'' +
                 ", telephoneNumber='" + telephoneNumber + '\'' +
                 ", type=" + type +
+                ", itemTag='" + itemTag + '\'' +
                 '}';
     }
 }
