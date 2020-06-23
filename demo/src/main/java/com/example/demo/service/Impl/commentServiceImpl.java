@@ -81,6 +81,7 @@ public class commentServiceImpl implements commentService {
             jsonObject.put("data", jsonArray);
             return new Msg<>(0,"success",jsonObject);
         }catch(Exception e){
+            System.out.println(e);
             return Msg.err("fail");
         }
     }
@@ -112,6 +113,7 @@ public class commentServiceImpl implements commentService {
                 jsonObject.put("toUserIcon",userto.getUserIcon());
                 jsonObject.put("content",x.getContent());
                 jsonObject.put("time",x.getTime());
+                jsonArray.add(jsonObject);
             }
             jsonObject = new JSONObject();
             jsonObject.put("data", jsonArray);
