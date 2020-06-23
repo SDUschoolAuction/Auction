@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.COS.CosStsClient;
 import com.example.demo.util.Msg;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
@@ -10,13 +11,16 @@ import com.qcloud.cos.http.HttpMethodName;
 import com.qcloud.cos.model.GeneratePresignedUrlRequest;
 import com.qcloud.cos.region.Region;
 import org.apache.ibatis.annotations.Param;
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
+import java.util.TreeMap;
 
 /**
  * @program: demo
@@ -32,18 +36,46 @@ public class COSController{
     int duration = 1800;
     String region = "ap-nanjing";
     String bucket = "auction-1300038466";
+    TreeMap<String, Object> config = new TreeMap<>();
 
-   /**
-    * @Author xu yingliang,Yao Yunzhi
-    * @Description 返回上传文件的签名
-    * @Date 14:45 2020/6/18
-    * @Param [key]  文件名称
-    * @return com.example.demo.util.Msg
-    **/
+    /**
+     * @Author xu yingliang,Yao Yunzhi
+     * @Description 返回上传文件的签名
+     * @Date 14:45 2020/6/18
+     * @Param [key]  文件名称
+     * @return com.example.demo.util.Msg
+     **/
     @GetMapping("/uploadFile")
     public String upload(String key){
+        config.put("secretId",secretId);
+        config.put("secretKey",secretKey);
+        config.put("durationSeconds", 1800);
+        config.put("bucket", bucket);
+        // 换成 bucket 所在地区
+        config.put("region", region);
+        config.put("allowPrefix", key);
+        String[] allowActions = new String[] {
+                // 简单上传
+                "name/cos:PutObject",
+                "name/cos:PostObject",
+                // 分片上传
+                "name/cos:InitiateMultipartUpload",
+                "name/cos:ListMultipartUploads",
+                "name/cos:ListParts",
+                "name/cos:UploadPart",
+                "name/cos:CompleteMultipartUpload"
+        };
+        config.put("allowActions", allowActions);
+
+        JSONObject credential = null;
+        try {
+            credential = CosStsClient.getCredential(config);
+            System.out.println(credential.toString(4));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // 要签名的 key, 生成的签名只能用于对应此 key 的上传
-        return "";
+        return credential.toString(4);
     }
 
     /**
