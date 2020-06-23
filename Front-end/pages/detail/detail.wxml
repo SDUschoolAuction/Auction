@@ -67,18 +67,22 @@
 
   <!-- 商品的标签 -->
   <view id="tags" class="align-center flex justify-start margin-xs  flex flex-wrap">
-    <view class="tags padding-xs" wx:for="{{list}}" wx:key>
-      <view id="tag" class="padding text-lg cu-tag bg-blue light round">#{{item.title}}</view>
+    <view class="tags padding-xs" wx:for="{{list}}">
+      <view id="tag" class="padding text-lg cu-tag bg-blue light round">#{{item}}</view>
     </view>
   </view>
   
   <!-- 商品的预览图片 -->
   <view id="pics" class="align-center flex flex-wrap">
-        <image class="radius2 margin-xs" style="width: {{imagewidth}}px; height: {{imageheight}}px;" src="{{item_image1}}" bindload="imageLoad"></image>
-        <image class="radius2 margin-xs" style="width: {{imagewidth}}px; height: {{imageheight}}px;" src="{{item_image2}}" bindload="imageLoad"></image>
-        <image class="radius2 margin-xs" style="width: {{imagewidth}}px; height: {{imageheight}}px;" src="{{item_image3}}" bindload="imageLoad"></image>
-        <image class="radius2 margin-xs" style="width: {{imagewidth}}px; height: {{imageheight}}px;" src="{{item_image4}}" bindload="imageLoad"></image>
-        <image class="radius2 margin-xs" style="width: {{imagewidth}}px; height: {{imageheight}}px;" src="{{item_image5}}" bindload="imageLoad"></image>
+        <image wx:if="{{item_image1!='' && item_image1!=null}}" class="radius2 margin-xs" style="width: {{imagewidth}}px; height: {{imageheight}}px;" src="{{item_image1}}" bindload="imageLoad"></image>
+
+        <image wx:if="{{item_image2!='' && item_image2!=null}}" class="radius2 margin-xs" style="width: {{imagewidth}}px; height: {{imageheight}}px;" src="{{item_image2}}" bindload="imageLoad"></image>
+
+        <image wx:if="{{item_image3!='' && item_image3!=null}}" class="radius2 margin-xs" style="width: {{imagewidth}}px; height: {{imageheight}}px;" src="{{item_image3}}" bindload="imageLoad"></image>
+
+        <image wx:if="{{item_image4!='' && item_image4!=null}}" class="radius2 margin-xs" style="width: {{imagewidth}}px; height: {{imageheight}}px;" src="{{item_image4}}" bindload="imageLoad"></image>
+        
+        <image wx:if="{{item_image5!='' && item_image5!=null}}" class="radius2 margin-xs" style="width: {{imagewidth}}px; height: {{imageheight}}px;" src="{{item_image5}}" bindload="imageLoad"></image>
   </view>
   
   <!-- body的底端文字部分 -->

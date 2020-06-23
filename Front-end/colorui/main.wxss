@@ -93,6 +93,9 @@ image {
 	border-radius: 6rpx;
 }
 
+.radius2 {
+	border-radius: 20rpx;
+}
 /* ==================
           图片
  ==================== */

@@ -5,6 +5,8 @@ const util = require('../../utils/util.js')
 const Time = require('../../utils/time.js')
 Page({
   data: {
+    item_id_fromSwitch: '-1',
+
     buyout_show: false,
     time_now: '',
 
@@ -49,78 +51,79 @@ Page({
     comment_show: false,
     no_comment_url:'/image/no_comments.png',
     user:{//这个是各个不同身份的用户的全部信息，+++++++++，----------，特别标注可能会更新的数据==========
-      seller_name:'我是一个很厉害的用户名',//卖家的名称
-      seller_info1:'我不知道我是登陆计时',//卖家提供的信息1
-      seller_info2:'还是别的什么东西',//卖家提供的信息2
-      seller_url:'/image/head.png',//卖家的头像地址
+      seller_name:'',//卖家的名称
+      seller_info1:'',//卖家提供的信息1
+      seller_info2:'',//卖家提供的信息2
+      seller_url:'',//卖家的头像地址
 
       user_name:'myUsername',
       user_url:'/image/head.png',//此账户用户的头像地址
       user_role:'visitor',//==========
       //此账户用户的身份，包含：“visitor”出价者、“buyer”竞拍者、“seller”拍卖者、“winner”中标者
       //会自动根据用户的身份来显示不同样式的页面
-      user_price:100,//此账户用户的当前出价，==========
-      user_old_price:99999,//此账户用户的原本的出价，==========
-      user_new_price:99999,//此账户用户的新的出价，==========
+      user_price:0,//此账户用户的当前出价，==========
+      user_old_price:0,//此账户用户的原本的出价，==========
+      user_new_price:0,//此账户用户的新的出价，==========
       user_phone:''
     },
     item:{//包含了此商品的基本信息，+++++++++，----------
-      current_price:99999,//当前此商品的最高出价
-      item_title:'我是拍卖品的题目，我觉得我这个题目很不错',//商品的标题
-      item_quality:"ninnew",//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
-      item_description:'我是一个很好看的拍卖品，有多么好看呢，有那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么那么好看！！！！！',
+      item_id:'-1',
+      current_price:0,//当前此商品的最高出价
+      item_title:'',//商品的标题
+      item_quality:"",//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
+      item_description:'',
       //商品的简介
-      item_buyout_price:15000,
-      item_status: "selling"//标记当前商品的拍卖状态，有selling正在拍卖和sold已拍卖
+      item_buyout_price:9999,
+      item_status: ""//标记当前商品的拍卖状态，有selling正在拍卖和sold已拍卖
     },
     commentList: [//评论的相关信息，seller角色的用户会出现卖家的提示tag，+++++++++
-      { item_id: 1, 
-        name:'我是用户1号',
-        text:'我好喜欢这个商品啊！！',
-        url:'/image/head.png',
-        role:'buyer',
-        time:'2010-08-01 10:30:00',
-        sub_comments:[]
-      }, 
-      { item_id: 2, 
-        name:'我是用户2号',
-        text:'我不喜欢但是我我还是要评论',
-        url:'/image/head.png',
-        role:'seller',
-        time:'2010-08-01 10:30:00',
-        sub_comments:[
-          { name:'我是用户1号',
-            target:'我是用户2号',
-            text:'你是不是傻，不喜欢评论啥',
-            role:'buyer',
-            father:'2',
-            time:'2010-08-01 10:30:00'
-          },
+      // { item_id: 1, 
+      //   name:'我是用户1号',
+      //   text:'我好喜欢这个商品啊！！',
+      //   url:'/image/head.png',
+      //   role:'buyer',
+      //   time:'2010-08-01 10:30:00',
+      //   sub_comments:[]
+      // }, 
+      // { item_id: 2, 
+      //   name:'我是用户2号',
+      //   text:'我不喜欢但是我我还是要评论',
+      //   url:'/image/head.png',
+      //   role:'seller',
+      //   time:'2010-08-01 10:30:00',
+      //   sub_comments:[
+      //     { name:'我是用户1号',
+      //       target:'我是用户2号',
+      //       text:'你是不是傻，不喜欢评论啥',
+      //       role:'buyer',
+      //       father:'2',
+      //       time:'2010-08-01 10:30:00'
+      //     },
 
-          { name:'我是用户3号',
-            target:'我是用户2号',
-            text:'卖家说自己不喜欢可还行',
-            role:'buyer',
-            father:'2',
-            time:'2010-08-01 10:30:00'
-          },
+      //     { name:'我是用户3号',
+      //       target:'我是用户2号',
+      //       text:'卖家说自己不喜欢可还行',
+      //       role:'buyer',
+      //       father:'2',
+      //       time:'2010-08-01 10:30:00'
+      //     },
 
-          { name:'我是用户2号',
-            target:'我是用户1号',
-            text:'要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！',
-            role:'seller',
-            father:'2',
-            time:'2010-08-01 10:30:00'
-          }
-        ]
-      }, 
-      { item_id: 3, 
-        name:'我是用户3号',
-        text:'我觉得不行，我也不知道我喜不喜欢',
-        url:'/image/head.png',
-        role:'buyer',
-        time:'2010-08-01 10:30:00',
-        sub_comments:[]}
+      //     { name:'我是用户2号',
+      //       target:'我是用户1号',
+      //       text:'要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！',
+      //       role:'seller',
+      //       father:'2',
+      //       time:'2010-08-01 10:30:00'
+      //     }
+      //   ]
+      // }, 
+      // { item_id: 3, 
+      //   name:'我是用户3号',
+      //   text:'我觉得不行，我也不知道我喜不喜欢',
+      //   url:'/image/head.png',
+      //   role:'buyer',
+      //   time:'2010-08-01 10:30:00',
+      //   sub_comments:[]}
     ],
     bidList: [//出价记录列表，+++++++++，----------
       { item_id: 1, name:'我是用户1号',price:'100'}, 
@@ -129,24 +132,13 @@ Page({
     ],
     selectedFlag: [false],//用来指示出价记录是否展开
     list: [//标签列表，由卖家登陆商品可能涉及的标签，+++++++++
-      {title: 'iphone'},
-      {title: 'apple'},
-      {title: 'huawei'},
-      {title: 'xiaomi'},
-      {title: '罗老师别这样'},
-      {title: '这是一个普通的标签'},
-      {title: '这是一个不普通的标签'},
-      {title: '标'},
-      {title: '签'},
-      {title: '这是一个比上一个更普通的标签'},
-      {title: '标签'}
-    ],
+      '标签'],
     //五张实物展示图，可以自动调整尺寸已适应不同设备和不同尺寸的照片，+++++++++
     item_image1: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2651866529,447223239&fm=26&gp=0.jpg',
     item_image2: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3393996789,3606006142&fm=26&gp=0.jpg',
     item_image3: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2829549029,1031122743&fm=26&gp=0.jpg',
     item_image4: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1114751058,1476283770&fm=26&gp=0.jpg',
-    item_image5: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3609079631,2329147195&fm=26&gp=0.jpg',
+    //item_image5: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3609079631,2329147195&fm=26&gp=0.jpg',
 
     imagewidth: 0,//缩放后的宽
     imageheight: 0,//缩放后的高,
@@ -201,8 +193,8 @@ Page({
   openSubcomment_1:function(e){//点击主列表的用户名的出价界面展开/收起切换函数
     var target = e.currentTarget.dataset.text;
     var father = e.currentTarget.dataset.father;
-    console.log(target);
-    console.log(father);
+    // console.log(target);
+    // console.log(father);
     this.setData({
       sub_holder_text: "回复@"+target,
       subcomment_father:father,
@@ -396,5 +388,154 @@ Page({
     imagewidth: imageize.imageWidth,
     imageheight: imageize.imageHeight
     })
+  },
+  getIteminfo: function (IDID) {
+    var that = this;
+    var status = 'item.item_status';
+    var quality = 'item.item_quality';
+    wx.request({
+      url: 'https://yyzcowtodd.cn/Auction/getItemById/'+IDID,
+      method: 'GET',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        var tags = res.data.itemTag.split(",");
+        var info = res.data.itemInfo.split("$"); 
+        console.log("info"+info);
+        that.setData({ 
+          textdata: res.data,
+          list:tags,
+          item_image1:res.data.itemImg1,
+          item_image2:res.data.itemImg2,
+          item_image3:res.data.itemImg3,
+          item_image4:res.data.itemImg4,
+          item:{
+            item_id:res.data.itemId,
+            current_price:res.data.finalPrice,//当前此商品的最高出价
+            item_title:info[0],//商品的标题
+            //item_quality:"ninnew",//商品的色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
+            item_description:info[2],
+            item_buyout_price:15000,
+          }
+        });
+        if(res.data.status=='-1'){
+          that.setData({ 
+            [status]: "preparing"//标记当前商品的拍卖状态，有selling正在拍卖和sold已拍卖
+          });
+        }
+        if(res.data.status == '0'){
+          that.setData({ 
+            [status]: "selling"//标记当前商品的拍卖状态，有selling正在拍卖和sold已拍卖
+          });
+        }
+        if(res.data.status=='1'){
+          that.setData({ 
+            [status]: "sold"//标记当前商品的拍卖状态，有selling正在拍卖和sold已拍卖
+          });
+        }
+        if(info[1]=='全新'){
+          that.setData({ 
+            [quality]:'brdnew'//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
+          })
+        }
+        if(info[1]=='九新'){
+          that.setData({ 
+            [quality]:'ninnew'//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
+          })
+        }
+        if(info[1]=='磨损'){
+          that.setData({ 
+            [quality]:'notnew'//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
+          })
+        }
+        if(info[1]==null){
+          that.setData({ 
+            [quality]:''//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
+          })
+        }
+        console.log("项目传来的数据"+res.data);
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        console.log("d");
+      }
+    })
+  },
+  getSellerinfo: function (itemID) {
+    var that = this;
+    var seller_name = 'user.seller_name';
+    var seller_info1 = 'user.seller_info1';
+    var seller_info2 = 'user.seller_info2';
+    var seller_url = 'user.seller_url';
+    wx.request({
+      url: 'https://yyzcowtodd.cn/Auction/user/'+itemID,
+      method: 'GET',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        that.setData({ 
+          textdata1: res.data,
+          [seller_name]:res.data.name,
+          [seller_info1]:res.data.telephoneNumber,
+          [seller_info2]:res.data.location,
+          [seller_url]:res.data.userIcon,
+        });   
+        console.log("项目传来的数据"+res.data);
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        console.log("d");
+      }
+    })
+  },
+  getComments: function (itemID) {
+    var that = this;
+    wx.request({
+      url: 'https://yyzcowtodd.cn/Auction/comments/getcomments?itemId='+itemID,
+      method: 'GET',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        var length = res.data.obj.data.length;
+        var count = 0;
+        that.setData({ 
+          comments: res.data.obj.data,
+        });    
+        while(length>0){
+          var list = 'that.data.commentList['+count+']';
+          that.setData({
+            [list]:{ 
+              item_id: that.data.item.item_id, 
+              name:res.data.obj.data.userName,
+              text:res.data.obj.data.content,
+              url:res.data.obj.data.userIcon,
+              role:'buyer',
+              time:res.data.obj.data.time,
+              sub_comments:[]
+            }
+          });
+          count += 1;
+        }
+        console.log("项目传来的数据"+res.data);
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        console.log("d");
+      }
+    })
+  },
+  onLoad: function (options) {
+    this.getIteminfo('3');
+    this.getSellerinfo('1');
+    this.getComments('3');
   }
 })
