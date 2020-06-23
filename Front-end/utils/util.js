@@ -84,9 +84,57 @@ function imageUtil(e) {
   // console.log('缩放后的高: ' + imageSize.imageHeight)
   return imageSize;
 }
-
-
+var Promise = require('bluebird.js') 
+export function wxPromisify(fn) {
+  return function (obj = {}) {
+    return new Promise((resolve, reject) => {
+      obj.success = function (res) {
+        resolve(res)
+      }
+      obj.fail = function (res) {
+        reject(res)
+      }
+      fn(obj)
+    })
+  }
+}
+export function wxPromise(fn) {
+    return function (obj = {}) {
+      return new Promise((resolve, reject) => {
+        obj.success = res => {
+          resolve(res)
+        };
+        obj.fail = res => {
+          reject(res)
+        };
+        fn(obj)
+      })
+    }
+  }
+const headerConfig = {
+  "Content-Type": "application/json",
+}
+export function get(url, data = {}) {
+    return new Promise((resolve, reject) => {
+      //网络请求
+      wx.request({
+        url: "https://yyzcowtodd.cn/Auction" + url,
+        data,
+        method: 'GET',
+        header: headerConfig,
+        success: function (res) {//服务器返回数据
+          resolve(res);
+        },
+        fail: function (error) {
+          reject(error);
+        }
+      })
+    });
+  }
 module.exports = {
   getTimeLeft: getTimeLeft,
-  imageUtil: imageUtil
+  imageUtil: imageUtil,
+  // wxPromisify: wxPromisify
+  wxPromise: wxPromise,
+  get: get
 }

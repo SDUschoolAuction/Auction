@@ -1,4 +1,5 @@
 //app.js
+var util = require('utils/util.js');
 App({
   onLaunch: function () {
     //隐藏系统tabbar
@@ -10,47 +11,6 @@ App({
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
     // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        if(res.code){
-          //发起网络请求
-          var that = this
-          //console.log(res.code)
-          wx.request({
-            url:that.globalData.apiurl+"/openid",
-            //url:"http://localhost:8083/openid",
-            data:{code:res.code},
-            success:function(e){
-              console.log(e);
-              
-        
-              
-              if(e.statusCode=="200"){
-                that.globalData.openid=e.data.openid;
-
-                console.log(that.globalData)
-               // wx.setStorageSync('openid',this.globalData.openid)
-               // typeof cb == "function"&&cb(this.globalData.openid)
-               if(e.data.login==1){
-                 that.globalData.userId=e.data.userId;
-                wx.switchTab({
-                  url: '/pages/switch/switch',
-                })
-              }
-
-              }else{
-                console.log("dlsb")
-                //that.wx.login(cb)
-              }
-            }
-          });
-        }else{
-          typeof cb =="function"&& cb("")
-          console.log('登陆失败'+res.msg)
-        }
-      }
-    })
     // 获取用户信息
     wx.getSetting({
       success: res => {
