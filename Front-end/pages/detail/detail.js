@@ -504,24 +504,27 @@ Page({
       },
       success: function (res) {
         var length = res.data.obj.data.length;
+        console.log("length:"+length);
         var count = 0;
         that.setData({ 
           comments: res.data.obj.data,
         });    
         while(length>0){
-          var list = 'that.data.commentList['+count+']';
+          var list = 'commentList['+count+']';
+          console.log("list:"+list);
           that.setData({
             [list]:{ 
               item_id: that.data.item.item_id, 
-              name:res.data.obj.data.userName,
-              text:res.data.obj.data.content,
-              url:res.data.obj.data.userIcon,
+              name:res.data.obj.data[count].userName,
+              text:res.data.obj.data[count].content,
+              url:res.data.obj.data[count].userIcon,
               role:'buyer',
-              time:res.data.obj.data.time,
+              time:res.data.obj.data[count].time,
               sub_comments:[]
             }
           });
           count += 1;
+          length -= 1;
         }
         console.log("项目传来的数据"+res.data);
       },
