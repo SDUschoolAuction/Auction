@@ -1,5 +1,16 @@
 
-<view class="padding center">
+<scroll-view scroll-x class="bg-white nav ">
+ <view class="flex text-center">
+  <view class="cu-item flex-sub {{0==TabCur?'text-green cur':''}}" bindtap="tabSelect" data-id="0">
+    <text class="cuIcon-title text-orange"></text> 拍卖
+  </view>
+  <view class="cu-item flex-sub {{1==TabCur?'text-green cur':''}}" bindtap="tabSelect" data-id="1">
+    <text class="cuIcon-title text-orange"></text> 一口价
+  </view>
+</view>
+</scroll-view>
+
+<view wx:if='{{0==TabCur}}' class="padding center">
 	<view class="cu-form-group margin-top">
 		<textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaInput" placeholder="请输入物品简介"></textarea>
 	</view>
@@ -29,7 +40,7 @@
 
 
 	<view class="cu-form-group margin-top">
-		<view class="title">物品名称</view>
+		<view class="title">物品标题</view>
 		<input placeholder="请输入物品名称及型号" bindinput="bindThingNameInput" value="{{thingName}}" ></input>
 	</view>
 	<view class="cu-form-group">
@@ -40,14 +51,7 @@
 		<view class="title">联系方式</view>
 		<input placeholder="请输入与您的联系方式" bindinput="bindthingPhoneNumberInput" value="{{thingPhoneNumber}}" type="digit" ></input>
 	</view>
-		<view class="cu-form-group">
-		<view class="title">发货地区</view>
-		<picker mode="region" bindchange="RegionChange" value="{{region}}" custom-item="{{customItem}}">
-			<view class="picker">
-				{{region[0]}}，{{region[1]}}，{{region[2]}}
-			</view>
-		</picker>
-	</view>
+
 	<view class="cu-form-group margin-top">
 		<view class="title">物品成色</view>
 		<picker bindchange="thingConditionsChange" value="{{thingConditionsIndex}}" range="{{thingConditions}}">
@@ -64,37 +68,102 @@
 			</view>
 		</picker>
 	</view>
-
-	
-
-
+		<view class="cu-form-group">
+		<view class="title">发货地区</view>
+		<picker mode="region" bindchange="RegionChange" value="{{region}}" custom-item="{{customItem}}">
+			<view class="picker">
+				{{region[0]}}，{{region[1]}}，{{region[2]}}
+			</view>
+		</picker>
+	</view>
  <date-time-picker mode="datetime" value="{{dateSecond}}" bindchange="selectDateSecondChange"> 
   <view class="cu-form-group margin-top">
 	<view class="title">起拍时间</view>
 	<view class="picker"> {{dateSecond}}</view>
 		</view>
 </date-time-picker>
-
-
 <date-time-picker mode="dateminute" value="{{dateMinute}}" bindchange="selectDateMinuteChange"> 
   <view class="cu-form-group ">
   <view class="title">结束时间</view>
 	<view class="picker">{{dateMinute}}</view>
 	</view>
 </date-time-picker>
+<view class="box">
+  <view class="cu-bar btn-group">
+    <button class="cu-btn bg-green shadow-blur round lg" type="primary" size="default" disabled="{{thingName == ''||thingPhoneNumber == ''|| imgList == '' || textareaValue == '' || thingConditions == '' || dateSecond == '' || dateMinute == '' || thingCampus == '' ||thingPrice ==''||region ==''||buttonLoadingThing ? true : false}}" loading="{{buttonLoadingThing}}" bindtap="bindSubmitThingA">发布</button>
+  </view>
+</view>
+</view>
+	
 
 
 
 
+<view wx:if='{{1==TabCur}}' class="padding center">
+	<view class="cu-form-group margin-top">
+		<textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaInput" placeholder="请输入物品简介"></textarea>
+	</view>
+	<view class="cu-bar bg-white ">
+		<view class="action">
+		</view>
+		<view class="action">
+			{{imgList.length}}/4
+		</view>
+	</view>
+	<view class="cu-form-group">
+		<view class="grid col-4 grid-square flex-sub">
+			<view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
+				<image src='{{imgList[index]}}' mode='aspectFill'></image>
+				<view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+					<text class="cuIcon-close"></text>
+				</view>
+			</view>
+			<view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<4}}">
+				<text class="cuIcon-cameraadd"></text>
+			</view>
+		</view>
+	</view>
+
+
+
+
+
+	<view class="cu-form-group margin-top">
+		<view class="title">物品标题</view>
+		<input placeholder="请输入物品名称" bindinput="bindThingNameInput" value="{{thingName}}" ></input>
+	</view>
+	<view class="cu-form-group">
+		<view class="title">物品价格</view>
+		<input placeholder="请输入物品价格" bindinput="bindThingPriceInput" value="{{thingPrice}}" ></input>
+	</view>
+	<view class="cu-form-group">
+		<view class="title">联系方式</view>
+		<input placeholder="请输入与您的联系方式" bindinput="bindthingPhoneNumberInput" value="{{thingPhoneNumber}}" type="digit" ></input>
+	</view>
+	
+	<view class="cu-form-group margin-top">
+		<view class="title">物品成色</view>
+		<picker bindchange="thingConditionsChange" value="{{thingConditionsIndex}}" range="{{thingConditions}}">
+			<view class="picker">
+				{{thingConditionsIndex?thingConditions[thingConditionsIndex]:'请输入物品损坏度'}}
+			</view>
+		</picker>
+	</view>
+		<view class="cu-form-group">
+		<view class="title">发货地区</view>
+		<picker mode="region" bindchange="RegionChange" value="{{region}}" custom-item="{{customItem}}">
+			<view class="picker">
+				{{region[0]}}，{{region[1]}}，{{region[2]}}
+			</view>
+		</picker>
+	</view>
 
 <view class="box">
   <view class="cu-bar btn-group">
-    <button class="cu-btn bg-green shadow-blur round lg" type="primary" size="default" disabled="{{thingName == ''||thingPhoneNumber == ''|| imgList == '' || textareaValue == '' ||thingPrice ==''||region ==''||buttonLoadingThing ? true : false}}" loading="{{buttonLoadingThing}}" bindtap="bindSubmitThing">发布</button>
+    <button class="cu-btn bg-green shadow-blur round lg" type="primary" size="default" disabled="{{thingName == ''||thingPhoneNumber == ''|| imgList == '' || textareaValue == '' ||thingPrice ==''||region ==''||buttonLoadingThing ? true : false}}" loading="{{buttonLoadingThing}}" bindtap="bindSubmitThingB">发布</button>
   </view>
 </view>
 
 
 
 </view>
-	
-

@@ -1,10 +1,31 @@
+
+
+
+
 const app = getApp();
 Page({
-
   data: {
+    StatusBar: app.globalData.StatusBar,
+    CustomBar: app.globalData.CustomBar,
+    index: null,
+    thingName: '',
+    thingPhoneNumber:'',
+    thingPrice: '',
+    thingConditions: ["全新", "几乎全新", "九成新", "八成新", "七成新", "六成新", "五成新", "五成新以下"],
+    thingConditionIndex: 0,
+    thingCampus: ["1", "2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],
+    thingCampusIndex: 0,
+    region: [],
+    imgList: [],
+    modalName: null,
+    textareaValue: '',
+    TabCur: 0,
+    scrollLeft:0,
     dateMinute: '',
     dateSecond: ''
   },
+
+
   /**
    * 年月日时分选择类型的回调函数，可以在该函数得到选择的时间
    */
@@ -22,23 +43,18 @@ Page({
     })
   },
 
-
-  data: {
-    StatusBar: app.globalData.StatusBar,
-    CustomBar: app.globalData.CustomBar,
-    index: null,
-    thingName: '',
-    thingPhoneNumber:'',
-    thingPrice: '',
-    thingConditions: ["全新", "几乎全新", "九成新", "八成新", "七成新", "六成新", "五成新", "五成新以下"],
-    thingConditionIndex: 0,
-    thingCampus: ["1", "2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],
-    thingCampusIndex: 0,
-    region: [],
-    imgList: [],
-    modalName: null,
-    textareaValue: ''
+ 
+  tabSelect(e) {
+    this.setData({
+      TabCur: e.currentTarget.dataset.id,
+      scrollLeft: (e.currentTarget.dataset.id-1)*60
+    })
   },
+
+
+
+
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -176,10 +192,9 @@ Page({
     })
   },
 
-  bindSubmitThing: function() {
+  bindSubmitThingA: function() {
     var that = this;
-    var studentId = that.data.studentId;
-    if (!studentId) {
+        
       wx.showModal({
         title: '系统提示',
         content: '确定发布',
@@ -187,116 +202,126 @@ Page({
           if (res.confirm) {
             console.log('用户点击确定')
             wx.navigateTo({
-              url: '../detail/detail',
+              url: '../myproducts/myproducts',
             })
+
+            var imgList = that.data.imgList; //图片
+            var thingName = that.data.thingName; //名字
+            var thingConditionIndex = that.data.thingConditionIndex; //成色索引值
+            var thingConditions = that.data.thingConditions[thingConditionIndex]; //成色
+            var thingCampusIndex = that.data.thingCampusIndex; //加价索引值
+            var thingCampus = that.data.thingCampus[thingCampusIndex]; //加价
+            var textareaValue = that.data.textareaValue || '无备注或描述'; //备注
+            var thingPhoneNumber = that.data.thingPhoneNumber; //电话
+            var thingPrice = that.data.thingPrice; //价格
+            var dateSecond = that.data.dateSecond
+            var dateMinute = that.data.dateMinute
+            var region = that.data.region
+                     
+            wx.request({
+              url:'https://yyzcowtodd.cn/Auction/addItemType/1',
+              data: {                
+                itemHead: thingName,                
+                markupRange: thingCampus,                
+                startPrice: thingPrice,
+                startTime:dateSecond,
+                endTime:dateMinute,  
+                itemTag: thingConditions,
+                itemInfo: textareaValue,
+                telephoneNumber: thingPhoneNumber,
+                itemLocation:region,  
+              },
+              method: "POST",
+              header: {
+                'content-type': 'application/json'
+              },
+              success: function(res) {
+                console.log(res);
+                
+              },
+              fail: function(res) {
+                console.log(JSON.stringify(res));
+                wx.showToast({
+                  title: '发布失败',
+                  icon: 'loading',
+                  duration: 2000
+                })
+                that.setData({
+                  buttonLoadingThingA: false
+                })
+              },
+            })
+            
           } else if (res.cancel) {
             console.log('用户点击取消')
           }
         }
       })
-    } else {
-      this.setData({
-        buttonLoadingThing: true
-      })
-      var imgList = that.data.imgList; //图片
-      var thingName = that.data.thingName; //名字
-      var thingConditionIndex = that.data.thingConditionIndex; //成色索引值
-      var thingConditions = that.data.thingConditions[thingConditionIndex]; //成色
-      var thingCampusIndex = that.data.thingCampusIndex; //加价索引值
-      var thingCampus = that.data.thingCampus[thingCampusIndex]; //加价
-      var textareaValue = that.data.textareaValue || '无备注或描述'; //备注
-      var thingPhoneNumber = that.data.thingPhoneNumber; //电话
-      var thingPrice = that.data.thingPrice; //价格
-      var studentId = that.data.studentId;
-      var nickName = that.data.nickName;
-    
+
      
-      wx.request({
-        url:'https://localhost/addType/1',
-        data: {
-          itemImg1: imgList,
-          itemId: thingName,
-          thingConditions: thingConditions,
-          markupRange: thingCampus,
-          itemInfo: textareaValue,
-          telephoneNumber: thingPhoneNumber,
-          startPrice: thingPrice,
-          startTime:dateSecond,
-          endTime:dateMinute,
-          itemLocation:region,
-          studentId: studentId,
-          nickName: nickName,
-        },
-        method: "POST",
-        header: {
-          'content-type': 'application/json'
-        },
-        success: function(res) {
-          console.log(res);
-          var currenttime = util.formatTime(new Date());
-          var currentdate = util.formatDate(new Date());
-          var thingId = res.data;
-          const uploadTask = wx.uploadFile({
-            url,
-            filePath: imgList[0],
-            name: 'file',
-            formData: {
-              'date': currentdate,
-              'datetime': currenttime,
-              'thingId': thingId,
-            },
-            success: function(res) {
-              console.log(res.data);
-              wx.showToast({
-                title: '发布成功',
-                icon: 'succes',
-                duration: 2500,
-                mask: true
-              })
-              that.setData({
-                buttonLoadingThing: false,
-                imgList: '',
-                thingName: '',
-                thingDescribe: '',
-                textareaValue: '',
-                thingPhoneNumber: '',//电话号码
-              })
-            },
-            fail: function(res) {
-              console.log(JSON.stringify(res));
-              wx.showToast({
-                title: '发布失败',
-                icon: 'loading',
-                duration: 2000
-              })
-              that.setData({
-                buttonLoadingThing: false
-              })
-            },
-          })
-        },
-        fail: function(res) {
-          console.log(JSON.stringify(res));
-          wx.showToast({
-            title: '发布失败',
-            icon: 'loading',
-            duration: 2000
-          })
-          that.setData({
-            buttonLoadingThing: false
-          })
-        },
-      })
-    }
+    
   },
+  bindSubmitThingB: function() {
+    var that = this;
+        
+      wx.showModal({
+        title: '系统提示',
+        content: '确定发布',
+        success: function(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+            wx.navigateTo({
+              url: '../myproducts/myproducts',
+            })
 
+            var imgList = that.data.imgList; //图片
+            var thingName = that.data.thingName; //名字
+            var thingConditionIndex = that.data.thingConditionIndex; //成色索引值
+            var thingConditions = that.data.thingConditions[thingConditionIndex]; //成色
+            var textareaValue = that.data.textareaValue || '无备注或描述'; //备注
+            var thingPhoneNumber = that.data.thingPhoneNumber; //电话
+            var thingPrice = that.data.thingPrice; //价格
+            var region = that.data.region
+                     
+            wx.request({
+              url:'https://yyzcowtodd.cn/Auction/addItemType/2',
+              data: {                
+                itemHead: thingName,                               
+                startPrice: thingPrice,
+                itemTag: thingConditions,
+                itemInfo: textareaValue,
+                telephoneNumber: thingPhoneNumber,
+                itemLocation:region,  
+              },
+              method: "POST",
+              header: {
+                'content-type': 'application/json'
+              },
+              success: function(res) {
+                console.log(res);
+                
+              },
+              fail: function(res) {
+                console.log(JSON.stringify(res));
+                wx.showToast({
+                  title: '发布失败',
+                  icon: 'loading',
+                  duration: 2000
+                })
+                that.setData({
+                  buttonLoadingThingB: false
+                })
+              },
+            })
+            
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
 
-
-
-
-
-
-
-
+     
+    
+  },
   
 })
