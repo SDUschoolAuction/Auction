@@ -211,8 +211,8 @@
    <text class="padding-right-xs cuIcon-comment lg text-gray light"></text>留言
   </button>  
   <view>
-     <button bindtap='buyoutShow' class="margin-right cu-btn round bg-yellow {{shadow?'shadow':''}}">一口价</button>
-     <button bindtap='changeShow' class="cu-btn round bg-green {{shadow?'shadow':''}}">出价</button>
+     <button wx:if="{{item.item_type==1}}" bindtap='buyoutShow' class="margin-right cu-btn round bg-yellow {{shadow?'shadow':''}}">一口价</button>
+     <button wx:if="{{item.item_type==0}}" bindtap='changeShow' class="cu-btn round bg-green {{shadow?'shadow':''}}">出价</button>
   </view>
 </view>
 <!-- visitor出价界面 -->
@@ -239,8 +239,8 @@
       <view class="flex justify-center text-red text-bold">¥{{item.current_price}}</view>
     </view>
     <view>
-     <button bindtap='buyoutShow' class="margin-right cu-btn round bg-yellow {{shadow?'shadow':''}}">一口价</button>
-     <button bindtap='changeShow' class="cu-btn round bg-green {{shadow?'shadow':''}}">继续出价</button>
+     <button wx:if="{{item.item_type==1}}"  bindtap='buyoutShow' class="margin-right cu-btn round bg-yellow {{shadow?'shadow':''}}">一口价</button>
+     <button wx:if="{{item.item_type==0}}" bindtap='changeShow' class="cu-btn round bg-green {{shadow?'shadow':''}}">继续出价</button>
     </view>
   </view>  
 </view>
