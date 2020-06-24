@@ -16,6 +16,11 @@ public class TypeOneImpl implements TypeService {
 
     @Override
     public Msg addType(JSONObject jsonObject) {
-        return typeOneDao.addType(jsonObject);
+        try{
+            typeOneDao.addType(jsonObject);
+            return Msg.ok("success");
+        }catch (Exception e){
+            return Msg.err(e.toString());
+        }
     }
 }

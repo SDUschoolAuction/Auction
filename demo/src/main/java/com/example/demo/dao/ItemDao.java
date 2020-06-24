@@ -2,17 +2,15 @@ package com.example.demo.dao;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.entity.Item;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
 public interface ItemDao {
 
-    @Insert("INSERT INTO item(`itemInfo`,`itemLocation`,`status`,`itemImg1`,`itemImg2`,`itemImg3`,`itemImg4`,`telephone`,`sellerId`,`type`) values(#{itemInfo},#{itemLocation},-1,#{itemImg1},#{itemImg2},#{itemImg3},#{itemImg4},#{telephoneNumber},#{sellerId},#{type});")
+    @Insert("INSERT INTO item(`itemInfo`,`itemLocation`,`status`,`itemImg1`,`itemImg2`,`itemImg3`,`itemImg4`,`telephoneNumber`,`sellerId`,`type`) values(#{itemInfo},#{itemLocation},-1,#{itemImg1},#{itemImg2},#{itemImg3},#{itemImg4},#{telephoneNumber},#{sellerId},#{type});")
+    @Options(useGeneratedKeys = true,keyProperty = "itemId",keyColumn = "itemId")
     Integer addItem(Item item);
 
     @Select("select * from (item left join type1 on item.itemId=type1.itemId) left join type2 on item.itemId=type2.itemId where item.itemId=#{itemId}\n" +

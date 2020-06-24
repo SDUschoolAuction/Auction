@@ -95,9 +95,10 @@ public class ItemController {
         Item item=JsonXMLUtils.map2obj((Map<String, Object>) map.get("item"),Item.class);
         JSONObject jsonObject= JsonXMLUtils.map2obj((Map<String, Object>) map.get("type"),JSONObject.class);
         try {
-            itemService.addItem(item);
+            Msg msg=itemService.addItem(item);
+            jsonObject.put("itemId",msg.getObj());
             factoryForTypeService.getTypeService(key).addType(jsonObject);
-            return Msg.ok("success");
+            return new Msg<>(0,"success",msg.getObj());
         }catch (Exception e){
             return Msg.err(e.toString());
         }
