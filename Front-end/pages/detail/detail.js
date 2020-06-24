@@ -3,6 +3,7 @@
 //需要更新后端数据的用----------表示
 const util = require('../../utils/util.js')
 const Time = require('../../utils/time.js')
+const app = getApp();
 Page({
   data: {
     xxxx:[],
@@ -136,15 +137,15 @@ Page({
     list: [//标签列表，由卖家登陆商品可能涉及的标签，+++++++++
       '标签'],
     //五张实物展示图，可以自动调整尺寸已适应不同设备和不同尺寸的照片，+++++++++
-    item_image1: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2651866529,447223239&fm=26&gp=0.jpg',
-    item_image2: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3393996789,3606006142&fm=26&gp=0.jpg',
-    item_image3: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2829549029,1031122743&fm=26&gp=0.jpg',
-    item_image4: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1114751058,1476283770&fm=26&gp=0.jpg',
+    item_image1: '',
+    item_image2: '',
+    item_image3: '',
+    item_image4: '',
     //item_image5: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3609079631,2329147195&fm=26&gp=0.jpg',
 
     imagewidth: 0,//缩放后的宽
     imageheight: 0,//缩放后的高,
-    datetimeTo: "2020/08/01 10:30:00 GMT+0800", //+++++++++
+    datetimeTo: "", //+++++++++
     //需要输入拍卖结束的时间，可自动显示拍卖是否在进行剩余时间
     //如果不输入目标时间则在页面中不显示倒计时，表示此拍卖永久有效？
     timeLeft: "",//预备储存剩余时间用来显示
@@ -391,196 +392,6 @@ Page({
     imageheight: imageize.imageHeight
     })
   },
-  // getIteminfo: function (IDID) {
-  //   var that = this;
-  //   var status = 'item.item_status';
-  //   var quality = 'item.item_quality';
-  //   wx.request({
-  //     url: 'https://yyzcowtodd.cn/Auction/getItemById/'+IDID,
-  //     method: 'GET',
-  //     header: {
-  //       'content-type': 'application/json'
-  //     },
-  //     success: function (res) {
-  //       var tags = res.data.itemTag.split(",");
-  //       var info = res.data.itemInfo.split("$"); 
-  //       console.log("info"+info);
-  //       that.setData({ 
-  //         textdata: res.data,
-  //         list:tags,
-  //         item_image1:res.data.itemImg1,
-  //         item_image2:res.data.itemImg2,
-  //         item_image3:res.data.itemImg3,
-  //         item_image4:res.data.itemImg4,
-  //         item:{
-  //           item_id:res.data.itemId,
-  //           current_price:res.data.finalPrice,//当前此商品的最高出价
-  //           item_title:info[0],//商品的标题
-  //           //item_quality:"ninnew",//商品的色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
-  //           item_description:info[2],
-  //           item_buyout_price:15000,
-  //         }
-  //       });
-  //       if(res.data.status=='-1'){
-  //         that.setData({ 
-  //           [status]: "preparing"//标记当前商品的拍卖状态，有selling正在拍卖和sold已拍卖
-  //         });
-  //       }
-  //       if(res.data.status == '0'){
-  //         that.setData({ 
-  //           [status]: "selling"//标记当前商品的拍卖状态，有selling正在拍卖和sold已拍卖
-  //         });
-  //       }
-  //       if(res.data.status=='1'){
-  //         that.setData({ 
-  //           [status]: "sold"//标记当前商品的拍卖状态，有selling正在拍卖和sold已拍卖
-  //         });
-  //       }
-  //       if(info[1]=='全新'){
-  //         that.setData({ 
-  //           [quality]:'brdnew'//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
-  //         })
-  //       }
-  //       if(info[1]=='九新'){
-  //         that.setData({ 
-  //           [quality]:'ninnew'//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
-  //         })
-  //       }
-  //       if(info[1]=='磨损'){
-  //         that.setData({ 
-  //           [quality]:'notnew'//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
-  //         })
-  //       }
-  //       if(info[1]==null){
-  //         that.setData({ 
-  //           [quality]:''//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
-  //         })
-  //       }
-  //       console.log("项目传来的数据"+res.data);
-  //     },
-  //     fail: function () {
-  //       // fail
-  //     },
-  //     complete: function () {
-  //       console.log("d");
-  //     }
-  //   })
-  // },
-
-
-
-
-
-
-  // getSellerinfo: function (itemID) {
-  //   var that = this;
-  //   var seller_name = 'user.seller_name';
-  //   var seller_info1 = 'user.seller_info1';
-  //   var seller_info2 = 'user.seller_info2';
-  //   var seller_url = 'user.seller_url';
-  //   wx.request({
-  //     url: 'https://yyzcowtodd.cn/Auction/user/'+itemID,
-  //     method: 'GET',
-  //     header: {
-  //       'content-type': 'application/json'
-  //     },
-  //     success: function (res) {
-  //       that.setData({ 
-  //         textdata1: res.data,
-  //         [seller_id]:res.data.userId,
-  //         [seller_name]:res.data.name,
-  //         [seller_info1]:res.data.telephoneNumber,
-  //         [seller_info2]:res.data.location,
-  //         [seller_url]:res.data.userIcon,
-  //       });   
-  //       console.log("项目传来的数据"+res.data);
-  //     },
-  //     fail: function () {
-  //       // fail
-  //     },
-  //     complete: function () {
-  //       console.log("d");
-  //     }
-  //   })
-  // },
-
-
-
-
-  // getComments: function (itemID) {
-  //   var that = this;
-  //   wx.request({
-  //     url: 'https://yyzcowtodd.cn/Auction/comments/getcomments?itemId='+itemID,
-  //     method: 'GET',
-  //     header: {
-  //       'content-type': 'application/json'
-  //     },
-  //     success: function (res) {
-  //       var length = res.data.obj.data.length;
-  //       console.log("length:"+length);
-  //       var count = 0;
-  //       that.setData({ 
-  //         comments: res.data.obj.data,
-  //       });    
-  //       while(length>0){
-  //         var list = 'commentList['+count+']';
-  //         console.log("list:"+list);
-  //         that.setData({
-  //           [list]:{ 
-  //             item_id: that.data.item.item_id, 
-  //             id:res.data.obj.data[count].commentId,
-  //             name:res.data.obj.data[count].userName,
-  //             text:res.data.obj.data[count].content,
-  //             url:res.data.obj.data[count].userIcon,
-  //             role:'buyer',
-  //             time:res.data.obj.data[count].time,
-  //             sub_comments:[
-  //             //{  name:'我是用户1号',
-  //             //   target:'我是用户2号',
-  //             //   text:'你是不是傻，不喜欢评论啥',
-  //             //   role:'buyer',
-  //             //   father:'2',
-  //             //   time:'2010-08-01 10:30:00'}that.data.xxxx[countx]
-  //           ]
-  //           }
-  //         });
-  //         count += 1;
-  //         length -= 1;
-  //       }
-  //       console.log("项目传来的数据"+res.data);
-  //       return count;
-  //     },
-  //     fail: function () {
-  //       // fail
-  //     },
-  //     complete: function () {
-  //       console.log("d");
-  //     }
-  //   })
-  // },
-  // getSubcomment: function (subID) {
-  //   var that = this;
-  //   wx.request({
-  //     url: 'https://yyzcowtodd.cn/Auction/comments/getReviewsForComments?commentId='+subID,
-  //     method: 'GET',
-  //     header: {
-  //       'content-type': 'application/json'
-  //     },
-  //     success: function (res) {
-  //       console.log("子评论"+res.data);
-  //       that.setData({
-  //         subsub:res.data.obj.data
-  //       });
-  //     },
-  //     fail: function () {
-  //       // fail
-  //     },
-  //     complete: function () {
-  //       console.log("d");
-  //     }
-  //   })
-  // },
-
 
   getInfo: function(itemID){
     var sellerID=0;
@@ -593,16 +404,21 @@ Page({
     var seller_info2 = 'user.seller_info2';
     var seller_url = 'user.seller_url';
     wx.request({
-      url: 'https://yyzcowtodd.cn/Auction/getItemById/'+itemID,
+      url: app.globalData.apiurl+'/getItemById/'+itemID,
       method: 'GET',
       header: {
         'content-type': 'application/json'
       },
       success: function (res) {
         sellerID = res.data.sellerId;
-        var tags = res.data.itemTag.split(",");
-        var info = res.data.itemInfo.split("$"); 
-        console.log("info"+info);
+        var info_tags = res.data.itemInfo.split("#");
+        var get_quality = res.data.itemTag; 
+        var title = res.data.itemHead;
+        var tags = new Array();
+        for (var i = 1, len = info_tags.length; i < len; i++) {
+          tags[i-1] = info_tags[i];
+        }
+        //console.log("info"+info);
         that.setData({ 
           textdata: res.data,
           list:tags,
@@ -612,11 +428,12 @@ Page({
           item_image4:res.data.itemImg4,
           item:{
             item_id:res.data.itemId,
-            current_price:res.data.finalPrice,//当前此商品的最高出价
-            item_title:info[0],//商品的标题
+            //current_price:res.data.finalPrice,//当前此商品的最高出价
+            item_title:title,//商品的标题
             //item_quality:"ninnew",//商品的色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
-            item_description:info[2],
-            item_buyout_price:15000,
+            item_description:info_tags[0],
+            //item_buyout_price:res.data.finalPrice,
+            item_type:res.data.type
           }
         });
         if(res.data.status=='-1'){
@@ -624,39 +441,44 @@ Page({
             [status]: "preparing"//标记当前商品的拍卖状态，有selling正在拍卖和sold已拍卖
           });
         }
-        if(res.data.status == '0'){
+        else if(res.data.status == '0'){
           that.setData({ 
             [status]: "selling"//标记当前商品的拍卖状态，有selling正在拍卖和sold已拍卖
           });
         }
-        if(res.data.status=='1'){
+        else if(res.data.status=='1'){
           that.setData({ 
             [status]: "sold"//标记当前商品的拍卖状态，有selling正在拍卖和sold已拍卖
           });
         }
-        if(info[1]=='全新'){
+        else{
+          that.setData({ 
+            [status]: "preparing"//如果数据出错则显示准备中
+          });
+        }
+        if(get_quality=='全新'){
           that.setData({ 
             [quality]:'brdnew'//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
           })
         }
-        if(info[1]=='九新'){
+        else if(get_quality=='九新'){
           that.setData({ 
             [quality]:'ninnew'//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
           })
         }
-        if(info[1]=='磨损'){
+        else if(get_quality=='磨损'){
           that.setData({ 
             [quality]:'notnew'//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
           })
         }
-        if(info[1]==null){
+        else{
           that.setData({ 
             [quality]:''//商品的成色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
           })
         }
         console.log("项目传来的数据"+res.data);
         wx.request({
-          url: 'https://yyzcowtodd.cn/Auction/user/'+sellerID,
+          url: app.globalData.apiurl+'/user/'+sellerID,
           method: 'GET',
           header: {
             'content-type': 'application/json'
@@ -679,6 +501,54 @@ Page({
             console.log("d");
           }
         })
+
+        wx.request({
+          url: app.globalData.apiurl+'/orders/getItemListBySellerId/'+sellerID,
+          method: 'GET',
+          header: {
+            'content-type': 'application/json'
+          },
+          success: function (res) {
+            var itemlist_length = res.data.length;
+            var itemlist_count = 0;
+            var current_price = 'item.current_price';
+            var user_new_price = 'user.user_new_price';
+            var item_buyout_price = 'item.item_buyout_price';
+            
+            while(itemlist_length>0){
+              if(res.data[itemlist_count].itemId==itemID){
+                that.setData({ 
+                  datetimeTo: res.data[itemlist_count].endTime,
+                  min_bidAdd: res.data[itemlist_count].markupRange
+                  
+                }); 
+                if(res.data[itemlist_count].itemPrice!=null){
+                  that.setData({ 
+                    [item_buyout_price]: res.data[itemlist_count].itemPrice,
+                    [current_price]: res.data[itemlist_count].itemPrice
+                  })
+                }
+                if(res.data[itemlist_count].startPrice!=null){
+                  that.setData({ 
+                    [current_price]: res.data[itemlist_count].startPrice,
+                    [user_new_price]: res.data[itemlist_count].startPrice
+                  })
+                }
+              }
+              itemlist_length--;
+              itemlist_count++;
+            }
+            that.setData({ 
+              getItemListBySellerId: res.data,
+            });  
+          },
+          fail: function () {
+            // fail
+          },
+          complete: function () {
+            console.log("d");
+          }
+        })
       },
       fail: function () {
         // fail
@@ -689,7 +559,7 @@ Page({
     })
 
     wx.request({
-      url: 'https://yyzcowtodd.cn/Auction/comments/getcomments?itemId='+itemID,
+      url: app.globalData.apiurl+'/comments/getcomments?itemId='+itemID,
       method: 'GET',
       header: {
         'content-type': 'application/json'
@@ -723,7 +593,7 @@ Page({
               ]}
               });
               wx.request({
-                  url: 'https://yyzcowtodd.cn/Auction/comments/getReviewsForComments?commentId='+res.data.obj.data[count].commentId,
+                  url: app.globalData.apiurl+'/comments/getReviewsForComments?commentId='+res.data.obj.data[count].commentId,
                   method: 'GET',
                   header: {
                     'content-type': 'application/json'
@@ -779,44 +649,10 @@ Page({
           }
         })
 
+        
 
   },
   onLoad: function (options) {
     this.getInfo('3');
-    // this.getIteminfo('3');
-    // this.getSellerinfo(this.data.textdata1.userId);
-    // this.getComments('3');
-    // var count=0;
-    // while(count<3){
-    //   console.log("cccccccccc"+length);
-    //   count++;
-    // }
-
-    //this.getSubcomment(1);
   }
 })
-
-
-
-// var xxxx = that.getSubcomment(that.data.commentList[count].id);
-//           console.log("type"+typeof(xxxx));
-//           console.log("type"+typeof(xxxx));
-//           console.log("type"+typeof(xxxx));
-//           console.log("type"+typeof(xxxx));
-//           var lengthx = xxxx.length;
-//           var countx = 0;
-//           while(lengthx>0){
-//             var list_sub = 'commentList['+count+'].sub_comments['+countx+']';
-//             that.setData({
-//               [list_sub]:{
-//                 name:that.data.xxxx[countx].fromUserName,
-//                 target:that.data.xxxx[countx].toUserName,
-//                 text:that.data.xxxx[countx].content,
-//                 role:'buyer',
-//                 father:that.data.xxxx[countx].commentId,
-//                 time:Time.formatTime(data.xxxx[countx].time)
-//               }
-//             });
-//             lengthx--;
-//             countx++;
-//           }
