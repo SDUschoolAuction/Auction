@@ -1,5 +1,4 @@
 //app.js
-var util = require('utils/util.js');
 App({
   onLaunch: function () {
     //隐藏系统tabbar
