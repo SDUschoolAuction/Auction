@@ -12,7 +12,7 @@
 
 <view wx:if='{{0==TabCur}}' class="padding center">
 	<view class="cu-form-group margin-top">
-		<textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaInput" placeholder="请输入物品简介"></textarea>
+		<textarea maxlength="200" disabled="{{modalName!=null}}" bindinput="textareaInput" placeholder="请输入物品简介，最多200字"></textarea>
 	</view>
 	<view class="cu-bar bg-white ">
 		<view class="action">
@@ -39,20 +39,20 @@
 
 
 
-	<view class="cu-form-group margin-top">
+	<view class="cu-form-group ">
 		<view class="title">物品标题</view>
 		<input placeholder="请输入物品名称及型号" bindinput="bindThingNameInput" value="{{thingName}}" ></input>
 	</view>
 	<view class="cu-form-group">
-		<view class="title">物品价格</view>
-		<input placeholder="请输入物品价格" bindinput="bindThingPriceInput" value="{{thingPrice}}" ></input>
+		<view class="title">起拍价格</view>
+		<input maxlength='5' type="number"  placeholder="请输入物品起拍价格/元" bindinput="bindThingPriceInput" value="{{thingPrice}}" ></input>
 	</view>
 	<view class="cu-form-group">
 		<view class="title">联系方式</view>
-		<input placeholder="请输入与您的联系方式" bindinput="bindthingPhoneNumberInput" value="{{thingPhoneNumber}}" type="digit" ></input>
+		<input  maxlength='11' type="number"  placeholder="请输入您的手机号码" bindinput="bindthingPhoneNumberInput" value="{{thingPhoneNumber}}"  ></input>
 	</view>
 
-	<view class="cu-form-group margin-top">
+	<view class="cu-form-group ">
 		<view class="title">物品成色</view>
 		<picker bindchange="thingConditionsChange" value="{{thingConditionsIndex}}" range="{{thingConditions}}">
 			<view class="picker">
@@ -82,6 +82,7 @@
 	<view class="picker"> {{dateSecond}}</view>
 		</view>
 </date-time-picker>
+
 <date-time-picker mode="dateminute" value="{{dateMinute}}" bindchange="selectDateMinuteChange"> 
   <view class="cu-form-group ">
   <view class="title">结束时间</view>
@@ -101,7 +102,7 @@
 
 <view wx:if='{{1==TabCur}}' class="padding center">
 	<view class="cu-form-group margin-top">
-		<textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaInput" placeholder="请输入物品简介"></textarea>
+		<textarea maxlength="200" disabled="{{modalName!=null}}" bindinput="textareaInput" placeholder="请输入物品简介,最多200字"></textarea>
 	</view>
 	<view class="cu-bar bg-white ">
 		<view class="action">
@@ -128,20 +129,21 @@
 
 
 
-	<view class="cu-form-group margin-top">
+	<view class="cu-form-group ">
 		<view class="title">物品标题</view>
 		<input placeholder="请输入物品名称" bindinput="bindThingNameInput" value="{{thingName}}" ></input>
 	</view>
 	<view class="cu-form-group">
 		<view class="title">物品价格</view>
-		<input placeholder="请输入物品价格" bindinput="bindThingPriceInput" value="{{thingPrice}}" ></input>
+		<input maxlength='5' type="number"  placeholder="请输入物品价格/元" bindinput="bindThingPriceInput" value="{{thingPrice}}" ></input>
 	</view>
 	<view class="cu-form-group">
 		<view class="title">联系方式</view>
-		<input placeholder="请输入与您的联系方式" bindinput="bindthingPhoneNumberInput" value="{{thingPhoneNumber}}" type="digit" ></input>
+		<input  maxlength='11' type="number"  placeholder="请输入您的手机号码" bindinput="bindthingPhoneNumberInput" value="{{thingPhoneNumber}}"  ></input>
 	</view>
+
 	
-	<view class="cu-form-group margin-top">
+	<view class="cu-form-group ">
 		<view class="title">物品成色</view>
 		<picker bindchange="thingConditionsChange" value="{{thingConditionsIndex}}" range="{{thingConditions}}">
 			<view class="picker">
@@ -160,7 +162,7 @@
 
 <view class="box">
   <view class="cu-bar btn-group">
-    <button class="cu-btn bg-green shadow-blur round lg" type="primary" size="default" disabled="{{thingName == ''||thingPhoneNumber == ''|| imgList == '' || textareaValue == '' ||thingPrice ==''||region ==''||buttonLoadingThing ? true : false}}" loading="{{buttonLoadingThing}}" bindtap="bindSubmitThingB">发布</button>
+    <button class="cu-btn bg-green shadow-blur round lg" type="primary" size="default" disabled="{{thingName == ''||thingPhoneNumber == ''|| imgList == '' || textareaValue == '' || region ==''|| thingConditions == '' || thingPrice ==''||region ==''||buttonLoadingThing ? true : false}}" loading="{{buttonLoadingThing}}" bindtap="bindSubmitThingB">发布</button>
   </view>
 </view>
 
