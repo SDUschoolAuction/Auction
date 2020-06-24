@@ -129,9 +129,9 @@ Page({
       //   sub_comments:[]}
     ],
     bidList: [//出价记录列表，+++++++++，----------
-      { item_id: 1, name:'我是用户1号',price:'100'}, 
-      { item_id: 2, name:'我是用户2号',price:'1000' }, 
-      { item_id: 3, name:'我是用户3号',price:'10000' },
+      // { item_id: 1, name:'我是用户1号',price:'100'}, 
+      // { item_id: 2, name:'我是用户2号',price:'1000' }, 
+      // { item_id: 3, name:'我是用户3号',price:'10000' },
     ],
     selectedFlag: [false],//用来指示出价记录是否展开
     list: [//标签列表，由卖家登陆商品可能涉及的标签，+++++++++
@@ -509,29 +509,29 @@ Page({
             'content-type': 'application/json'
           },
           success: function (res) {
-            var itemlist_length = res.data.length;
+            var itemlist_length = res.data.obj.length;
             var itemlist_count = 0;
             var current_price = 'item.current_price';
             var user_new_price = 'user.user_new_price';
             var item_buyout_price = 'item.item_buyout_price';
             
             while(itemlist_length>0){
-              if(res.data[itemlist_count].itemId==itemID){
+              if(res.data.obj[itemlist_count].itemId==itemID){
                 that.setData({ 
-                  datetimeTo: res.data[itemlist_count].endTime,
-                  min_bidAdd: res.data[itemlist_count].markupRange
-                  
+                  datetimeTo: res.data.obj[itemlist_count].endTime,
+                  min_bidAdd: res.data.obj[itemlist_count].markupRange,
+                  [current_price]: res.data.obj[itemlist_count].startPrice
                 }); 
-                if(res.data[itemlist_count].itemPrice!=null){
+                if(res.data.obj[itemlist_count].itemPrice!=null){
                   that.setData({ 
-                    [item_buyout_price]: res.data[itemlist_count].itemPrice,
-                    [current_price]: res.data[itemlist_count].itemPrice
+                    [item_buyout_price]: res.data.obj[itemlist_count].itemPrice,
+                    [current_price]: res.data.obj[itemlist_count].itemPrice
                   })
                 }
-                if(res.data[itemlist_count].startPrice!=null){
+                else{
                   that.setData({ 
-                    [current_price]: res.data[itemlist_count].startPrice,
-                    [user_new_price]: res.data[itemlist_count].startPrice
+                    [current_price]: res.data.obj[itemlist_count].startPrice,
+                    [user_new_price]: res.data.obj[itemlist_count].startPrice
                   })
                 }
               }
@@ -539,7 +539,7 @@ Page({
               itemlist_count++;
             }
             that.setData({ 
-              getItemListBySellerId: res.data,
+              getItemListBySellerId: res.data.obj,
             });  
           },
           fail: function () {
@@ -649,6 +649,38 @@ Page({
           }
         })
 
+        wx.request({
+          url: app.globalData.apiurl+'/records/getRecordsByItemId/'+itemID,
+          method: 'GET',
+          header: {
+            'content-type': 'application/json'
+          },
+          success: function (res) {
+            var records_length = res.data.obj.length;
+            var records_count = 0;
+            while(records_length>0){
+              var bid_list = 'bidList['+records_count+']';
+              that.setData({
+                [bid_list]:{
+                  item_id: res.data.obj[records_length-1].itemId, 
+                  name:'我是用户1号',
+                  price: res.data.obj[records_length-1].dealPrice,
+                }
+              });
+              records_count++;
+              records_length--;
+            }
+            that.setData({ 
+              getRecordsByItemId: res.data.obj
+            });  
+          },
+          fail: function () {
+            // fail
+          },
+          complete: function () {
+            console.log("d");
+          }
+        })
         
 
   },
