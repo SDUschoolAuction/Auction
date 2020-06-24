@@ -17,7 +17,6 @@ public class TypeTwoImpl implements TypeService {
     public Msg addType(JSONObject jsonObject) {
         try {
             typeTwoDao.addType(jsonObject);
-            System.out.println("success");
             return Msg.ok("success");
         }catch (Exception e){
             return Msg.err(e.toString());

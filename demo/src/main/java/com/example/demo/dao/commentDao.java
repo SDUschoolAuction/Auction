@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.Review;
 import org.apache.ibatis.annotations.*;
@@ -35,6 +36,8 @@ public interface commentDao {
         @Insert("insert into review (commentId,content,time,fromUser,toUser) values (#{commentId},,#{content},#{time},#{fromUser},#{toUser})")
         Integer addReview(@Param("commentId") int commentId,@Param("content") String content,@Param("time") String time,@Param("fromUser") int fromUser,@Param("toUser") int toUser);
 
-        @Select("Select * from review")
-        List<Review> getAllReviews();
+        @Select("Select reviewId,commentId,content,`time`,fromUser,toUser,user1.name fromUserName,user2.name toUserName,user1.userIcon fromUserIcon,user2.userIcon toUserIcon\n" +
+                "\tfrom review,users user1,users user2 \n" +
+                "\twhere user1.userid=review.fromUser and user2.userid=review.toUser;")
+        List<JSONObject> getAllReviews();
 }

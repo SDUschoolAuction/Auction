@@ -1,7 +1,4 @@
 
-
-
-
 const app = getApp();
 Page({
   data: {
@@ -15,14 +12,15 @@ Page({
     thingConditionIndex: 0,
     thingCampus: ["1", "2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],
     thingCampusIndex: 0,
-    region: [],
+    region: ["省","市","区"],
     imgList: [],
     modalName: null,
     textareaValue: '',
     TabCur: 0,
     scrollLeft:0,
     dateMinute: '',
-    dateSecond: ''
+    dateSecond: '',
+    tel_length:0,
   },
 
 
@@ -43,17 +41,12 @@ Page({
     })
   },
 
- 
   tabSelect(e) {
     this.setData({
       TabCur: e.currentTarget.dataset.id,
       scrollLeft: (e.currentTarget.dataset.id-1)*60
     })
   },
-
-
-
-
 
 
   /**
@@ -107,9 +100,6 @@ Page({
   },
 
 
-
-
-
   
   bindThingNameInput: function(e) { //商品名字
     this.setData({
@@ -117,15 +107,30 @@ Page({
     })
   },
   bindThingPriceInput: function(e) { //商品价格
+    var thingPrice;
+    
+    if(e.detail.value.indexOf(".")< 0 && e.detail.value !=""){//以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+      thingPrice= parseFloat(e.detail.value);
+    }
     this.setData({
-      thingPrice: e.detail.value
+      thingPrice: thingPrice,
     })
+
   },
+
+
+
+  
   bindthingPhoneNumberInput: function(e) { //联系电话
+    
     this.setData({
       thingPhoneNumber: e.detail.value
     })
   },
+
+
+
+  
   thingConditionsChange(e) {//商品成色
     
     this.setData({
@@ -147,22 +152,47 @@ Page({
 
   //图片
   ChooseImage() {
-    wx.chooseImage({
-      count: 4, //默认9
+    var COS = require('./cos-wx-sdk-v5');  
+    var Bucket = 'auction-1300038466';
+    var Region = 'ap-nanjing';
+    // 初始化实例
+    var cos = new COS({
+        SecretId: 'AKIDNK6bsgu5ZkjS9bKAPQHsDI7j7QUMw1aM',
+        SecretKey: '77qshKj5A4h38xa8PgjT0UiV3LQDoBTS'
+    });
+
+    const that = this;
+    wx.chooseImage({      
+      count: 1, //默认9
       sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album'], //从相册选择
       success: (res) => {
-        if (this.data.imgList.length != 0) {
-          this.setData({
-            imgList: this.data.imgList.concat(res.tempFilePaths)
-          })
-        } else {
-          this.setData({
-            imgList: res.tempFilePaths
-          })
-        }
-      }
+        var filePath = res.tempFiles[0].path;
+        var filename = filePath.substr(filePath.lastIndexOf('/') + 1);
+        
+        cos.postObject({
+            Bucket: Bucket,
+            Region: Region,
+            Key: filename,
+            FilePath: filePath,
+            onProgress: function (info) {
+                console.log(JSON.stringify(info));
+            }            
+        }, function (err, data) {
+            console.log(err || data);   
+            console.log(data.Location);
+            
+            if(data.Location!=0){
+                that.setData({
+                  imgList:that.data.imgList.concat("http://"+data.Location)
+                })  
+            }
+         });
+      
+          }
+       
     });
+
   },
   ViewImage(e) {
     wx.previewImage({
@@ -194,7 +224,8 @@ Page({
 
   bindSubmitThingA: function() {
     var that = this;
-        
+    var tel_length = that.data.thingPhoneNumber.length;
+    if (tel_length==11) { 
       wx.showModal({
         title: '系统提示',
         content: '确定发布',
@@ -217,9 +248,9 @@ Page({
             var dateSecond = that.data.dateSecond
             var dateMinute = that.data.dateMinute
             var region = that.data.region
-                     
+            var url = app.globalData.apiurl + '/addItemType/1'        
             wx.request({
-              url:'https://yyzcowtodd.cn/Auction/addItemType/1',
+              url,
               data: {                
                 itemHead: thingName,                
                 markupRange: thingCampus,                
@@ -230,6 +261,7 @@ Page({
                 itemInfo: textareaValue,
                 telephoneNumber: thingPhoneNumber,
                 itemLocation:region,  
+                itemImg:imgList
               },
               method: "POST",
               header: {
@@ -251,19 +283,34 @@ Page({
                 })
               },
             })
-            
+
+          
+
+
           } else if (res.cancel) {
             console.log('用户点击取消')
           }
         }
       })
+    } else {
+      wx.showModal({
+        title: '系统提示',
+        content: '联系方式请输入11位手机号码',
+        cancelText: '取消',
+        confirmText: '确定',
+        
+      })
+    }
+   
+     
 
      
     
   },
   bindSubmitThingB: function() {
     var that = this;
-        
+    var tel_length = that.data.thingPhoneNumber.length;
+    if (tel_length==11) {    
       wx.showModal({
         title: '系统提示',
         content: '确定发布',
@@ -282,9 +329,9 @@ Page({
             var thingPhoneNumber = that.data.thingPhoneNumber; //电话
             var thingPrice = that.data.thingPrice; //价格
             var region = that.data.region
-                     
+            var url = app.globalData.apiurl + '/addItemType/2'         
             wx.request({
-              url:'https://yyzcowtodd.cn/Auction/addItemType/2',
+              url,
               data: {                
                 itemHead: thingName,                               
                 startPrice: thingPrice,
@@ -292,6 +339,8 @@ Page({
                 itemInfo: textareaValue,
                 telephoneNumber: thingPhoneNumber,
                 itemLocation:region,  
+                itemImg:imgList
+
               },
               method: "POST",
               header: {
@@ -319,7 +368,15 @@ Page({
           }
         }
       })
-
+    } else {
+      wx.showModal({
+        title: '系统提示',
+        content: '联系方式请输入11位手机号码',
+        cancelText: '取消',
+        confirmText: '确定',
+        
+      })
+    }
      
     
   },
