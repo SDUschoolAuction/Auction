@@ -1,63 +1,58 @@
 package com.example.demo.entity;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 public class Record {
+    private long userid;
+    private long itemId;
 
-  private long usersUserid;
-  private long itemItemId;
-
- @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
- @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
-  private Date dealTime;
-  private long dealPrice;
-
-
-  public long getUsersUserid() {
-    return usersUserid;
-  }
-
-  public void setUsersUserid(long usersUserid) {
-    this.usersUserid = usersUserid;
-  }
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date dealTime;
+    private long dealPrice;
+    private String telephoneNumber;
 
 
-  public long getItemItemId() {
-    return itemItemId;
-  }
+    public long getUserid() {
+        return userid;
+    }
 
-  public void setItemItemId(long itemItemId) {
-    this.itemItemId = itemItemId;
-  }
+    public void setUserid(long userid) {
+        this.userid = userid;
+    }
 
+    public long getItemId() {
+        return itemId;
+    }
 
-  public Date getDealTime() {
-    return dealTime;
-  }
+    public void setItemId(long itemId) {
+        this.itemId = itemId;
+    }
 
-  public void setDealTime(Date dealTime) {
-    this.dealTime = dealTime;
-  }
+    public Date getDealTime() {
+        return dealTime;
+    }
 
+    public void setDealTime(Date dealTime) {
+        this.dealTime = dealTime;
+    }
 
-  public long getDealPrice() {
-    return dealPrice;
-  }
+    public long getDealPrice() {
+        return dealPrice;
+    }
 
-  public void setDealPrice(long dealPrice) {
-    this.dealPrice = dealPrice;
-  }
+    public void setDealPrice(long dealPrice) {
+        this.dealPrice = dealPrice;
+    }
 
+    public String getTelephoneNumber() {
+        return telephoneNumber;
+    }
 
-  @Override
-  public String toString() {
-    return "Record{" +
-            "users_userId=" + usersUserid +
-            ", item_itemId=" + itemItemId +
-            ", dealTime=" + dealTime +
-            ", dealPrice=" + dealPrice +
-            '}';
-  }
+    public void setTelephoneNumber(String telephoneNumber) {
+        this.telephoneNumber = telephoneNumber;
+    }
 }
