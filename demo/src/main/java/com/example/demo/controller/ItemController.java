@@ -115,18 +115,14 @@ public class ItemController {
      * @Date: 2020/6/24 22:32
      */
     @RequestMapping("/addItemType/{key}")
-    public Msg addItemType(@PathVariable String key,@RequestBody Map<String,Object> map) throws Exception {
-        Item item=JsonXMLUtils.map2obj((Map<String, Object>) map.get("item"),Item.class);
-        JSONObject jsonObject= JsonXMLUtils.map2obj((Map<String, Object>) map.get("type"),JSONObject.class);
-        try {
-            Msg msg=itemService.addItem(item);
-            jsonObject.put("itemId",msg.getObj());
-            factoryForTypeService.getTypeService(key).addType(jsonObject);
-            return new Msg<>(0,"success",msg.getObj());
+    public Msg addItemType(@PathVariable String key,@RequestBody Map<String,Object> map){
+        try{
+            return factoryForTypeService.getTypeService(key).addItemType(map);
         }catch (Exception e){
             return Msg.err(e.toString());
         }
     }
+
 
 
 
