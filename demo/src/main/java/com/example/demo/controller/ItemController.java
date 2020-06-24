@@ -90,6 +90,30 @@ public class ItemController {
     }
 
 
+    /**
+     * @Description: 同时传入Item和Type，key代表Type的种类，1代表Type1拍卖，不传itemId
+     * @Param: [key, map]
+     * {
+     * 	"item":{
+     * 		"itemInfo":"测试的数据，这里是信息的详细信息",
+     * 		"finalPrice":13,
+     * 		"itemLocation":"山东省济南市",
+     * 		"itemImg1":"https://img.alicdn.com/imgextra/i1/27907426/O1CN01n3DQLu24j9jYKjK7n_!!0-saturn_solar.jpg_260x260.jpg",
+     * 		"telephoneNumber":"15665825816",
+     * 		"sellerId":1,
+     * 		"type":1
+     * 	},
+     * 	"type":{
+     * 		"startPrice":13,
+     * 		"markupRange":1,
+     * 		"startTime":"2020-07-01 16:50:00",
+     * 		"endTime":"2020-09-09 00:00:00"
+     * 	}
+     * }
+     * @returns: com.example.demo.util.Msg
+     * @Author: Exgc
+     * @Date: 2020/6/24 22:32
+     */
     @RequestMapping("/addItemType/{key}")
     public Msg addItemType(@PathVariable String key,@RequestBody Map<String,Object> map) throws Exception {
         Item item=JsonXMLUtils.map2obj((Map<String, Object>) map.get("item"),Item.class);

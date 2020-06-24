@@ -58,13 +58,26 @@ public class UserController{
         return rowData.toJSONString();
     }
 
-
+    /**
+     * @Description: 添加新用户
+     * @Param: [user]
+     * @returns: com.example.demo.util.Msg
+     * @Author: Exgc
+     * @Date: 2020/6/24 22:31
+     */
     @PostMapping("/addUser")
     public Msg addUser(@RequestBody User user){
         System.out.println(user.toString());
         return userService.addUser(user);
     }
 
+    /**
+     * @Description: 根据用户的userId获取用户的信息
+     * @Param: [userId]
+     * @returns: com.example.demo.entity.User
+     * @Author: Exgc
+     * @Date: 2020/6/24 22:28
+     */
     @RequestMapping("/user/{userId}")
     public User getUserById(@PathVariable int userId){
         return userService.getUserById(userId);
