@@ -643,15 +643,16 @@ Page({
                             // console.log("i"+i);
                             // console.log("aa"+aa);
                             if(comments[i].id == subsub[aa].commentId){
+                              var time = Time.formatTime(new Date(subsub[aa].time));
                               console.log("找到了id相等的");
                               that.setData({
                                 [subsubsub]:{
-                                  name:subsub[aa].fromUser,
-                                  target:subsub[aa].toUser,
+                                  name:subsub[aa].fromUserName,
+                                  target:subsub[aa].toUserName,
                                   text:subsub[aa].content,
                                   role:'buyer',
                                   father:subsub[aa].commentId,
-                                  time:subsub[aa].time
+                                  time:time
                                 }
                               });
                               count = count + 1;
@@ -747,14 +748,37 @@ Page({
           success: function (res) {
             var records_length = res.data.obj.length;
             var records_count = 0;
+            var Userid = res.data.obj[records_length-1].userid;
             while(records_length>0){
               var bid_list = 'bidList['+records_count+']';
               that.setData({
                 [bid_list]:{
                   item_id: res.data.obj[records_length-1].itemId, 
-                  name:'我是用户1号',
+                  user_id: res.data.obj[records_length-1].userid, 
+                  //name:'我是用户1号',
                   price: res.data.obj[records_length-1].dealPrice,
                 }
+              },function(){
+                var bid_list_name = 'bidList['+records_count+'].name';
+                wx.request({
+                  url: app.globalData.apiurl+'/user/'+Userid,
+                  method: 'GET',
+                  header: {
+                    'content-type': 'application/json'
+                  },
+                  success: function (res) {
+                    that.setData({ 
+                      [bid_list_name]: res.data.name
+                    });  
+                  },
+                  fail: function () {
+                    // fail
+                  },
+                  complete: function () {
+                    console.log("d");
+                  }
+                })
+
               });
               records_count++;
               records_length--;
@@ -762,6 +786,15 @@ Page({
             that.setData({ 
               getRecordsByItemId: res.data.obj
             });  
+
+
+            
+
+            
+
+
+
+
           },
           fail: function () {
             // fail
