@@ -20,8 +20,7 @@ public class ItemServiceImpl implements ItemService {
     public Msg addItem(Item item) {
         try{
             itemDao.addItem(item);
-            System.out.println("ok");
-            return Msg.ok("success");
+            return new Msg<>(0,"success",item.getItemId());
         }catch (Exception e){
             System.out.println(e.toString());
             return Msg.err(e.toString());
