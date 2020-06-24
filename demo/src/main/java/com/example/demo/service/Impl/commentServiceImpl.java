@@ -157,5 +157,14 @@ public class commentServiceImpl implements commentService {
 
     }
 
+    @Override
+    public Msg getAllReviews() {
+        try{
+            return new Msg<>(0,"sucess",commentDao.getAllReviews());
+        }catch (Exception e){
+            return Msg.err(e.toString());
+        }
+    }
+
 
 }

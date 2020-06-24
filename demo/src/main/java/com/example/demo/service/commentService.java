@@ -10,4 +10,5 @@ public interface commentService {
     Msg getReviews(int commentId);
     Msg addComments(int itemId,int userId,String content,String time);
     Msg addReview(int commentId,String content,String time,int fromUser,int toUser);
+    Msg getAllReviews();
 }

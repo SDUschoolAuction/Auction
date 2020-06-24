@@ -35,5 +35,6 @@ public interface commentDao {
         @Insert("insert into review (commentId,content,time,fromUser,toUser) values (#{commentId},,#{content},#{time},#{fromUser},#{toUser})")
         Integer addReview(@Param("commentId") int commentId,@Param("content") String content,@Param("time") String time,@Param("fromUser") int fromUser,@Param("toUser") int toUser);
 
-
+        @Select("Select * from review")
+        List<Review> getAllReviews();
 }

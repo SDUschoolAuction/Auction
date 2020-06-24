@@ -92,4 +92,9 @@ public class CommentController {
     public Msg addReview(int commentId,String content,String time,int fromUser,int toUser){ return commentService.addReview(commentId,content,time,fromUser,toUser); }
 
 
+    @RequestMapping("/getAllReviews")
+    public Msg getAllReviews(){
+        return commentService.getAllReviews();
+    }
+
 }
