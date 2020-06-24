@@ -46,6 +46,7 @@ Page({
           }else{
             console.log("dlsb")
           }
+          console.log(app.globalData)
          wx.setStorageSync("openID", e.data.openid)
       })
   },
@@ -67,7 +68,4 @@ Page({
       }
     })
   }
-
-
 })
- 
