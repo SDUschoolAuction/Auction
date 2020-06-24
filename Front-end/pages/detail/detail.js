@@ -6,7 +6,8 @@ const Time = require('../../utils/time.js')
 const app = getApp();
 Page({
   data: {
-    xxxx:[],
+    
+    subsub_comments:[],
     item_id_fromSwitch: '-1',
     comment_length:0,
 
@@ -566,13 +567,14 @@ Page({
       },
       success: function (res) {
         var length = res.data.obj.data.length;
+        var list='';
         console.log("length:"+length);
         var count = 0;
         that.setData({ 
           comments: res.data.obj.data,
         });    
         while(length>0){
-          var list = 'commentList['+count+']';
+          list = 'commentList['+count+']';
           console.log("list:"+list);
           that.setData({
             [list]:{ 
@@ -590,54 +592,142 @@ Page({
               //   role:'buyer',
               //   father:'2',
               //   time:'2010-08-01 10:30:00'}
-              ]}
-              });
-              wx.request({
-                  url: app.globalData.apiurl+'/comments/getReviewsForComments?commentId='+res.data.obj.data[count].commentId,
-                  method: 'GET',
-                  header: {
-                    'content-type': 'application/json'
-                  },
-                  success: function (res) {
-                    var countx=0;
-                    var lengthx=res.data.obj.data.length;
-                    that.setData({ 
-                      subsub_comments: res.data.obj.data,
-                    });  
-                    while(lengthx>0){
-                      console.log("aaaaaaaaaaaaaaaa");
-                      var list_sub = list+'.sub_comments['+countx+']';
-                      //console.log("list:"+list);
+              ]}}
+              ,function() {
+                
+                // var subsub_comments_subsub = 'subsub_comments_subsub['+count+']';
+                // console.log("subsub_comments_subsub"+subsub_comments_subsub);
+                // console.log("subsub_comments_subsub_list"+list);
+                // wx.request({//获取全部的子评论
+                //     url: app.globalData.apiurl+'/comments/getReviewsForComments?commentId='+count,
+                //     method: 'GET',
+                //     header: {
+                //       'content-type': 'application/json'
+                //     },
+                //     success: function (res) {
+                //       that.setData({
+                //         [subsub_comments_subsub]:res.data.obj
+                //       },function(){});
+                //     },
+                //     fail: function () {
+                //       // fail
+                //       console.log("fffffffff");
+                //     },
+                //     complete: function () {
+                //       console.log("d");
+                //     }
+                //   })
+
+
+                  wx.request({//获取全部的子评论
+                    url: app.globalData.apiurl+'/comments/getAllReviews',
+                    method: 'GET',
+                    header: {
+                      'content-type': 'application/json'
+                    },
+                    success: function (res) {
                       that.setData({
-                        [list_sub]:{
-                            name:res.data.obj.data[countx].fromUserName,
-                            target:res.data.obj.data[countx].toUserName,
-                            text:res.data.obj.data[countx].content,
-                            role:'buyer',
-                            father:res.data.obj.data[countx].commentId,
-                            time:res.data.obj.data[countx].time
-                            // name:"res.data.obj.data.fromUserName",
-                            // target:"res.data.obj.data.toUserName",
-                            // text:"res.data.obj.data.content",
-                            // role:'buyer',
-                            // father:"res.data.obj.data.commentId",
-                            // time:"ime.formatTime(new Date())"
-                        }
+                        subsub_comments_subsub:res.data.obj
+                      },function(){
+                       var comments = that.data.commentList;
+                       var subsub = that.data.subsub_comments_subsub;
+                       var comments_length = comments.length;
+                       var subsub_length = subsub.length;
+                       var comments_count = 0;
+                       var subsub_count = 0;
+                      for(var i = 0 ; i < comments_length ; i++){
+                         // console.log("A");
+                          var count = 0;
+                          for(var aa = 0 ; aa < subsub_length ; aa++){
+                            var subsubsub = 'commentList['+i+'].sub_comments['+count+']';
+                            // console.log("i"+i);
+                            // console.log("aa"+aa);
+                            if(comments[i].id == subsub[aa].commentId){
+                              var time = Time.formatTime(new Date(subsub[aa].time));
+                              console.log("找到了id相等的");
+                              that.setData({
+                                [subsubsub]:{
+                                  name:subsub[aa].fromUserName,
+                                  target:subsub[aa].toUserName,
+                                  text:subsub[aa].content,
+                                  role:'buyer',
+                                  father:subsub[aa].commentId,
+                                  time:time
+                                }
+                              });
+                              count = count + 1;
+                            }
+                            // console.log("===================================");
+                            // console.log("comments_count===="+comments_count);
+                            // console.log("subsub_count===="+subsub_count);
+                            // console.log("找到了id相等的");
+                            // console.log("comments.id===="+comments[comments_count].id);
+                            // console.log("subsub.commentId==="+subsub[subsub_count].commentId);
+                            // console.log("===================================");
+                          }
+                      }
+                      
+                      //  console.log("comments_length"+comments_length);
+                      //  console.log("subsub_length"+subsub_length);
+                      //  while
+                      //  for(subsub_length;subsub_length>0;subsub_length--){
+                      //    for(comments_length;comments_length>0;comments_length--){
+                      //     console.log("comments_count===="+comments_count);
+                      //     console.log("subsub_count===="+subsub_count);
+                      //     // if(comments[comments_count].id == subsub[subsub_count].commentId){
+                      //     //   console.log("===================================");
+                      //     //   console.log("comments_count===="+comments_count);
+                      //     //   console.log("subsub_count===="+subsub_count);
+                      //     //   console.log("找到了id相等的");
+                      //     //   console.log("comments.id===="+comments[comments_count].id);
+                      //     //   console.log("subsub.commentId==="+subsub[subsub_count].commentId);
+                      //     //   console.log("===================================");
+                      //     // }
+                      //     comments_count++;
+                      //   }
+                      //   subsub_count = subsub_count+1;
+                      //  }
                       });
-                      lengthx--;
-                      countx++;
+                    },
+                    fail: function () {
+                      // fail
+                      console.log("fffffffff");
+                    },
+                    complete: function () {
+                      console.log("d");
                     }
-                  },
-                  fail: function () {
-                    // fail
-                  },
-                  complete: function () {
-                    console.log("d");
-                  }
-                })
-              count += 1;
-              length -= 1;
-            }
+                  })   
+              }
+              );
+              //that.getSubrequset(count,that);
+                // var subsub_comments_subsub = 'subsub_comments_subsub['+count+']';
+                // console.log("subsub_comments_subsub"+subsub_comments_subsub);
+                // console.log("subsub_comments_subsub_list"+list);
+                // wx.request({
+                //     url: app.globalData.apiurl+'/comments/getReviewsForComments?commentId='+count,
+                //     method: 'GET',
+                //     header: {
+                //       'content-type': 'application/json'
+                //     },
+                //     success: function (res) {
+                //       that.setData({
+                //         [subsub_comments_subsub]:res.data.obj
+                //       },function(){});
+                //     },
+                //     fail: function () {
+                //       // fail
+                //       console.log("fffffffff");
+                //     },
+                //     complete: function () {
+                //       console.log("d");
+                //     }
+                //   })
+
+
+
+              length--;
+              count++;
+        }
             console.log("项目传来的数据"+res.data);
             return count;
           },
@@ -658,14 +748,37 @@ Page({
           success: function (res) {
             var records_length = res.data.obj.length;
             var records_count = 0;
+            var Userid = res.data.obj[records_length-1].userid;
             while(records_length>0){
               var bid_list = 'bidList['+records_count+']';
               that.setData({
                 [bid_list]:{
                   item_id: res.data.obj[records_length-1].itemId, 
-                  name:'我是用户1号',
+                  user_id: res.data.obj[records_length-1].userid, 
+                  //name:'我是用户1号',
                   price: res.data.obj[records_length-1].dealPrice,
                 }
+              },function(){
+                var bid_list_name = 'bidList['+records_count+'].name';
+                wx.request({
+                  url: app.globalData.apiurl+'/user/'+Userid,
+                  method: 'GET',
+                  header: {
+                    'content-type': 'application/json'
+                  },
+                  success: function (res) {
+                    that.setData({ 
+                      [bid_list_name]: res.data.name
+                    });  
+                  },
+                  fail: function () {
+                    // fail
+                  },
+                  complete: function () {
+                    console.log("d");
+                  }
+                })
+
               });
               records_count++;
               records_length--;
@@ -673,6 +786,15 @@ Page({
             that.setData({ 
               getRecordsByItemId: res.data.obj
             });  
+
+
+            
+
+            
+
+
+
+
           },
           fail: function () {
             // fail
@@ -681,10 +803,75 @@ Page({
             console.log("d");
           }
         })
-        
-
   },
+  // subFunction: function(){
+  //   var length = this.data.commentList.length;
+  //   var count = 0;
+  //   // console.log('onShowonShowonShowonShowonShow');
+  //   console.log('onShowlength'+length);
+  //   while(length>0){
+  //     console.log('onShowonShowonShowonShowonShow');
+  //     var sub_length = this.data.subsub_comments.length;
+  //     var sub_count = 0;
+  //     var sub_commentList = 'commentList['+count+'].sub_comments[1]';
+  //     while(sub_length>0){
+  //       if(this.data.subsub_comments[sub_count].commentId == this.data.commentList[count].id){
+  //         this.setData({
+  //           // [sub_commentList]:this.data.commentList[count].sub_comments.concat(this.data.subsub_comments[sub_count].content)
+  //           texttext:{title:11111111}
+  //       });
+  //       }
+  //       sub_count++;
+  //       sub_length--;
+  //     }
+  //     count++;
+  //     length--;
+  //   }
+  // },
   onLoad: function (options) {
     this.getInfo('3');
   }
+//   function getItems(){
+//     wx.request({
+//         ... //
+//         success:(res)=>{
+//             if(num < pageNum) {
+//                 getItems(++num);
+//             }
+//         }
+//     })
+// }
+  // getSubrequset:function(count,that){
+  //   var comment_length = that.data.commentList.length;
+  //   wx.request({
+  //     url: app.globalData.apiurl+'/comments/getReviewsForComments?commentId='+count,
+  //     method: 'GET',
+  //     header: {
+  //       'content-type': 'application/json'
+  //     },
+  //     success: function (res) {
+  //       var sub_length = res.data.obj.length;
+  //       var sub_count = 0;
+  //       while(sub_length>0){
+  //         var comment_sub = 'commentList['+count+'].sub_comments['+sub_count+']';
+  //         that.setData({
+  //           [comment_sub]:res.data.obj[sub_count]
+  //         });
+  //         sub_length--;
+  //         sub_count++
+  //       }
+        
+  //       if(count < comment_length-1) {
+  //         getSubrequset(++count,that);
+  //       }
+  //     },
+  //     fail: function () {
+  //       // fail
+  //       console.log("fffffffff");
+  //     },
+  //     complete: function () {
+  //       console.log("d");
+  //     }
+  //   })
+  // }
 })
