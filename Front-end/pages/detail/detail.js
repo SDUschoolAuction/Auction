@@ -640,6 +640,7 @@ Page({
             [list]:{ 
               item_id: that.data.item.item_id, 
               id:res.data.obj.data[count].commentId,
+              user_id:res.data.obj.data[count].userId,
               name:res.data.obj.data[count].userName,
               text:res.data.obj.data[count].content,
               url:res.data.obj.data[count].userIcon,
@@ -708,7 +709,9 @@ Page({
                               that.setData({
                                 [subsubsub]:{
                                   name:subsub[aa].fromUserName,
+                                  fromUserId:subsub[aa].fromUser,
                                   target:subsub[aa].toUserName,
+                                  toUserId:subsub[aa].toUser,
                                   text:subsub[aa].content,
                                   role:'buyer',
                                   father:subsub[aa].commentId,
@@ -988,6 +991,8 @@ Page({
                         //           [subsubsub]:{
                         //             name:subsub[aa].fromUserName,
                         //             target:subsub[aa].toUserName,
+                        //             fromUserId:subsub[aa].fromUser,
+                        //             toUserId:subsub[aa].toUser,
                         //             text:subsub[aa].content,
                         //             role:'buyer',
                         //             father:subsub[aa].commentId,
