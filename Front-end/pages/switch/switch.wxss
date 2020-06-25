@@ -7,6 +7,7 @@
   align-items: center;
   padding-left: 10rpx;
   padding-right: 10rpx;
+  margin-bottom: 100rpx;
 }
 .goods_item{
   justify-content: center;
@@ -72,6 +73,14 @@
   align-items: center;
 
 }
+.one.hide{
+  display: flex;
+  background-color: grey;
+  font-size: 20rpx;
+  height: 34rpx;
+  align-items: center;
+
+}
 .count_down_end{
   background-color: grey;
   height: 34rpx;
@@ -88,7 +97,7 @@
   display: flex;
   margin-top: 2rpx;
   align-items: center;
-  font-size:20rpx;
+  font-size:19rpx;
 }
 .goods_num_participants{
   margin-top: 10rpx;

@@ -14,22 +14,53 @@ public class OrderController {
     @Resource
     OrdersService ordersService;
 
+<<<<<<< HEAD
 
+=======
+    /**
+     * @Description: 获取我已购买的商品信息
+     * @Param: [buyerId] 
+     * @returns: com.example.demo.util.Msg 
+     * @Author: 刘梦普、Exgc
+     * @Date: 2020/6/24 22:37
+     */
+>>>>>>> e2f1e10c145dd125d5cec1be5b0a4985082aa267
     @RequestMapping("/buyerorders/{buyerId}")
     public Msg getbuyerOrders(@PathVariable Integer buyerId){
         return ordersService.getbuyerOrders(buyerId);
     }
 
+    /**
+     * @Description: 获取我已卖出的商品信息
+     * @Param: [sellerId] 
+     * @returns: com.example.demo.util.Msg 
+     * @Author: 刘梦普、Exgc
+     * @Date: 2020/6/24 22:37
+     */
     @RequestMapping("/sellerorders/{sellerId}")
     public Msg getsellerOrders(@PathVariable Integer sellerId){
         return ordersService.getsellerOrders(sellerId);
     }
 
+    /**
+     * @Description: 获取我的发布商品信息
+     * @Param: [sellerId] 
+     * @returns: com.example.demo.util.Msg 
+     * @Author: Exgc
+     * @Date: 2020/6/24 22:38
+     */
     @RequestMapping("/getItemListBySellerId/{sellerId}")
     public Msg getItemListBySellerId(@PathVariable int sellerId){
         return ordersService.getItemListBySellerId(sellerId);
     }
 
+    /**
+     * @Description: 获取我的参拍商品信息
+     * @Param: [customerId] 
+     * @returns: com.example.demo.util.Msg 
+     * @Author: Exgc
+     * @Date: 2020/6/24 22:38
+     */
     @RequestMapping("/getItemListByCustomerId/{customerId}")
     public Msg getItemListByCustomerId(@PathVariable int customerId){
         return ordersService.getItemListByCustomerId(customerId);

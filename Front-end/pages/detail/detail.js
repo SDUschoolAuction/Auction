@@ -60,7 +60,7 @@ Page({
       seller_info2:'',//卖家提供的信息2
       seller_url:'',//卖家的头像地址
 
-      user_name:'myUsername',
+      user_name:'cxz',
       user_url:'/image/head.png',//此账户用户的头像地址
       user_role:'visitor',//==========
       //此账户用户的身份，包含：“visitor”出价者、“buyer”竞拍者、“seller”拍卖者、“winner”中标者
@@ -185,13 +185,123 @@ Page({
   openSubcomment:function(e){//出价界面展开/收起切换函数
     var target = e.currentTarget.dataset.text;
     var father = e.currentTarget.dataset.father;
-    console.log(target);
-    console.log(father);
+    // console.log(target);
+    // console.log(father);
     this.setData({
       sub_holder_text: "回复@"+target,
       subcomment_father:father,
       subcomment_target:target,
       subcomment_show: true
+    })
+  },
+  deleteComment:function(e){//出价界面展开/收起切换函数
+    var id = e.currentTarget.dataset.deleteid;
+    var that = this;
+    console.log("将要删除的评论的id为:"+id);
+    wx.request({
+      url: app.globalData.apiurl+'/comments/deleteComment?commentId='+id,
+      method: 'DELETE',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (boolean) {
+        if(boolean){
+          wx.request({
+            url: app.globalData.apiurl+'/comments/getcomments?itemId='+that.data.item.item_id,
+            method: 'GET',
+            header: {
+              'content-type': 'application/json'
+            },
+            success: function (res) {
+              var length = res.data.obj.data.length;
+              var list='';
+              // console.log("length:"+length);
+              var count = 0;
+              that.setData({ 
+                comments: res.data.obj.data,
+              });    
+              while(length>0){
+                list = 'commentList['+count+']';
+                //console.log("list:"+list);
+                that.setData({
+                  [list]:{ 
+                    item_id: that.data.item.item_id, 
+                    id:res.data.obj.data[count].commentId,
+                    user_id:res.data.obj.data[count].userId,
+                    name:res.data.obj.data[count].userName,
+                    text:res.data.obj.data[count].content,
+                    url:res.data.obj.data[count].userIcon,
+                    role:'buyer',
+                    time:res.data.obj.data[count].time,
+                    sub_comments:[
+                    // { name:'我是用户1号',
+                    //   target:'我是用户2号',
+                    //   text:'你是不是傻，不喜欢评论啥',
+                    //   role:'buyer',
+                    //   father:'2',
+                    //   time:'2010-08-01 10:30:00'}
+                    ]
+                  }
+                });
+                count++;
+                length--;
+              }
+                },
+                fail: function () {
+                  // fail
+                  console.log("fffffffff");
+                },
+                complete: function () {
+                  //// console.log("d");
+                }
+              }) 
+
+          console.log("将要删除的评论的id为:"+id+"删除成功");
+        }
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        // console.log("d");
+      }
+    })
+  },
+  deleteSubComment:function(e){
+    var that = this;
+    var id = e.currentTarget.dataset.deleteid;
+    console.log("将要删除的二级评论的id为:"+id);
+    wx.request({
+      url: app.globalData.apiurl+'/comments/deleteReviewsForComments?reviewId='+id,
+      method: 'DELETE',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (boolean) {
+        if(boolean){  
+          var comments = that.data.commentList;
+          var comments_length = comments.length;
+          for(var i = 0 ; i < comments_length ; i++){
+            var sub_length = comments[i].sub_comments.length;
+            for(var aa = 0 ; aa < sub_length ; aa++){
+              if(comments[i].sub_comments[aa].id == id){
+                //comments[i].sub_comments.splice(aa,1);
+                var show = 'commentList['+i+'].sub_comments['+aa+'].show';
+                that.setData({
+                  [show]:false
+                });
+              }
+            }
+          }
+          console.log("将要删除的评论的id为:"+id+"删除成功");
+        }
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        // console.log("d");
+      }
     })
   },
   openSubcomment_1:function(e){//点击主列表的用户名的出价界面展开/收起切换函数
@@ -280,7 +390,7 @@ Page({
         commentInput: "",//把输入的值设置成空
         comment_button_text: "取消"
       });
-      console.log("list的是："+this.data.commentInput_list[count].text);
+      //console.log("list的是："+this.data.commentInput_list[count].text);
       this.setData({
         commentCount:count + 1
       });
@@ -309,7 +419,7 @@ Page({
         commentInput: "",//把输入的值设置成空
         comment_button_text: "取消"
       });
-      console.log("sublist的是："+this.data.subcommentInput_list[subcount].text);
+      // console.log("sublist的是："+this.data.subcommentInput_list[subcount].text);
       this.setData({
         subCommentcount:subcount + 1
       });
@@ -499,7 +609,7 @@ Page({
             // fail
           },
           complete: function () {
-            console.log("d");
+            // console.log("d");
           }
         })
 
@@ -521,13 +631,23 @@ Page({
                 that.setData({ 
                   datetimeTo: res.data.obj[itemlist_count].endTime,
                   min_bidAdd: res.data.obj[itemlist_count].markupRange,
-                  [current_price]: res.data.obj[itemlist_count].startPrice
+                  //[current_price]: res.data.obj[itemlist_count].startPrice
                 }); 
+                if(that.data.item.current_price != res.data.obj[itemlist_count].startPrice){
+                  that.setData({ 
+                    [current_price]: res.data.obj[itemlist_count].startPrice
+                  });
+                }
                 if(res.data.obj[itemlist_count].itemPrice!=null){
                   that.setData({ 
                     [item_buyout_price]: res.data.obj[itemlist_count].itemPrice,
-                    [current_price]: res.data.obj[itemlist_count].itemPrice
-                  })
+                    //[current_price]: res.data.obj[itemlist_count].itemPrice
+                  });
+                  if(that.data.item.current_price != res.data.obj[itemlist_count].itemPrice){
+                    that.setData({ 
+                      [current_price]: res.data.obj[itemlist_count].itemPrice
+                    });
+                  }
                 }
                 else{
                   that.setData({ 
@@ -547,7 +667,7 @@ Page({
             // fail
           },
           complete: function () {
-            console.log("d");
+            // console.log("d");
           }
         })
       },
@@ -555,7 +675,7 @@ Page({
         // fail
       },
       complete: function () {
-        console.log("d");
+        // console.log("d");
       }
     })
 
@@ -568,18 +688,19 @@ Page({
       success: function (res) {
         var length = res.data.obj.data.length;
         var list='';
-        console.log("length:"+length);
+        // console.log("length:"+length);
         var count = 0;
         that.setData({ 
           comments: res.data.obj.data,
         });    
         while(length>0){
           list = 'commentList['+count+']';
-          console.log("list:"+list);
+          //console.log("list:"+list);
           that.setData({
             [list]:{ 
               item_id: that.data.item.item_id, 
               id:res.data.obj.data[count].commentId,
+              user_id:res.data.obj.data[count].userId,
               name:res.data.obj.data[count].userName,
               text:res.data.obj.data[count].content,
               url:res.data.obj.data[count].userIcon,
@@ -614,7 +735,7 @@ Page({
                 //       console.log("fffffffff");
                 //     },
                 //     complete: function () {
-                //       console.log("d");
+                //       // console.log("d");
                 //     }
                 //   })
 
@@ -643,49 +764,26 @@ Page({
                             // console.log("i"+i);
                             // console.log("aa"+aa);
                             if(comments[i].id == subsub[aa].commentId){
-                              console.log("找到了id相等的");
+                              var time = Time.formatTime(new Date(subsub[aa].time));
+                              // console.log("找到了id相等的");
                               that.setData({
                                 [subsubsub]:{
-                                  name:subsub[aa].fromUser,
-                                  target:subsub[aa].toUser,
+                                  name:subsub[aa].fromUserName,
+                                  fromUserId:subsub[aa].fromUser,
+                                  target:subsub[aa].toUserName,
+                                  toUserId:subsub[aa].toUser,
                                   text:subsub[aa].content,
                                   role:'buyer',
                                   father:subsub[aa].commentId,
-                                  time:subsub[aa].time
+                                  time:time,
+                                  id:subsub[aa].reviewId,
+                                  show:true
                                 }
                               });
                               count = count + 1;
                             }
-                            // console.log("===================================");
-                            // console.log("comments_count===="+comments_count);
-                            // console.log("subsub_count===="+subsub_count);
-                            // console.log("找到了id相等的");
-                            // console.log("comments.id===="+comments[comments_count].id);
-                            // console.log("subsub.commentId==="+subsub[subsub_count].commentId);
-                            // console.log("===================================");
                           }
                       }
-                      
-                      //  console.log("comments_length"+comments_length);
-                      //  console.log("subsub_length"+subsub_length);
-                      //  while
-                      //  for(subsub_length;subsub_length>0;subsub_length--){
-                      //    for(comments_length;comments_length>0;comments_length--){
-                      //     console.log("comments_count===="+comments_count);
-                      //     console.log("subsub_count===="+subsub_count);
-                      //     // if(comments[comments_count].id == subsub[subsub_count].commentId){
-                      //     //   console.log("===================================");
-                      //     //   console.log("comments_count===="+comments_count);
-                      //     //   console.log("subsub_count===="+subsub_count);
-                      //     //   console.log("找到了id相等的");
-                      //     //   console.log("comments.id===="+comments[comments_count].id);
-                      //     //   console.log("subsub.commentId==="+subsub[subsub_count].commentId);
-                      //     //   console.log("===================================");
-                      //     // }
-                      //     comments_count++;
-                      //   }
-                      //   subsub_count = subsub_count+1;
-                      //  }
                       });
                     },
                     fail: function () {
@@ -693,48 +791,22 @@ Page({
                       console.log("fffffffff");
                     },
                     complete: function () {
-                      console.log("d");
+                      //// console.log("d");
                     }
                   })   
               }
               );
-              //that.getSubrequset(count,that);
-                // var subsub_comments_subsub = 'subsub_comments_subsub['+count+']';
-                // console.log("subsub_comments_subsub"+subsub_comments_subsub);
-                // console.log("subsub_comments_subsub_list"+list);
-                // wx.request({
-                //     url: app.globalData.apiurl+'/comments/getReviewsForComments?commentId='+count,
-                //     method: 'GET',
-                //     header: {
-                //       'content-type': 'application/json'
-                //     },
-                //     success: function (res) {
-                //       that.setData({
-                //         [subsub_comments_subsub]:res.data.obj
-                //       },function(){});
-                //     },
-                //     fail: function () {
-                //       // fail
-                //       console.log("fffffffff");
-                //     },
-                //     complete: function () {
-                //       console.log("d");
-                //     }
-                //   })
-
-
-
               length--;
               count++;
         }
-            console.log("项目传来的数据"+res.data);
+            //console.log("项目传来的数据"+res.data);
             return count;
           },
           fail: function () {
             // fail
           },
           complete: function () {
-            console.log("d");
+            // console.log("d");
           }
         })
 
@@ -747,12 +819,14 @@ Page({
           success: function (res) {
             var records_length = res.data.obj.length;
             var records_count = 0;
+            var Userid = res.data.obj[records_length-1].userid;
             while(records_length>0){
               var bid_list = 'bidList['+records_count+']';
               that.setData({
                 [bid_list]:{
                   item_id: res.data.obj[records_length-1].itemId, 
-                  name:'我是用户1号',
+                  user_id: res.data.obj[records_length-1].userid, 
+                  name: res.data.obj[records_length-1].userName, 
                   price: res.data.obj[records_length-1].dealPrice,
                 }
               });
@@ -767,7 +841,7 @@ Page({
             // fail
           },
           complete: function () {
-            console.log("d");
+           // // console.log("d");
           }
         })
   },
@@ -796,7 +870,239 @@ Page({
   //   }
   // },
   onLoad: function (options) {
-    this.getInfo('3');
+    var itemID = '3';
+    var that = this;
+    this.getInfo(itemID);
+    var interval = setInterval(function () {  
+      console.log('刷新页面！');
+      //这里放把存在本地的信息提交到后端的函数
+      that.setData({
+        //把本地的存要提交数据的数据结构清0
+      },function(){
+        //that.getInfo('3');
+        wx.request({//更新商品的价格
+          url: app.globalData.apiurl+'/getItemById/'+itemID,
+          method: 'GET',
+          header: {
+          'content-type': 'application/json'
+          },
+          success: function (res) {
+            var sellerID = res.data.sellerId;
+            wx.request({
+              url: app.globalData.apiurl+'/orders/getItemListBySellerId/'+sellerID,
+              method: 'GET',
+              header: {
+                'content-type': 'application/json'
+              },
+              success: function (res) {
+                var itemlist_length = res.data.obj.length;
+                var itemlist_count = 0;
+                var current_price = 'item.current_price';
+                var user_new_price = 'user.user_new_price';
+                var item_buyout_price = 'item.item_buyout_price';
+                while(itemlist_length>0){
+                  if(res.data.obj[itemlist_count].itemId==itemID){
+                    if(that.data.item.current_price != res.data.obj[itemlist_count].startPrice){
+                      that.setData({ 
+                        [current_price]: res.data.obj[itemlist_count].startPrice
+                      });
+                    }
+                    if(res.data.obj[itemlist_count].itemPrice!=null){
+                      that.setData({ 
+                        [item_buyout_price]: res.data.obj[itemlist_count].itemPrice,
+                        //[current_price]: res.data.obj[itemlist_count].itemPrice
+                      });
+                      if(that.data.item.current_price != res.data.obj[itemlist_count].itemPrice){
+                        that.setData({ 
+                          [current_price]: res.data.obj[itemlist_count].itemPrice
+                        });
+                      }
+                    }
+                    else{
+                      that.setData({ 
+                        [current_price]: res.data.obj[itemlist_count].startPrice,
+                        [user_new_price]: res.data.obj[itemlist_count].startPrice
+                      })
+                    }
+                  }
+                  itemlist_length--;
+                  itemlist_count++;
+                }
+              },
+              fail: function () {
+                // fail
+              },
+              complete: function () {
+                // // console.log("d");
+              }
+            })
+          },
+              fail: function () {
+                // fail
+              },
+              complete: function () {
+                // // console.log("d");
+              }
+            })
+
+
+
+            wx.request({//更新出价记录
+              url: app.globalData.apiurl+'/records/getRecordsByItemId/'+itemID,
+              method: 'GET',
+              header: {
+                'content-type': 'application/json'
+              },
+              success: function (res) {
+                var records_length = res.data.obj.length;
+                var records_count = 0;
+                var Userid = res.data.obj[records_length-1].userid;
+                while(records_length>0){
+                  var bid_list = 'bidList['+records_count+']';
+                  that.setData({
+                    [bid_list]:{
+                      item_id: res.data.obj[records_length-1].itemId, 
+                      user_id: res.data.obj[records_length-1].userid, 
+                      name: res.data.obj[records_length-1].userid, 
+                      price: res.data.obj[records_length-1].dealPrice,
+                    }
+                  });
+                  records_count++;
+                  records_length--;
+                } 
+              },
+              fail: function () {
+                // fail
+              },
+              complete: function () {
+                // // console.log("d");
+              }
+            })
+            wx.request({
+              url: app.globalData.apiurl+'/comments/getcomments?itemId='+itemID,
+              method: 'GET',
+              header: {
+                'content-type': 'application/json'
+              },
+              success: function (res) {
+                var length = res.data.obj.data.length;
+                var list='';
+                // console.log("length:"+length);
+                var count = 0;
+
+
+
+                
+
+
+                that.setData({ 
+                  comments_update: res.data.obj.data,
+                });    
+                while(length>0){
+                  list = 'commentList['+count+']';
+                  var item_id = 'commentList['+count+'].item_id';
+                  var id = 'commentList['+count+'].id';
+                  var name = 'commentList['+count+'].name';
+                  var text = 'commentList['+count+'].text';
+                  var url = 'commentList['+count+'].url';
+                  var role = 'commentList['+count+'].role';
+                  var time = 'commentList['+count+'].time';
+                  // console.log("list:"+list);
+                  that.setData({
+                      [item_id]: that.data.item.item_id, 
+                      [id]:res.data.obj.data[count].commentId,
+                      [name]:res.data.obj.data[count].userName,
+                      [text]:res.data.obj.data[count].content,
+                      [url]:res.data.obj.data[count].userIcon,
+                      [role]:'buyer',
+                      [time]:res.data.obj.data[count].time,
+                    });
+                      length--;
+                      count++;
+                }
+                    //console.log("项目传来的数据"+res.data)
+                  },
+                  fail: function () {
+                    // fail
+                  },
+                  complete: function () {
+                    // // console.log("d");
+                  }
+                })
+
+                wx.request({//获取全部的子评论
+                  url: app.globalData.apiurl+'/comments/getAllReviews',
+                  method: 'GET',
+                  header: {
+                    'content-type': 'application/json'
+                  },
+                  success: function (res) {
+                    that.setData({
+                      subsub_comments_subsubsub:res.data.obj
+                    },function(){
+                     var comments = that.data.commentList;
+                     var gettedData = that.data.subsub_comments_subsubsub;
+                     var comments_length = comments.length;
+                     var subsub_length = gettedData.length;
+                     var comments_count = 0;
+                     var subsub_count = 0;
+                     if(res.data.obj.length != that.data.subsub_comments_subsub.length){
+                        console.log("发生了变化需要更新数据");
+                        // console.log("新的长度"+that.data.subsub_comments_subsubsub.length);
+                        // console.log("原来的长度"+that.data.subsub_comments_subsub.length);
+                          for(var i = 0 ; i < comments_length ; i++){
+                            // console.log("A");
+                            var count = 0;
+                            for(var aa = 0 ; aa < subsub_length ; aa++){
+                              var targetData = 'commentList['+i+'].sub_comments['+count+']';
+                              if(comments[i].id == gettedData[aa].commentId){
+                                // console.log("找到了对应id");
+                                // console.log("comments[i].id"+comments[i].id);
+                                // console.log("gettedData[aa].commentId"+gettedData[aa].commentId);
+                                // console.log("gettedData[aa].id"+gettedData[aa].reviewId);
+                                var time = Time.formatTime(new Date(gettedData[aa].time));
+                                that.setData({
+                                  [targetData]:{
+                                    name:gettedData[aa].fromUserName,
+                                    target:gettedData[aa].toUserName,
+                                    fromUserId:gettedData[aa].fromUser,
+                                    toUserId:gettedData[aa].toUser,
+                                    text:gettedData[aa].content,
+                                    role:'buyer',
+                                    father:gettedData[aa].commentId,
+                                    time:time,
+                                    id:gettedData[aa].reviewId,
+                                    show:true
+                                  }
+                                });
+                                count = count + 1;
+                              }
+                            }
+                        }
+                     }
+                     else{
+                       console.log("没有发生变化不做任何操作");
+                      //  console.log("新的长度"+that.data.subsub_comments_subsubsub.length);
+                      //   console.log("原来的长度"+that.data.subsub_comments_subsub.length);
+                     }
+                    
+                    });
+                  },
+                  fail: function () {
+                    // fail
+                    console.log("fffffffff");
+                  },
+                  complete: function () {
+                    // // console.log("d");
+                  }
+                })
+
+
+          
+
+
+          })
+    }, 10000) //循环间隔 单位ms
   }
 //   function getItems(){
 //     wx.request({
@@ -837,8 +1143,10 @@ Page({
   //       console.log("fffffffff");
   //     },
   //     complete: function () {
-  //       console.log("d");
+  //       // console.log("d");
   //     }
   //   })
   // }
 })
+
+

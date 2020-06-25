@@ -157,7 +157,7 @@
             <image class="user_info_imgg1 margin-xs" src="{{user.user_url}}"></image>
             <view class="comment_text margin text-black">{{user.user_name}}</view>
             <view wx:if="{{user.user_role=='seller'}}" class="text-lg margin-xs cu-tag bg-green light radius">卖家</view>
-            <button wx:if="{{item.name == user.name}}" class="delete cu-btn padding-0 text-blue bg-white">删除</button>
+            <button wx:if="{{item.name == user.user_name}}" class="delete cu-btn padding-0 text-blue bg-white">删除</button>
           </view>
           <view class="padding comment_text">{{item.text}}</view>
           <view class="padding-0 padding-bottom-sm text-sm comment_time">{{item.time}}</view>
@@ -168,35 +168,42 @@
   <!-- 评论的显示 -->
   <view id="comments" class="padding text-lg text-gray" wx:for="{{commentList}}">
         <view class="comment align-center">
-          <view id="comment_head" class="flex justify-start align-center">
-            <image class="user_info_imgg1 margin-xs" src="{{item.url}}"></image>
-            <button  bindtap="openSubcomment_1" data-text="{{item.name}}" data-father="{{item.item_id}}" class="text-lg cu-btn padding-0 text-blue bg-white">{{item.name}}</button>
-            <view wx:if="{{item.role=='seller'}}" class="text-lg margin-xs cu-tag bg-green light radius">卖家</view>
-            <button wx:if="{{item.name == user.name}}" class="text-lg cu-btn padding-0 text-blue bg-white">删除</button>
+          <view id="comment_head" class="flex justify-between align-center">
+            <view class="flex justify-between align-center">
+              <image class="user_info_imgg1 margin-xs" src="{{item.url}}"></image>
+              <button  bindtap="openSubcomment_1" data-text="{{item.name}}" data-father="{{item.id}}" class="text-lg cu-btn padding-0 text-blue bg-white">{{item.name}}</button>
+              <view wx:if="{{item.role=='seller'}}" class="text-lg margin-xs cu-tag bg-green light radius">卖家</view>
+            </view>
+            <button wx:if="{{item.name == user.user_name}}" bindtap="deleteComment" data-deleteid="{{item.id}}" class="text-lg cu-btn padding-0 text-blue bg-white">删除</button>
           </view>
           <view class="padding comment_text">{{item.text}}</view>
           <view class="padding-0 padding-bottom-sm text-sm comment_time">{{item.time}}</view>
 
           <!-- sub评论的显示 -->
-          <view class="subcomment padding comment_text text-df" wx:for="{{item.sub_comments}}">
-            <view class="subcomment_title flex justify-start align-center">
-              <button bindtap="openSubcomment"  data-text="{{item.name}}" data-father="{{item.father}}" class="cu-btn padding-0 text-blue bg-white">{{item.name}}</button>
-              <text class="text-df padding-left-sm padding-right-sm">回复</text>
-              <button bindtap="openSubcomment" data-text="{{item.target}}" data-father="{{item.father}}" class="cu-btn padding-0 text-blue bg-white">{{item.target}}</button>
+          <view wx:for="{{item.sub_comments}}">
+            <view hidden="{{!item.show}}" class="subcomment padding comment_text text-df">
+              <view hidden="{{!item.show}}" class="flex justify-between align-center">
+                <view class="subcomment_title flex justify-start align-center">
+                  <button bindtap="openSubcomment"  data-text="{{item.name}}" data-father="{{item.father}}" class="cu-btn padding-0 text-blue bg-white">{{item.name}}</button>
+                  <text class="text-df padding-left-sm padding-right-sm">回复</text>
+                  <button bindtap="openSubcomment" data-text="{{item.target}}" data-father="{{item.father}}" class="cu-btn padding-0 text-blue bg-white">{{item.target}}</button>
+                </view>
+                <button wx:if="{{item.name == user.user_name}}" bindtap="deleteSubComment" data-deleteid="{{item.id}}" class="cu-btn padding-0 text-blue bg-white">删除</button>
+              </view>
+              <text hidden="{{!item.show}}" >{{item.text}}</text>
+              <view hidden="{{!item.show}}"  class="padding-0 text-sm comment_time_sub">{{item.time}}</view>
             </view>
-            {{item.text}}
-            <view class="padding-0 text-sm comment_time_sub">{{item.time}}</view>
           </view>
 
           <!-- 新sub评论的显示 -->
           <view hidden="{{!new_subcomment_bool}}" wx:for="{{subcommentInput_list}}" wx:for-item="subfor">
-            <view hidden="{{subfor.father!=item.item_id}}" class="subcomment padding comment_text text-df" >
-              <view hidden="{{subfor.father!=item.item_id}}" class="subcomment_title flex justify-start align-center">
-                <button  hidden="{{subfor.father!=item.item_id}}" bindtap="openSubcomment"  data-text="{{user.user_name}}" data-father="{{subfor.father}}" class="cu-btn padding-0 text-blue bg-white">{{user.user_name}}</button>
-                <text  hidden="{{subfor.father!=item.item_id}}" class="text-df padding-left-sm padding-right-sm">回复</text>
-                <button  hidden="{{subfor.father!=item.item_id}}" bindtap="openSubcomment" data-text="{{subfor.target}}" data-father="{{subfor.father}}" class="cu-btn padding-0 text-blue bg-white">{{subfor.target}}</button>
+            <view hidden="{{subfor.father!=item.id}}" class="subcomment padding comment_text text-df" >
+              <view hidden="{{subfor.father!=item.id}}" class="subcomment_title flex justify-start align-center">
+                <button  hidden="{{subfor.father!=item.id}}" bindtap="openSubcomment"  data-text="{{user.user_name}}" data-father="{{subfor.father}}" class="cu-btn padding-0 text-blue bg-white">{{user.user_name}}</button>
+                <text  hidden="{{subfor.father!=item.id}}" class="text-df padding-left-sm padding-right-sm">回复</text>
+                <button  hidden="{{subfor.father!=item.id}}" bindtap="openSubcomment" data-text="{{subfor.target}}" data-father="{{subfor.father}}" class="cu-btn padding-0 text-blue bg-white">{{subfor.target}}</button>
               </view>
-              <text hidden="{{subfor.father!=item.item_id}}">{{subfor.text}}</text>
+              <text hidden="{{subfor.father!=item.id}}">{{subfor.text}}</text>
               <view class="padding-0 padding-bottom-sm text-sm comment_time">{{subfor.time}}</view>
             </view>
           </view> 

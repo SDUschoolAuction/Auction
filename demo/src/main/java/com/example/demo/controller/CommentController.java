@@ -86,10 +86,17 @@ public class CommentController {
      * @Date: 2020/6/15
      */
 
+    
     @RequestMapping("/addReview")
     public Msg addReview(int commentId,String content,Timestamp time,int fromUser,int toUser){ return commentService.addReview(commentId,content,time,fromUser,toUser); }
 
-
+    /**
+     * @Description: 获取所有回复的消息，同时返回用户的头像、姓名等信息
+     * @Param: [] 
+     * @returns: com.example.demo.util.Msg 
+     * @Author: Exgc
+     * @Date: 2020/6/24 22:34
+     */
     @RequestMapping("/getAllReviews")
     public Msg getAllReviews(){
         return commentService.getAllReviews();

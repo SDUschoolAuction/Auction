@@ -2,37 +2,60 @@
 <!-- 首页 -->
 <view class="first_tab">
   <navigator 
-  class="goods_item" url="/pages/detail/detail"
+  class="goods_item" url="/pages/detail/detail?itemId={{item.itemId}}"
   wx:for="{{goodsList}}" 
   wx:for-index="i"
   wx:key="itemId"
   wx:if="{{i<m}}" >
 
+   <!-- IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII -->
     <!-- 图片容器 -->
     <view class="goods_image_wrap">
       <image src="{{item.itemImg1}}" mode="aspextFit"></image>
     </view>
     <!-- 倒计时 -->
-    <view class="one {{showView?'show':'hide'}}" >
+    <view wx:if="{{item.stateGoods!=1}}">
+<view wx:if="{{item.startTime<item.nowTime}}">
+    <view class="one.show" wx:if="{{item.showView!=false}}">
         <!-- <view class="count_down"> -->
                   <text class="time_end" decode="{{true}}" space="{{true}}">距离拍卖结束 &nbsp;&nbsp;</text>
                 <!--  <view class="time">5天11小时23分</view> -->
-                      <view wx:if="{{day>1}}" class="cu bg-black radius text-yellow">{{day}}</view>
-                      <view wx:if="{{day>1}}" class="bolder1">天</view>
-                      <view class="cu bg-black radius text-yellow" >{{hou}}</view>
+                      <view wx:if="{{item.day>1}}" class="cu bg-black radius text-yellow">{{item.day}}</view>
+                      <view wx:if="{{item.day>1}}" class="bolder1">天</view>
+                      <view class="cu bg-black radius text-yellow" >{{item.hou}}</view>
                       <view class="bolder">:</view>
-                      <view class="cu bg-black radius text-yellow" >{{min}}</view>
+                      <view class="cu bg-black radius text-yellow" >{{item.min}}</view>
                       <view class="bolder">:</view>
-                      <view class="cu bg-black radius text-yellow" >{{sec}}</view>
+                      <view class="cu bg-black radius text-yellow" >{{item.sec}}</view>
         <!-- </view> -->
     </view>
-    <view class="two {{showView?'hide':'show'}}">
+    <view class="one.hide"  wx:if="{{item.showView==false}}">
         <view class="count_down_end"> 
               <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;拍卖已结束</text>
         </view>
     </view>
+  </view>
+<view wx:if="{{item.startTime>item.nowTime}}">
+<view  class="one.show">
+        <!-- <view class="count_down"> -->
+                  <text class="time_end" decode="{{true}}" space="{{true}}">距离拍卖开始 &nbsp;&nbsp;</text>
+               
+                      <view wx:if="{{item.day>1}}" class="cu bg-black radius text-yellow">{{item.day}}</view>
+                      <view wx:if="{{item.day>1}}" class="bolder1">天</view>
+                      <view class="cu bg-black radius text-yellow" >{{item.hou}}</view>
+                      <view class="bolder">:</view>
+                      <view class="cu bg-black radius text-yellow" >{{item.min}}</view>
+                      <view class="bolder">:</view>
+                      <view class="cu bg-black radius text-yellow" >{{item.sec}}</view>
 
-    
+    </view>
+
+</view>
+
+
+
+</view>
+
     <!-- 商品容器 -->
     <view class="goods_info_wrap">
       <!-- 商品名称 -->
@@ -46,6 +69,8 @@
         <view class="goods_num_participants">11人想要</view>
       </view>
     </view>
+  <!-- IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII -->
+
   </navigator>
    
 
@@ -54,15 +79,3 @@
   
 </view>
   <tabbar tabbar="{{tabbar}}"></tabbar>
-
-
-
-<!-- 商品详情页的入口，因为原本没有给入口的按钮，我就写在这了，到时候主页建好了把商品的预览连过来就好了 -->
-<!-- <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
-  <view class="cu-item arrow">
-      <navigator class="content" url="/pages/detail/detail" hover-class="none">
-        <text class="cuIcon-myfill text-cyan"></text>
-        <text class="text-grey">商品详情页</text>
-      </navigator>
-    </view> -->
-<!--   </view> -->
