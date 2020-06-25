@@ -2,8 +2,9 @@ package com.example.demo.service;
 import com.example.demo.entity.Record;
 import com.example.demo.util.Msg;
 
-public interface dealService {
+public interface DealService {
    Msg addDealRecord(Record record);
-   //Msg updateItemDealPrice(Records record);
+
+   Msg bid(Record record) throws InterruptedException;
 
 }

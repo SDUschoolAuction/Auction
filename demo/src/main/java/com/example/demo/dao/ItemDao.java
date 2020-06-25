@@ -2,6 +2,7 @@ package com.example.demo.dao;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.entity.Item;
+import com.example.demo.entity.Record;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

@@ -6,29 +6,28 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 public class Record {
-    private long userid;
-    private long itemId;
-
+    private Integer userId;
+    private Integer itemId;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date dealTime;
-    private long dealPrice;
+    private Integer dealPrice;
     private String telephoneNumber;
 
 
-    public long getUserid() {
-        return userid;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUserid(long userid) {
-        this.userid = userid;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public long getItemId() {
+    public Integer getItemId() {
         return itemId;
     }
 
-    public void setItemId(long itemId) {
+    public void setItemId(Integer itemId) {
         this.itemId = itemId;
     }
 
@@ -40,11 +39,11 @@ public class Record {
         this.dealTime = dealTime;
     }
 
-    public long getDealPrice() {
+    public Integer getDealPrice() {
         return dealPrice;
     }
 
-    public void setDealPrice(long dealPrice) {
+    public void setDealPrice(Integer dealPrice) {
         this.dealPrice = dealPrice;
     }
 
@@ -54,5 +53,16 @@ public class Record {
 
     public void setTelephoneNumber(String telephoneNumber) {
         this.telephoneNumber = telephoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Record{" +
+                "userId=" + userId +
+                ", itemId=" + itemId +
+                ", dealTime=" + dealTime +
+                ", dealPrice=" + dealPrice +
+                ", telephoneNumber='" + telephoneNumber + '\'' +
+                '}';
     }
 }
