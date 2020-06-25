@@ -60,7 +60,7 @@ Page({
       seller_info2:'',//卖家提供的信息2
       seller_url:'',//卖家的头像地址
 
-      user_name:'cxz',
+      user_name:'wei',
       user_url:'/image/head.png',//此账户用户的头像地址
       user_role:'visitor',//==========
       //此账户用户的身份，包含：“visitor”出价者、“buyer”竞拍者、“seller”拍卖者、“winner”中标者
@@ -197,8 +197,52 @@ Page({
   deleteComment:function(e){//出价界面展开/收起切换函数
     var id = e.currentTarget.dataset.deleteid;
     console.log("将要删除的评论的id为:"+id);
-    this.setData({
+    wx.request({
+      url: app.globalData.apiurl+'/deleteComments',
+      method: 'DELETE',
+      data:{
+        'commentId': id
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (boolean) {
+        if(boolean){
+          console.log("将要删除的评论的id为:"+id+"删除成功");
+        }
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        console.log("d");
+      }
     })
+  },
+  deleteSubComment:function(e){//出价界面展开/收起切换函数
+    var id = e.currentTarget.dataset.deleteid;
+    console.log("将要删除的二级评论的id为:"+id);
+    // wx.request({
+    //   url: app.globalData.apiurl+'/deleteComments',
+    //   method: 'DELETE',
+    //   data:{
+    //     'commentId': id
+    //   },
+    //   header: {
+    //     'content-type': 'application/json'
+    //   },
+    //   success: function (boolean) {
+    //     if(boolean){
+    //       console.log("将要删除的评论的id为:"+id+"删除成功");
+    //     }
+    //   },
+    //   fail: function () {
+    //     // fail
+    //   },
+    //   complete: function () {
+    //     console.log("d");
+    //   }
+    // })
   },
   openSubcomment_1:function(e){//点击主列表的用户名的出价界面展开/收起切换函数
     var target = e.currentTarget.dataset.text;
@@ -658,7 +702,8 @@ Page({
                                   text:subsub[aa].content,
                                   role:'buyer',
                                   father:subsub[aa].commentId,
-                                  time:time
+                                  time:time,
+                                  id:subsub[aa].reviewId
                                 }
                               });
                               count = count + 1;
