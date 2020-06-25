@@ -60,7 +60,7 @@ Page({
       seller_info2:'',//卖家提供的信息2
       seller_url:'',//卖家的头像地址
 
-      user_name:'wei',
+      user_name:'cxz',
       user_url:'/image/head.png',//此账户用户的头像地址
       user_role:'visitor',//==========
       //此账户用户的身份，包含：“visitor”出价者、“buyer”竞拍者、“seller”拍卖者、“winner”中标者
@@ -196,18 +196,66 @@ Page({
   },
   deleteComment:function(e){//出价界面展开/收起切换函数
     var id = e.currentTarget.dataset.deleteid;
+    var that = this;
     console.log("将要删除的评论的id为:"+id);
     wx.request({
-      url: app.globalData.apiurl+'/deleteComments',
+      url: app.globalData.apiurl+'/comments/deleteComment?commentId='+id,
       method: 'DELETE',
-      data:{
-        'commentId': id
-      },
       header: {
         'content-type': 'application/json'
       },
       success: function (boolean) {
         if(boolean){
+          wx.request({
+            url: app.globalData.apiurl+'/comments/getcomments?itemId='+that.data.item.item_id,
+            method: 'GET',
+            header: {
+              'content-type': 'application/json'
+            },
+            success: function (res) {
+              var length = res.data.obj.data.length;
+              var list='';
+              // console.log("length:"+length);
+              var count = 0;
+              that.setData({ 
+                comments: res.data.obj.data,
+              });    
+              while(length>0){
+                list = 'commentList['+count+']';
+                //console.log("list:"+list);
+                that.setData({
+                  [list]:{ 
+                    item_id: that.data.item.item_id, 
+                    id:res.data.obj.data[count].commentId,
+                    user_id:res.data.obj.data[count].userId,
+                    name:res.data.obj.data[count].userName,
+                    text:res.data.obj.data[count].content,
+                    url:res.data.obj.data[count].userIcon,
+                    role:'buyer',
+                    time:res.data.obj.data[count].time,
+                    sub_comments:[
+                    // { name:'我是用户1号',
+                    //   target:'我是用户2号',
+                    //   text:'你是不是傻，不喜欢评论啥',
+                    //   role:'buyer',
+                    //   father:'2',
+                    //   time:'2010-08-01 10:30:00'}
+                    ]
+                  }
+                });
+                count++;
+                length--;
+              }
+                },
+                fail: function () {
+                  // fail
+                  console.log("fffffffff");
+                },
+                complete: function () {
+                  //// console.log("d");
+                }
+              }) 
+
           console.log("将要删除的评论的id为:"+id+"删除成功");
         }
       },
