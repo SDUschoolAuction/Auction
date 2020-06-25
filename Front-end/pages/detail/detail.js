@@ -60,7 +60,7 @@ Page({
       seller_info2:'',//卖家提供的信息2
       seller_url:'',//卖家的头像地址
 
-      user_name:'myUsername',
+      user_name:'cxz',
       user_url:'/image/head.png',//此账户用户的头像地址
       user_role:'visitor',//==========
       //此账户用户的身份，包含：“visitor”出价者、“buyer”竞拍者、“seller”拍卖者、“winner”中标者
@@ -192,6 +192,12 @@ Page({
       subcomment_father:father,
       subcomment_target:target,
       subcomment_show: true
+    })
+  },
+  deleteComment:function(e){//出价界面展开/收起切换函数
+    var id = e.currentTarget.dataset.deleteid;
+    console.log("将要删除的评论的id为:"+id);
+    this.setData({
     })
   },
   openSubcomment_1:function(e){//点击主列表的用户名的出价界面展开/收起切换函数
@@ -755,7 +761,7 @@ Page({
                 [bid_list]:{
                   item_id: res.data.obj[records_length-1].itemId, 
                   user_id: res.data.obj[records_length-1].userid, 
-                  //name:'我是用户1号',
+                  name: res.data.obj[records_length-1].userName, 
                   price: res.data.obj[records_length-1].dealPrice,
                 }
               },function(){
