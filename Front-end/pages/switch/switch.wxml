@@ -79,15 +79,3 @@
   
 </view>
   <tabbar tabbar="{{tabbar}}"></tabbar>
-
-
-
-<!-- 商品详情页的入口，因为原本没有给入口的按钮，我就写在这了，到时候主页建好了把商品的预览连过来就好了 -->
-<!-- <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
-  <view class="cu-item arrow">
-      <navigator class="content" url="/pages/detail/detail" hover-class="none">
-        <text class="cuIcon-myfill text-cyan"></text>
-        <text class="text-grey">商品详情页</text>
-      </navigator>
-    </view> -->
-<!--   </view> -->
