@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.entity.Record;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -8,8 +9,8 @@ import java.util.List;
 @Mapper
 public interface RecordsDao {
 
-    @Select("SELECT * from records\n" +
-            "\twhere itemId=#{itemId}\n" +
+    @Select("SELECT users.userId userId,users.name userName,users.userIcon userIcon,records.telephoneNumber telephoneNumber,records.dealPrice dealPrice,records.itemId itemId,records.dealTime dealTime from records,users\n" +
+            "\twhere records.itemId=#{itemId} and records.userId=users.userid\n" +
             "\torder by dealPrice desc;")
-    List<Record> getRecordsByItemId(int itemId);
+    List<JSONObject> getRecordsByItemId(int itemId);
 }
