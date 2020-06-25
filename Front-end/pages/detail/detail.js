@@ -762,7 +762,7 @@ Page({
                 [bid_list]:{
                   item_id: res.data.obj[records_length-1].itemId, 
                   user_id: res.data.obj[records_length-1].userid, 
-                  name: res.data.obj[records_length-1].userid, 
+                  name: res.data.obj[records_length-1].userName, 
                   price: res.data.obj[records_length-1].dealPrice,
                 }
               });
@@ -974,7 +974,7 @@ Page({
                      var subsub_count = 0;
                      if(res.data.obj.length != that.data.subsub_comments_subsub.length){
                         console.log("没有发生了变化需要更新数据");
-                        console.log("新的长度"+res.data.obj.length);
+                        console.log("新的长度"+that.data.subsub_comments_subsubsub.length);
                         console.log("原来的长度"+that.data.subsub_comments_subsub.length);
 
                         //   for(var i = 0 ; i < comments_length ; i++){
@@ -1003,7 +1003,7 @@ Page({
                      else{
                        console.log("没有发生变化不做任何操作");
                        console.log("新的长度"+res.data.obj.length);
-                      console.log("原来的长度"+that.data.subsub_comments_subsub.length);
+                        console.log("原来的长度"+that.data.subsub_comments_subsub.length);
                      }
                     
                     });
@@ -1022,7 +1022,7 @@ Page({
 
 
           })
-    }, 1000) //循环间隔 单位ms
+    }, 100000) //循环间隔 单位ms
   }
 //   function getItems(){
 //     wx.request({
