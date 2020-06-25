@@ -267,30 +267,42 @@ Page({
       }
     })
   },
-  deleteSubComment:function(e){//出价界面展开/收起切换函数
+  deleteSubComment:function(e){
+    var that = this;
     var id = e.currentTarget.dataset.deleteid;
     console.log("将要删除的二级评论的id为:"+id);
-    // wx.request({
-    //   url: app.globalData.apiurl+'/deleteComments',
-    //   method: 'DELETE',
-    //   data:{
-    //     'commentId': id
-    //   },
-    //   header: {
-    //     'content-type': 'application/json'
-    //   },
-    //   success: function (boolean) {
-    //     if(boolean){
-    //       console.log("将要删除的评论的id为:"+id+"删除成功");
-    //     }
-    //   },
-    //   fail: function () {
-    //     // fail
-    //   },
-    //   complete: function () {
-    //     // console.log("d");
-    //   }
-    // })
+    wx.request({
+      url: app.globalData.apiurl+'/comments/deleteReviewsForComments?reviewId='+id,
+      method: 'DELETE',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (boolean) {
+        if(boolean){  
+          var comments = that.data.commentList;
+          var comments_length = comments.length;
+          for(var i = 0 ; i < comments_length ; i++){
+            var sub_length = comments[i].sub_comments.length;
+            for(var aa = 0 ; aa < sub_length ; aa++){
+              if(comments[i].sub_comments[aa].id == id){
+                //comments[i].sub_comments.splice(aa,1);
+                var show = 'commentList['+i+'].sub_comments['+aa+'].show';
+                that.setData({
+                  [show]:false
+                });
+              }
+            }
+          }
+          console.log("将要删除的评论的id为:"+id+"删除成功");
+        }
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        // console.log("d");
+      }
+    })
   },
   openSubcomment_1:function(e){//点击主列表的用户名的出价界面展开/收起切换函数
     var target = e.currentTarget.dataset.text;
@@ -764,7 +776,8 @@ Page({
                                   role:'buyer',
                                   father:subsub[aa].commentId,
                                   time:time,
-                                  id:subsub[aa].reviewId
+                                  id:subsub[aa].reviewId,
+                                  show:true
                                 }
                               });
                               count = count + 1;
