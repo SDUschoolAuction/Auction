@@ -2,14 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.service.Impl.commentServiceImpl;
 import com.example.demo.util.Msg;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Description;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 
 @RestController
 @RequestMapping("/comments")
@@ -73,15 +71,15 @@ public class CommentController {
 
     /**
      * @Description: 添加留言
-     * @Param: [itemId],[userId],[content],[time]
+     * @Param: [itemId],[userId],[content]
      * @return: com.example.demo.util.Msg
      * @Author: Li Ao
      * @Date: 2020/6/15
      */
     @RequestMapping("/addComments")
-    public Msg addComments(int itemId,int userId,String content,String time){ return commentService.addComments(itemId,userId,content,time); }
+    public Msg addComments(int itemId, int userId, String content, Timestamp time){ return commentService.addComments(itemId,userId,content,time); }
     /**
-     * @Description:添加留言回复
+     * @Description: 添加留言回复
      * @Param: [commentId],[content],[time],[fromUser],[toUser]
      * @return: com.example.demo.util.Msg
      * @Author: Li Ao
@@ -89,7 +87,7 @@ public class CommentController {
      */
 
     @RequestMapping("/addReview")
-    public Msg addReview(int commentId,String content,String time,int fromUser,int toUser){ return commentService.addReview(commentId,content,time,fromUser,toUser); }
+    public Msg addReview(int commentId,String content,Timestamp time,int fromUser,int toUser){ return commentService.addReview(commentId,content,time,fromUser,toUser); }
 
 
     @RequestMapping("/getAllReviews")

@@ -12,6 +12,7 @@ import com.example.demo.util.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -119,6 +120,7 @@ public class commentServiceImpl implements commentService {
             jsonObject.put("data", jsonArray);
             return new Msg<>(0,"success",jsonObject);
         }catch(Exception e){
+
             return Msg.err("fail");
         }
     }
@@ -131,11 +133,12 @@ public class commentServiceImpl implements commentService {
      * @Author: Li Ao
      * @Date: 2020/6/15
      */
-    public Msg addComments(int itemId,int userId,String content,String time){
+    public Msg addComments(int itemId, int userId, String content, Timestamp time){
         try {
             commentDao.addComment(itemId,userId,content,time);
             return Msg.ok("success");
         }catch (Exception E){
+            System.out.println(E);
             return Msg.err("fail");
         }
     }
@@ -147,11 +150,12 @@ public class commentServiceImpl implements commentService {
      * @Author: Li Ao
      * @Date: 2020/6/15
      */
-    public Msg addReview(int commentId,String content,String time,int fromUser,int toUser){
+    public Msg addReview(int commentId,String content,Timestamp time,int fromUser,int toUser){
         try{
             commentDao.addReview(commentId,content,time,fromUser,toUser);
             return Msg.ok("success");
         }catch (Exception e){
+            System.out.println(e);
             return Msg.err("fail");
         }
 
