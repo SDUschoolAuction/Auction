@@ -1002,7 +1002,7 @@ Page({
                      }
                      else{
                        console.log("没有发生变化不做任何操作");
-                       console.log("新的长度"+res.data.obj.length);
+                       console.log("新的长度"+that.data.subsub_comments_subsubsub.length);
                         console.log("原来的长度"+that.data.subsub_comments_subsub.length);
                      }
                     
@@ -1022,7 +1022,7 @@ Page({
 
 
           })
-    }, 100000) //循环间隔 单位ms
+    }, 99999999) //循环间隔 单位ms
   }
 //   function getItems(){
 //     wx.request({
