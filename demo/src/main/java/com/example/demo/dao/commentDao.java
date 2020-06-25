@@ -6,6 +6,7 @@ import com.example.demo.entity.Review;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Mapper
@@ -31,10 +32,10 @@ public interface commentDao {
 
 //         添加留言
         @Insert("insert into comment (itemId,userId,content,time) values (#{itemId},#{userId},#{content},#{time})")
-        Integer addComment(@Param("itemId") int itemId,@Param("userId") int userId,@Param("content") String content,@Param("time") String time);
+        Integer addComment(@Param("itemId") int itemId,@Param("userId") int userId,@Param("content") String content,@Param("time") Timestamp time);
 //         添加回复
-        @Insert("insert into review (commentId,content,time,fromUser,toUser) values (#{commentId},,#{content},#{time},#{fromUser},#{toUser})")
-        Integer addReview(@Param("commentId") int commentId,@Param("content") String content,@Param("time") String time,@Param("fromUser") int fromUser,@Param("toUser") int toUser);
+        @Insert("insert into review (commentId,content,time,fromUser,toUser) values (#{commentId},#{content},#{time},#{fromUser},#{toUser})")
+        Integer addReview(@Param("commentId") int commentId,@Param("content") String content,@Param("time") Timestamp time,@Param("fromUser") int fromUser,@Param("toUser") int toUser);
 
         @Select("Select reviewId,commentId,content,`time`,fromUser,toUser,user1.name fromUserName,user2.name toUserName,user1.userIcon fromUserIcon,user2.userIcon toUserIcon\n" +
                 "\tfrom review,users user1,users user2 \n" +

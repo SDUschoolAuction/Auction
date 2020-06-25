@@ -18,7 +18,6 @@ public class Order {
     this.dealPrice = dealPrice;
   }
 
-
   public long getPeopleCount() {
     return peopleCount;
   }
