@@ -989,23 +989,33 @@ Page({
                 var list='';
                 // console.log("length:"+length);
                 var count = 0;
+
+
+
+                
+
+
                 that.setData({ 
                   comments_update: res.data.obj.data,
                 });    
                 while(length>0){
                   list = 'commentList['+count+']';
+                  var item_id = 'commentList['+count+'].item_id';
+                  var id = 'commentList['+count+'].id';
+                  var name = 'commentList['+count+'].name';
+                  var text = 'commentList['+count+'].text';
+                  var url = 'commentList['+count+'].url';
+                  var role = 'commentList['+count+'].role';
+                  var time = 'commentList['+count+'].time';
                   // console.log("list:"+list);
                   that.setData({
-                    [list]:{ 
-                      item_id: that.data.item.item_id, 
-                      id:res.data.obj.data[count].commentId,
-                      name:res.data.obj.data[count].userName,
-                      text:res.data.obj.data[count].content,
-                      url:res.data.obj.data[count].userIcon,
-                      role:'buyer',
-                      time:res.data.obj.data[count].time,
-                      sub_comments:[]
-                    }
+                      [item_id]: that.data.item.item_id, 
+                      [id]:res.data.obj.data[count].commentId,
+                      [name]:res.data.obj.data[count].userName,
+                      [text]:res.data.obj.data[count].content,
+                      [url]:res.data.obj.data[count].userIcon,
+                      [role]:'buyer',
+                      [time]:res.data.obj.data[count].time,
                     });
                       length--;
                       count++;
@@ -1031,45 +1041,49 @@ Page({
                       subsub_comments_subsubsub:res.data.obj
                     },function(){
                      var comments = that.data.commentList;
-                     var subsub = that.data.subsub_comments_subsubsub;
+                     var gettedData = that.data.subsub_comments_subsubsub;
                      var comments_length = comments.length;
-                     var subsub_length = subsub.length;
+                     var subsub_length = gettedData.length;
                      var comments_count = 0;
                      var subsub_count = 0;
                      if(res.data.obj.length != that.data.subsub_comments_subsub.length){
-                        console.log("没有发生了变化需要更新数据");
-                        console.log("新的长度"+that.data.subsub_comments_subsubsub.length);
-                        console.log("原来的长度"+that.data.subsub_comments_subsub.length);
-
-                        //   for(var i = 0 ; i < comments_length ; i++){
-                        //     // console.log("A");
-                        //     var count = 0;
-                        //     for(var aa = 0 ; aa < subsub_length ; aa++){
-                        //       var subsubsub = 'commentList['+i+'].sub_comments['+count+']';
-                        //       if(comments[i].id == subsub[aa].commentId)){
-                        //         var time = Time.formatTime(new Date(subsub[aa].time));
-                        //         that.setData({
-                        //           [subsubsub]:{
-                        //             name:subsub[aa].fromUserName,
-                        //             target:subsub[aa].toUserName,
-                        //             fromUserId:subsub[aa].fromUser,
-                        //             toUserId:subsub[aa].toUser,
-                        //             text:subsub[aa].content,
-                        //             role:'buyer',
-                        //             father:subsub[aa].commentId,
-                        //             time:time,
-                        //             id:subsub[aa].reviewId
-                        //           }
-                        //         });
-                        //         count = count + 1;
-                        //       }
-                        //     }
-                        // }
+                        console.log("发生了变化需要更新数据");
+                        // console.log("新的长度"+that.data.subsub_comments_subsubsub.length);
+                        // console.log("原来的长度"+that.data.subsub_comments_subsub.length);
+                          for(var i = 0 ; i < comments_length ; i++){
+                            // console.log("A");
+                            var count = 0;
+                            for(var aa = 0 ; aa < subsub_length ; aa++){
+                              var targetData = 'commentList['+i+'].sub_comments['+count+']';
+                              if(comments[i].id == gettedData[aa].commentId){
+                                // console.log("找到了对应id");
+                                // console.log("comments[i].id"+comments[i].id);
+                                // console.log("gettedData[aa].commentId"+gettedData[aa].commentId);
+                                // console.log("gettedData[aa].id"+gettedData[aa].reviewId);
+                                var time = Time.formatTime(new Date(gettedData[aa].time));
+                                that.setData({
+                                  [targetData]:{
+                                    name:gettedData[aa].fromUserName,
+                                    target:gettedData[aa].toUserName,
+                                    fromUserId:gettedData[aa].fromUser,
+                                    toUserId:gettedData[aa].toUser,
+                                    text:gettedData[aa].content,
+                                    role:'buyer',
+                                    father:gettedData[aa].commentId,
+                                    time:time,
+                                    id:gettedData[aa].reviewId,
+                                    show:true
+                                  }
+                                });
+                                count = count + 1;
+                              }
+                            }
+                        }
                      }
                      else{
                        console.log("没有发生变化不做任何操作");
-                       console.log("新的长度"+that.data.subsub_comments_subsubsub.length);
-                        console.log("原来的长度"+that.data.subsub_comments_subsub.length);
+                      //  console.log("新的长度"+that.data.subsub_comments_subsubsub.length);
+                      //   console.log("原来的长度"+that.data.subsub_comments_subsub.length);
                      }
                     
                     });
@@ -1088,7 +1102,7 @@ Page({
 
 
           })
-    }, 99999999) //循环间隔 单位ms
+    }, 10000) //循环间隔 单位ms
   }
 //   function getItems(){
 //     wx.request({
