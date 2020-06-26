@@ -154,8 +154,8 @@
   <view hidden="{{!new_comment_bool}}" id="comments_new" class="padding text-lg text-gray" wx:for="{{commentInput_list}}">
         <view class="comment align-center" hidden = "">
           <view id="comment_head" class="flex justify-start align-center">
-            <image class="user_info_imgg1 margin-xs" src="{{user.user_url}}"></image>
-            <view class="comment_text margin text-black">{{user.user_name}}</view>
+            <view class="user_info_imgg1 margin-xs" > <open-data  type="userAvatarUrl"></open-data></view>
+            <view class="comment_text margin text-black"><open-data type="userNickName"></open-data></view>
             <view wx:if="{{user.user_role=='seller'}}" class="text-lg margin-xs cu-tag bg-green light radius">卖家</view>
             <button wx:if="{{item.name == user.user_name}}" class="delete cu-btn padding-0 text-blue bg-white">删除</button>
           </view>
@@ -199,6 +199,7 @@
           <view hidden="{{!new_subcomment_bool}}" wx:for="{{subcommentInput_list}}" wx:for-item="subfor">
             <view hidden="{{subfor.father!=item.id}}" class="subcomment padding comment_text text-df" >
               <view hidden="{{subfor.father!=item.id}}" class="subcomment_title flex justify-start align-center">
+              
                 <button  hidden="{{subfor.father!=item.id}}" bindtap="openSubcomment"  data-text="{{user.user_name}}" data-father="{{subfor.father}}" class="cu-btn padding-0 text-blue bg-white">{{user.user_name}}</button>
                 <text  hidden="{{subfor.father!=item.id}}" class="text-df padding-left-sm padding-right-sm">回复</text>
                 <button  hidden="{{subfor.father!=item.id}}" bindtap="openSubcomment" data-text="{{subfor.target}}" data-father="{{subfor.father}}" class="cu-btn padding-0 text-blue bg-white">{{subfor.target}}</button>

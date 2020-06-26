@@ -22,4 +22,13 @@ public class RecordsServoceImpl implements RecordsService {
             return Msg.err(e.toString());
         }
     }
+
+    @Override
+    public Msg getRecordsCountByItemId(int itemId) {
+        try {
+            return new Msg<>(0,"success",recordsDao.getRecordsCountByItemId(itemId));
+        }catch (Exception e){
+            return Msg.err(e.toString());
+        }
+    }
 }

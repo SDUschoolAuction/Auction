@@ -4,4 +4,6 @@ import com.example.demo.util.Msg;
 
 public interface RecordsService {
     Msg getRecordsByItemId(int itemId);
+
+    Msg getRecordsCountByItemId(int itemId);
 }

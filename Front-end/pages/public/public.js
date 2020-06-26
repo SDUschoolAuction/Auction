@@ -68,7 +68,25 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    
+    var that = this;
+    var itemId = that.data.itemId;
+    var nickName = that.data.nickName;
+    wx.getStorage({
+      key: 'itemId',
+      success: function(res) {
+        that.setData({
+          itemId: res.data
+        })
+      },
+    })
+    wx.getStorage({
+      key: 'nickName',
+      success: function(res) {
+        that.setData({
+          nickName: res.data
+        })
+      },
+    })
   },
 
   /**
@@ -248,6 +266,8 @@ Page({
             var dateSecond = that.data.dateSecond
             var dateMinute = that.data.dateMinute
             var region = that.data.region
+            var itemId = that.data.itemId;
+            var nickNmae = that.data.nickName;
             var url = app.globalData.apiurl + '/addItemType/1'        
             wx.request({
               url,
@@ -261,7 +281,9 @@ Page({
                 itemInfo: textareaValue,
                 telephoneNumber: thingPhoneNumber,
                 itemLocation:region,  
-                itemImg:imgList
+                itemImg:imgList,
+                itemId: itemId, //用户的学号
+                nickName: nickNmae, //用户昵称
               },
               method: "POST",
               header: {
@@ -329,6 +351,8 @@ Page({
             var thingPhoneNumber = that.data.thingPhoneNumber; //电话
             var thingPrice = that.data.thingPrice; //价格
             var region = that.data.region
+            var itemId = that.data.itemId;
+            var nickNmae = that.data.nickName;
             var url = app.globalData.apiurl + '/addItemType/2'         
             wx.request({
               url,
@@ -339,7 +363,9 @@ Page({
                 itemInfo: textareaValue,
                 telephoneNumber: thingPhoneNumber,
                 itemLocation:region,  
-                itemImg:imgList
+                itemImg:imgList,
+                itemId: itemId, //用户的学号
+                nickName: nickNmae, //用户昵称
 
               },
               method: "POST",

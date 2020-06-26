@@ -1,22 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.COS.CosStsClient;
-import com.example.demo.util.Msg;
-import com.qcloud.cos.COSClient;
-import com.qcloud.cos.ClientConfig;
-import com.qcloud.cos.auth.BasicCOSCredentials;
-import com.qcloud.cos.auth.COSCredentials;
-import com.qcloud.cos.auth.COSSigner;
-import com.qcloud.cos.http.HttpMethodName;
-import com.qcloud.cos.model.GeneratePresignedUrlRequest;
-import com.qcloud.cos.region.Region;
-import org.apache.ibatis.annotations.Param;
 import org.json.JSONObject;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.Date;
 import java.util.TreeMap;
 
 /**

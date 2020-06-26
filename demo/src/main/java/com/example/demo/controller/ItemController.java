@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.entity.Item;
 import com.example.demo.factory.FactoryForTypeService;
@@ -22,6 +21,7 @@ public class ItemController {
 
     @Resource
     private FactoryForTypeService factoryForTypeService;
+
 
 
     /**

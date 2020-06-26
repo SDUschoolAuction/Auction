@@ -6,6 +6,8 @@ const Time = require('../../utils/time.js')
 const app = getApp();
 Page({
   data: {
+    
+    userId:'',
     subsub_comments:[],
     item_id_fromSwitch: '-1',
     comment_length:0,
@@ -81,53 +83,7 @@ Page({
       item_status: ""//标记当前商品的拍卖状态，有selling正在拍卖和sold已拍卖
     },
     commentList: [//评论的相关信息，seller角色的用户会出现卖家的提示tag，+++++++++
-      // { item_id: 1, 
-      //   name:'我是用户1号',
-      //   text:'我好喜欢这个商品啊！！',
-      //   url:'/image/head.png',
-      //   role:'buyer',
-      //   time:'2010-08-01 10:30:00',
-      //   sub_comments:[]
-      // }, 
-      // { item_id: 2, 
-      //   name:'我是用户2号',
-      //   text:'我不喜欢但是我我还是要评论',
-      //   url:'/image/head.png',
-      //   role:'seller',
-      //   time:'2010-08-01 10:30:00',
-      //   sub_comments:[
-      //     { name:'我是用户1号',
-      //       target:'我是用户2号',
-      //       text:'你是不是傻，不喜欢评论啥',
-      //       role:'buyer',
-      //       father:'2',
-      //       time:'2010-08-01 10:30:00'
-      //     },
 
-      //     { name:'我是用户3号',
-      //       target:'我是用户2号',
-      //       text:'卖家说自己不喜欢可还行',
-      //       role:'buyer',
-      //       father:'2',
-      //       time:'2010-08-01 10:30:00'
-      //     },
-
-      //     { name:'我是用户2号',
-      //       target:'我是用户1号',
-      //       text:'要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！要你寡！',
-      //       role:'seller',
-      //       father:'2',
-      //       time:'2010-08-01 10:30:00'
-      //     }
-      //   ]
-      // }, 
-      // { item_id: 3, 
-      //   name:'我是用户3号',
-      //   text:'我觉得不行，我也不知道我喜不喜欢',
-      //   url:'/image/head.png',
-      //   role:'buyer',
-      //   time:'2010-08-01 10:30:00',
-      //   sub_comments:[]}
     ],
     bidList: [//出价记录列表，+++++++++，----------
       // { item_id: 1, name:'我是用户1号',price:'100'}, 
@@ -383,16 +339,38 @@ Page({
         commentInput: "",//把输入的值设置成空
         comment_button_text: "取消"
       });
-      //console.log("list的是："+this.data.commentInput_list[count].text);
+      console.log("list的是："+this.data.commentInput_list[count].text);
       this.setData({
         commentCount:count + 1
       });
+      var that = this;
+      this.setData({
+        userId: app.globalData.userId
+      });
+      console.log(app.globalData.userId);
+      wx.request({
+        url: app.globalData.apiurl + '/comments/addComments',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          itemId: this.data.item.item_id,
+          userId: app.globalData.userId,
+          content: input,
+          time: time
+        },
+        success: function (res) {
+          console.log(666);
+        }
+      })
     }
   },
   submitSubcomment:function(e){//用来提交用户输入的sub评论
     console.log("输入的评论是："+this.data.commentInput);
     this.closeSubcomment();
     var time = Time.formatTime(new Date());
+    var commentId = this.data.subcomment_father;
     var input = this.data.commentInput;
     var subcount = this.data.subCommentcount;
     var list = "subcommentInput_list["+subcount+"]";//console.log(list);
@@ -412,10 +390,54 @@ Page({
         commentInput: "",//把输入的值设置成空
         comment_button_text: "取消"
       });
-      // console.log("sublist的是："+this.data.subcommentInput_list[subcount].text);
+      console.log("sublist的是："+this.data.subcommentInput_list[subcount].text);
       this.setData({
         subCommentcount:subcount + 1
       });
+      var that = this;
+      this.setData({
+        userId: app.globalData.userId
+      });
+      console.log(app.globalData.userId);
+      console.log(commentId);
+      wx.request({
+        url: app.globalData.apiurl + '/comments/getcomments?itemId='+this.data.item.item_id,
+        method: 'GET',
+        header: {
+          'content-type': 'application/json'
+        },
+        success: function (res) {
+          var count = 0;
+          var length = res.data.obj.data.length;
+          while(count<length){
+          if(commentId == res.data.obj.data[count].commentId ){
+           var fatherid = res.data.obj.data[count].userId;
+           break;
+          }
+          count++;
+        }
+          console.log(fatherid);
+          wx.request({
+            url: app.globalData.apiurl + '/comments/addReview',
+            method: 'POST',
+            header: {
+              'content-type': 'application/x-www-form-urlencoded'
+            },
+            data: {
+              commentId:commentId,
+              fromUser: app.globalData.userId,
+              toUser:fatherid,
+              content: input,
+              time: time
+            },
+          })
+          console.log(commentId);
+          console.log(app.globalData.userId,);
+          console.log(fatherid);
+          console.log(input);
+          console.log(time);
+        }
+      })
     }
   },
   submitBid:function(e){//提交新的出价的函数
@@ -461,6 +483,23 @@ Page({
       this.setData({
         [bidCount_x]:bidCount+1,
       });
+      wx.request({
+        url: app.globalData.apiurl + '/bid',
+        method: 'POST',
+        header: {
+          'content-type': 'application/json'
+        },
+        data: {
+          itemId: this.data.item.item_id,
+          userid: app.globalData.userId,
+          dealPrice: new_price,
+          //dealTime:time,
+          telephoneNumber:'55555',
+        },
+        success: function (res) {
+          console.log(666);
+        }
+      })
     }
   },
   submitBuyout:function(e){//确认一口价购买的函数

@@ -15,7 +15,6 @@ public class TestController {
     @Resource
     private testService testService;
 
-
     @RequestMapping("/test")
     public List<test> getTest(){
         return testService.getTest();
