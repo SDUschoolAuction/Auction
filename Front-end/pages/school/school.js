@@ -18,6 +18,12 @@ Page({
     modalHidden:true,
     show:false
   },
+
+  intoSearchFunc: function (e) {
+    wx.navigateTo({
+      url: '../search_school/search_school'
+    })
+  },
    
   /**
    * 生命周期函数--监听页面加载
@@ -41,16 +47,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    //创建节点选择器
-    var query = wx.createSelectorQuery();
-    query.select('#right').boundingClientRect()
-    query.exec(function (res) {
-      //res就是 所有标签为mjltest的元素的信息 的数组
-      //console.log(res);
-      //取高度
-      //console.log("height : "+res[0].height);
-      rightheight = res[0].height;
-    })
+    
+   
   },
   //右侧索引表点击事件
   letterclick: function (e) {
@@ -68,13 +66,7 @@ Page({
         that.dialog.hideDialog();
       }, 500)
     }
-  },  //touch 事件有bug
-  touchStart: function (e) {
-    console.log('touchStart start ');
-    touchEndy = e.touches[0].pageY;
-    console.log('touchStart end ');
-  },
-
+  },  
   showOrHideLetterDialog: function(isShow,letter,autodimss) {
     if (!isShow) {
       that.dialog.setLetter(letter);

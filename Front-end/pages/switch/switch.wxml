@@ -2,7 +2,7 @@
 <!-- 首页 -->
 <view class="first_tab">
   <navigator 
-  class="goods_item" url="/pages/detail/detail?itemId={{item.itemId}}"
+  class="goods_item" url="/pages/detail/detail?itemId={{item.itemId}}&finalPrice={{item.finalPrice}}"
   wx:for="{{goodsList}}" 
   wx:for-index="i"
   wx:key="itemId"
