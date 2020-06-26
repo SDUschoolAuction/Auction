@@ -15,6 +15,7 @@ public class OneMouthDeallmp implements oneMouthDealService{
     public Msg addOneMouthDeal(Record record){
         try{
             oneMouthDao.insertRecord(record);
+            oneMouthDao.insertOrder(record);
             oneMouthDao.update_item_status(record);
             System.out.println("ok");
             return Msg.ok("success");
