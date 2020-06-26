@@ -6,6 +6,7 @@
     "pages/detail/detail",
     "pages/public/public",
     "pages/school/school",
+    "pages/search_school/search_school",
     "pages/my/my",
     "pages/myparticipation/myparticipation",
     "pages/myproducts/myproducts",

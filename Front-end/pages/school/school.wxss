@@ -1,9 +1,54 @@
 /* pages/school/school.wxss */
+
+
+/* start搜索框 */
+
+.search{
+  background: rgb(255, 255, 255);
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  font-family: "Microsoft YaHei";
+}
+
+.frame{
+  width: 97%;
+  height: 30px;
+  position: relative;
+  background: #eeeeee;
+  margin: 0px auto;
+  border-radius: 5px;
+}
+
+.frame input{
+  width: 80%;
+  height: 100%;
+  margin-left: 80rpx;
+}
+
+.holder{
+  color: #999;
+  font-size: 13px;
+  margin-left: 10px;
+
+}
+.im_search{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 7px;
+  left: 10px;
+}
+
+/* end搜索框 */
+
+
 .content {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  padding-top: 100rpx;
 }
 .school-scroll {
   left: 0;
@@ -22,9 +67,9 @@
 }
 .school-letter {
   font-size: 30rpx;
-  padding-top: 30rpx;
+  padding-top: 20rpx;
   padding-left: 40rpx;
-  padding-bottom: 30rpx;
+  padding-bottom: 20rpx;
 }
 .school-name {
   border-bottom: 1px solid #eee;
@@ -50,7 +95,7 @@
   font-size: 24rpx;
   color: #888;
   width: 40rpx;
-  height: 40rpx;
+  height: 53rpx;
   text-align: center;
   display: flex;
   align-items: center;

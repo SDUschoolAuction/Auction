@@ -1,0 +1,55 @@
+/* pages/search_school/search_school.wxss */
+.scroll-view {
+  width: 100%;
+  position: absolute;
+  top: 80rpx;
+  
+  background-color: white;
+  -moz-box-shadow: 0px 0px 2px #e2e2e2;
+  -webkit-box-shadow: 0px 0px 2px #e2e2e2;
+  box-shadow: 0px 0px 2px #e2e2e2;
+}
+.msg-item {
+  width: 100%;
+}
+.user-name {
+  width: 100%;
+  padding: 20rpx;
+  font-size: 33rpx;
+  border-bottom: 1px solid #e2e2e2;
+}
+/* 搜索框 */
+
+.im_search{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 9px;
+  left: 10px;
+}
+
+
+.search{
+  background: rgb(255, 255, 255);
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  font-family: "Microsoft YaHei";
+}
+
+.frame{
+  width: 97%;
+  height: 30px;
+  position: relative;
+  background: #eeeeee;
+  margin: 0px auto;
+  border-radius: 5px;
+}
+
+.frame input{
+  width: 80%;
+  height: 100%;
+  margin-left: 80rpx;
+}
