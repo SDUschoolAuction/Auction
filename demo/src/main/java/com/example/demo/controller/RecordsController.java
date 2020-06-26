@@ -27,4 +27,10 @@ public class RecordsController {
     public Msg getRecordsByItemId(@PathVariable int itemId){
         return recordsService.getRecordsByItemId(itemId);
     }
+
+
+    @RequestMapping("/getRecordsCountByItemId/{itemId}")
+    public Msg getRecordsCountByItemId(@PathVariable int itemId){
+        return recordsService.getRecordsCountByItemId(itemId);
+    }
 }
