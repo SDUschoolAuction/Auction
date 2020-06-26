@@ -6,7 +6,6 @@ const Time = require('../../utils/time.js')
 const app = getApp();
 Page({
   data: {
-    
     subsub_comments:[],
     item_id_fromSwitch: '-1',
     comment_length:0,
@@ -60,6 +59,7 @@ Page({
       seller_info2:'',//卖家提供的信息2
       seller_url:'',//卖家的头像地址
 
+      user_infoinfo:app.globalData.userId,
       user_name:'cxz',
       user_url:'/image/head.png',//此账户用户的头像地址
       user_role:'visitor',//==========
@@ -151,13 +151,6 @@ Page({
     //如果不输入目标时间则在页面中不显示倒计时，表示此拍卖永久有效？
     timeLeft: "",//预备储存剩余时间用来显示
     bool:true//用来指示目标时间是否大于当前时间，避免产生剩余时间为负的情况
-  },
-  onLoad: function (options) {
-    var timestamp0 = Date.parse(new Date());
-    var timestamp1 = Date.parse(this.data.datetimeTo);
-    if(timestamp1<timestamp0){
-      this.data.bool=false;
-    }
   },
   changeToggle:function(e){//初见记录展开/收起切换函数
     var index = e.currentTarget.dataset.index;
@@ -602,6 +595,15 @@ Page({
               [seller_info1]:res.data.telephoneNumber,
               [seller_info2]:res.data.location,
               [seller_url]:res.data.userIcon,
+            },function(){
+              var sellerid = that.data.user.seller_id;
+              var userid = that.data.user.userid;
+              var role = 'user.user_role';
+              if(userid == sellerid){
+                that.setData({
+                  [role]:'seller'
+                })
+              }
             });   
             console.log("项目传来的数据"+res.data);
           },
@@ -629,31 +631,51 @@ Page({
             while(itemlist_length>0){
               if(res.data.obj[itemlist_count].itemId==itemID){
                 that.setData({ 
-                  datetimeTo: res.data.obj[itemlist_count].endTime,
+                  datetimeTo: Time.formatTime(new Date(res.data.obj[itemlist_count].endTime)),
                   min_bidAdd: res.data.obj[itemlist_count].markupRange,
                   //[current_price]: res.data.obj[itemlist_count].startPrice
+                  
+                },function(){
+                  if(that.data.bool && that.data.datetimeTo !=""){
+                    that.data.timer = setInterval(() =>{ 
+                      that.setData({
+                        timeLeft: util.getTimeLeft(that.data.datetimeTo)
+                      });
+                      if (that.data.timeLeft == "拍卖已结束") {
+                        clearInterval(that.data.timer);
+                      }
+                    }, 1000);
+                  }
+                  else if(that.data.datetimeTo ==""){
+                    that.setData({
+                      timeLeft: ""
+                    });
+                  }
+                  else{
+                    that.setData({
+                      timeLeft: "拍卖已结束"
+                    });
+                  }
                 }); 
-                if(that.data.item.current_price != res.data.obj[itemlist_count].startPrice){
-                  that.setData({ 
-                    [current_price]: res.data.obj[itemlist_count].startPrice
-                  });
-                }
-                if(res.data.obj[itemlist_count].itemPrice!=null){
-                  that.setData({ 
-                    [item_buyout_price]: res.data.obj[itemlist_count].itemPrice,
-                    //[current_price]: res.data.obj[itemlist_count].itemPrice
-                  });
-                  if(that.data.item.current_price != res.data.obj[itemlist_count].itemPrice){
+                if(that.data.item.item_type == 1){//拍卖
+                  if(that.data.item.current_price != res.data.obj[itemlist_count].finalPrice){
                     that.setData({ 
-                      [current_price]: res.data.obj[itemlist_count].itemPrice
+                      [current_price]: res.data.obj[itemlist_count].finalPrice
                     });
                   }
                 }
-                else{
-                  that.setData({ 
-                    [current_price]: res.data.obj[itemlist_count].startPrice,
-                    [user_new_price]: res.data.obj[itemlist_count].startPrice
-                  })
+                else if(that.data.item.item_type == 2){//一口价
+                  if(res.data.obj[itemlist_count].itemPrice!=null){
+                    that.setData({ 
+                      [item_buyout_price]: res.data.obj[itemlist_count].itemPrice,
+                      //[current_price]: res.data.obj[itemlist_count].itemPrice
+                    });
+                    if(that.data.item.current_price != res.data.obj[itemlist_count].itemPrice){
+                      that.setData({ 
+                        [current_price]: res.data.obj[itemlist_count].itemPrice
+                      });
+                    }
+                  }
                 }
               }
               itemlist_length--;
@@ -820,12 +842,23 @@ Page({
             var records_length = res.data.obj.length;
             var records_count = 0;
             var Userid = res.data.obj[records_length-1].userid;
+            var current_price = 'item.current_price';
+            var user_new_price = 'user.user_new_price';
+            that.setData({ 
+              
+            })
             while(records_length>0){
               var bid_list = 'bidList['+records_count+']';
-              that.setData({
+              var role = 'user.user_role';
+              if(res.data.obj[records_length-1].userId == that.data.user.user_id){
+                that.setData({
+                  [role]:'buyer'
+                })
+              }
+              that.setData({    
                 [bid_list]:{
                   item_id: res.data.obj[records_length-1].itemId, 
-                  user_id: res.data.obj[records_length-1].userid, 
+                  user_id: res.data.obj[records_length-1].userId, 
                   name: res.data.obj[records_length-1].userName, 
                   price: res.data.obj[records_length-1].dealPrice,
                 }
@@ -870,7 +903,17 @@ Page({
   //   }
   // },
   onLoad: function (options) {
-    var itemID = '3';
+    
+
+
+    //console.log('onload1onload1onload1onload1onload1onload1');
+    var timestamp0 = Date.parse(new Date());
+    var timestamp1 = Date.parse(this.data.datetimeTo);
+    if(timestamp1<timestamp0){
+      this.data.bool=false;
+    }
+    var itemID = options.finalPrice;
+    var itemID = options.itemId;
     var that = this;
     this.getInfo(itemID);
     var interval = setInterval(function () {  
@@ -902,27 +945,26 @@ Page({
                 var item_buyout_price = 'item.item_buyout_price';
                 while(itemlist_length>0){
                   if(res.data.obj[itemlist_count].itemId==itemID){
-                    if(that.data.item.current_price != res.data.obj[itemlist_count].startPrice){
-                      that.setData({ 
-                        [current_price]: res.data.obj[itemlist_count].startPrice
-                      });
-                    }
-                    if(res.data.obj[itemlist_count].itemPrice!=null){
-                      that.setData({ 
-                        [item_buyout_price]: res.data.obj[itemlist_count].itemPrice,
-                        //[current_price]: res.data.obj[itemlist_count].itemPrice
-                      });
-                      if(that.data.item.current_price != res.data.obj[itemlist_count].itemPrice){
+                    if(that.data.item.item_type == 1){//拍卖
+                      if(that.data.item.current_price != res.data.obj[itemlist_count].finalPrice){
                         that.setData({ 
-                          [current_price]: res.data.obj[itemlist_count].itemPrice
+                          [current_price]: res.data.obj[itemlist_count].finalPrice,
+                          [user_new_price]: res.data.obj[itemlist_count].finalPrice
                         });
                       }
                     }
-                    else{
-                      that.setData({ 
-                        [current_price]: res.data.obj[itemlist_count].startPrice,
-                        [user_new_price]: res.data.obj[itemlist_count].startPrice
-                      })
+                    else if(that.data.item.item_type == 2){//一口价
+                      if(res.data.obj[itemlist_count].itemPrice!=null){
+                        that.setData({ 
+                          [item_buyout_price]: res.data.obj[itemlist_count].itemPrice,
+                          //[current_price]: res.data.obj[itemlist_count].itemPrice
+                        });
+                        if(that.data.item.current_price != res.data.obj[itemlist_count].itemPrice){
+                          that.setData({ 
+                            [current_price]: res.data.obj[itemlist_count].itemPrice
+                          });
+                        }
+                      }
                     }
                   }
                   itemlist_length--;
@@ -963,7 +1005,7 @@ Page({
                     [bid_list]:{
                       item_id: res.data.obj[records_length-1].itemId, 
                       user_id: res.data.obj[records_length-1].userid, 
-                      name: res.data.obj[records_length-1].userid, 
+                      name: res.data.obj[records_length-1].userName, 
                       price: res.data.obj[records_length-1].dealPrice,
                     }
                   });
@@ -1096,11 +1138,6 @@ Page({
                     // // console.log("d");
                   }
                 })
-
-
-          
-
-
           })
     }, 10000) //循环间隔 单位ms
   }

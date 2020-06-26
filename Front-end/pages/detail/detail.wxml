@@ -218,8 +218,8 @@
    <text class="padding-right-xs cuIcon-comment lg text-gray light"></text>留言
   </button>  
   <view>
-     <button wx:if="{{item.item_type==1}}" bindtap='buyoutShow' class="margin-right cu-btn round bg-yellow {{shadow?'shadow':''}}">一口价</button>
-     <button wx:if="{{item.item_type==0}}" bindtap='changeShow' class="cu-btn round bg-green {{shadow?'shadow':''}}">出价</button>
+     <button wx:if="{{item.item_type==2}}" bindtap='buyoutShow' class="margin-right cu-btn round bg-yellow {{shadow?'shadow':''}}">一口价</button>
+     <button wx:if="{{item.item_type==1}}" bindtap='changeShow' class="cu-btn round bg-green {{shadow?'shadow':''}}">出价</button>
   </view>
 </view>
 <!-- visitor出价界面 -->
@@ -246,8 +246,8 @@
       <view class="flex justify-center text-red text-bold">¥{{item.current_price}}</view>
     </view>
     <view>
-     <button wx:if="{{item.item_type==1}}"  bindtap='buyoutShow' class="margin-right cu-btn round bg-yellow {{shadow?'shadow':''}}">一口价</button>
-     <button wx:if="{{item.item_type==0}}" bindtap='changeShow' class="cu-btn round bg-green {{shadow?'shadow':''}}">继续出价</button>
+     <button wx:if="{{item.item_type==2}}"  bindtap='buyoutShow' class="margin-right cu-btn round bg-yellow {{shadow?'shadow':''}}">一口价</button>
+     <button wx:if="{{item.item_type==1}}" bindtap='changeShow' class="cu-btn round bg-green {{shadow?'shadow':''}}">继续出价</button>
     </view>
   </view>  
 </view>
@@ -273,7 +273,7 @@
 
 <!-- winner用户的留言 -->
 <!-- 解决margin问题 -->
-<view wx:if="{{user.user_role=='winner' || item.item_status=='preparing' || item.item_status=='sold'}}" id="comment" class="padding bg-white align-center">
+<!-- <view wx:if="{{user.user_role=='winner' || item.item_status=='preparing' || item.item_status=='sold'}}" id="comment" class="padding bg-white align-center">
   <view id="comment_title" class="padding text-xl bolder text-gray align-center">
     <text>留言</text>
     <view id="comment_button" ><button class="text-lg cu-btn round bg-green">我要留言</button></view>
@@ -292,7 +292,7 @@
           <view class="padding comment_text">{{item.text}}</view>
         </view>
   </view>
-</view>
+</view> -->
 
 
 <!-- 评论界面 -->
