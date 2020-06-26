@@ -48,7 +48,6 @@ public class DealServicelmpl implements DealService {
         int finalPrice= item.getFinalPrice();
         if(record.getDealPrice()>finalPrice){
             System.out.println(+finalPrice+" "+record.toString()+" start sleeping");
-            Thread.sleep(1000*30);
             Date date = new Date();
             record.setDealTime(date);
             dealDao.updateItemFinalPrice(record);
