@@ -147,6 +147,7 @@ public class Item {
                 ", telephoneNumber='" + telephoneNumber + '\'' +
                 ", type=" + type +
                 ", itemTag='" + itemTag + '\'' +
+                ", itemHead='" + itemHead + '\'' +
                 '}';
     }
 }

@@ -14,6 +14,6 @@ public interface RecordsDao {
             "\torder by dealPrice desc;")
     List<JSONObject> getRecordsByItemId(int itemId);
 
-    @Select("select count(1) from records where itemId=#{itemId} group by itemId;")
+    @Select("select count(userId) from records where itemId=#{itemId} group by itemId;")
     int getRecordsCountByItemId(int itemId);
 }
