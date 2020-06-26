@@ -47,7 +47,8 @@ Page({
             console.log("dlsb")
           }
           console.log(app.globalData)
-         wx.setStorageSync("openID", e.data.openid)
+          wx.setStorageSync("openID", e.data.openid)
+          wx.setStorageSync("userID", e.data.userId)
       })
   },
   onLoad:function(){
