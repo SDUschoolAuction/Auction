@@ -7,7 +7,7 @@ Page({
     motto: 'Hello World',
     userInfo:{},
     needauth:true,
-    str_openid:""
+   
   },
   jumpPage:function(){
     wx.redirectTo({
