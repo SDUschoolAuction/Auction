@@ -7,7 +7,7 @@ const app = getApp();
 Page({
   data: {
     
-    userId:'',
+    userId: app.globalData.userId,
     subsub_comments:[],
     item_id_fromSwitch: '-1',
     comment_length:0,
@@ -17,6 +17,7 @@ Page({
 
     subcomment_father: -1,
     subcomment_target: '',
+    subcomment_id:0,
     new_subcomment_bool: false,
     subcomment_show: false,
     subCommentcount: 0,
@@ -134,13 +135,16 @@ Page({
   openSubcomment:function(e){//出价界面展开/收起切换函数
     var target = e.currentTarget.dataset.text;
     var father = e.currentTarget.dataset.father;
+    var id = e.currentTarget.dataset.id;
     // console.log(target);
-    // console.log(father);
+    // console.log(father); 
+    console.log(id);
     this.setData({
       sub_holder_text: "回复@"+target,
       subcomment_father:father,
       subcomment_target:target,
-      subcomment_show: true
+      subcomment_show: true,
+      subcomment_id :id,
     })
   },
   deleteComment:function(e){//出价界面展开/收起切换函数
@@ -344,9 +348,9 @@ Page({
         commentCount:count + 1
       });
       var that = this;
-      this.setData({
-        userId: app.globalData.userId
-      });
+ //     this.setData({
+ //       userId: app.globalData.userId
+  //    });
       console.log(app.globalData.userId);
       wx.request({
         url: app.globalData.apiurl + '/comments/addComments',
@@ -369,8 +373,10 @@ Page({
   submitSubcomment:function(e){//用来提交用户输入的sub评论
     console.log("输入的评论是："+this.data.commentInput);
     this.closeSubcomment();
+    var fatherid;
     var time = Time.formatTime(new Date());
     var commentId = this.data.subcomment_father;
+    var reviewId = this.data.subcomment_id;
     var input = this.data.commentInput;
     var subcount = this.data.subCommentcount;
     var list = "subcommentInput_list["+subcount+"]";//console.log(list);
@@ -378,6 +384,7 @@ Page({
       console.log("没有留言内容，此次判定为取消");
     }
     else{
+  
       this.setData({
         new_subcomment_bool: true,
         [list]: {
@@ -395,49 +402,59 @@ Page({
         subCommentcount:subcount + 1
       });
       var that = this;
-      this.setData({
-        userId: app.globalData.userId
-      });
+  //    this.setData({
+  //      userId: app.globalData.userId
+  //    });
+      
+      var that = this;
+      console.log(fatherid);
       console.log(app.globalData.userId);
       console.log(commentId);
-      wx.request({
-        url: app.globalData.apiurl + '/comments/getcomments?itemId='+this.data.item.item_id,
-        method: 'GET',
-        header: {
-          'content-type': 'application/json'
-        },
-        success: function (res) {
-          var count = 0;
-          var length = res.data.obj.data.length;
-          while(count<length){
-          if(commentId == res.data.obj.data[count].commentId ){
-           var fatherid = res.data.obj.data[count].userId;
-           break;
+      if (reviewId > 0) {
+        var n = 0;
+        var len = this.data.subsub_comments_subsub.length;
+        while (n < len) {
+          if (reviewId == this.data.subsub_comments_subsub[n].reviewId) {
+            fatherid = this.data.subsub_comments_subsub[n].fromUser;
+            console.log(this.data.subsub_comments_subsub[n].fromUser);
           }
-          count++;
+          n++;
         }
-          console.log(fatherid);
-          wx.request({
-            url: app.globalData.apiurl + '/comments/addReview',
-            method: 'POST',
-            header: {
-              'content-type': 'application/x-www-form-urlencoded'
-            },
-            data: {
-              commentId:commentId,
-              fromUser: app.globalData.userId,
-              toUser:fatherid,
-              content: input,
-              time: time
-            },
-          })
-          console.log(commentId);
-          console.log(app.globalData.userId,);
-          console.log(fatherid);
-          console.log(input);
-          console.log(time);
+      }
+      else {
+        var n = 0;
+        var len = this.data.comments.length;
+        while (n < len) {
+          if (commentId == this.data.comments[n].commentId) {
+            fatherid = this.data.comments[n].userId;
+            console.log(this.data.comments[n].userId);
+          }
+          n++;
         }
+      }
+      wx.request({
+        url: app.globalData.apiurl + '/comments/addReview',
+        method: 'POST',
+        header: {
+          "content-type": "application/x-www-form-urlencoded"
+        },
+        data: {
+          commentId: commentId,
+          content: input,
+          time: time,
+          fromUser: app.globalData.userId,
+          toUser: fatherid
+        },
+
+        success: function (res) {
+          console.log("success")
+        },
       })
+      console.log('commentId是：' + commentId);
+      console.log('fromUser是：' + app.globalData.userId,);
+      console.log('toUser是：' + fatherid);
+      console.log('输入的回复是：' + input);
+      console.log('回复时间是：' + time);
     }
   },
   submitBid:function(e){//提交新的出价的函数
@@ -491,20 +508,45 @@ Page({
         },
         data: {
           itemId: this.data.item.item_id,
-          userid: app.globalData.userId,
+          userId: app.globalData.userId,
           dealPrice: new_price,
           //dealTime:time,
           telephoneNumber:'55555',
         },
         success: function (res) {
-          console.log(666);
-        }
+          console.log(res);
+          console.log(app.globalData.userId); 
+        }   
       })
     }
   },
   submitBuyout:function(e){//确认一口价购买的函数
     console.log(this.data.user.user_name+"以一口价"+this.data.item.item_buyout_price+"买下了此商品");
     this.buyoutShow();
+
+    this.setData({
+      userId: app.globalData.userId
+    });
+    var that = this;
+    wx.request({
+      url: app.globalData.apiurl + '/purchase',
+      method: 'POST',
+      header: {
+        'content-type': 'application/json'
+      },
+      data: {
+        userId: app.globalData.userId,
+        itemId: this.data.item.item_id,
+        dealPrice: this.data.item.item_buyout_price,
+        //dealTime:time,
+        telephoneNumber: '55555',
+      },
+      success: function (res) {
+        console.log(res);
+        console.log(app.globalData.userId);
+      }
+    })
+
   },
   onShow: function () {//处理倒计时的函数
     if(this.data.bool && this.data.datetimeTo !=""){
@@ -562,13 +604,30 @@ Page({
           tags[i-1] = info_tags[i];
         }
         //console.log("info"+info);
+
+        if(res.data.itemImg1!=null){
+          that.setData({ 
+          item_image1:res.data.itemImg1,
+          })
+        }
+        if(res.data.itemImg2!=null){
+          that.setData({ 
+            item_image2:res.data.itemImg2,
+          })
+        }
+        if(res.data.itemImg3!=null){
+          that.setData({ 
+            item_image3:res.data.itemImg3,
+          })
+        }
+        if(res.data.itemImg4!=null){
+          that.setData({ 
+            item_image4:res.data.itemImg4,
+          })
+        }   
         that.setData({ 
           textdata: res.data,
           list:tags,
-          item_image1:res.data.itemImg1,
-          item_image2:res.data.itemImg2,
-          item_image3:res.data.itemImg3,
-          item_image4:res.data.itemImg4,
           item:{
             item_id:res.data.itemId,
             //current_price:res.data.finalPrice,//当前此商品的最高出价
@@ -636,7 +695,7 @@ Page({
               [seller_url]:res.data.userIcon,
             },function(){
               var sellerid = that.data.user.seller_id;
-              var userid = that.data.user.userid;
+              var userid = that.data.user.userId;
               var role = 'user.user_role';
               if(userid == sellerid){
                 that.setData({
@@ -669,9 +728,14 @@ Page({
             
             while(itemlist_length>0){
               if(res.data.obj[itemlist_count].itemId==itemID){
+                if(res.data.obj[itemlist_count].markupRange!=null){
+                  that.setData({ 
+                    min_bidAdd: res.data.obj[itemlist_count].markupRange,
+                })
+              }
                 that.setData({ 
                   datetimeTo: Time.formatTime(new Date(res.data.obj[itemlist_count].endTime)),
-                  min_bidAdd: res.data.obj[itemlist_count].markupRange,
+                 
                   //[current_price]: res.data.obj[itemlist_count].startPrice
                   
                 },function(){
@@ -878,9 +942,10 @@ Page({
             'content-type': 'application/json'
           },
           success: function (res) {
+            if(res.data.obj[records_length-1]!=null){
             var records_length = res.data.obj.length;
             var records_count = 0;
-            var Userid = res.data.obj[records_length-1].userid;
+            var Userid = res.data.obj[records_length-1].userId;
             var current_price = 'item.current_price';
             var user_new_price = 'user.user_new_price';
             that.setData({ 
@@ -908,6 +973,7 @@ Page({
             that.setData({ 
               getRecordsByItemId: res.data.obj
             });  
+          }
           },
           fail: function () {
             // fail
@@ -917,35 +983,7 @@ Page({
           }
         })
   },
-  // subFunction: function(){
-  //   var length = this.data.commentList.length;
-  //   var count = 0;
-  //   // console.log('onShowonShowonShowonShowonShow');
-  //   console.log('onShowlength'+length);
-  //   while(length>0){
-  //     console.log('onShowonShowonShowonShowonShow');
-  //     var sub_length = this.data.subsub_comments.length;
-  //     var sub_count = 0;
-  //     var sub_commentList = 'commentList['+count+'].sub_comments[1]';
-  //     while(sub_length>0){
-  //       if(this.data.subsub_comments[sub_count].commentId == this.data.commentList[count].id){
-  //         this.setData({
-  //           // [sub_commentList]:this.data.commentList[count].sub_comments.concat(this.data.subsub_comments[sub_count].content)
-  //           texttext:{title:11111111}
-  //       });
-  //       }
-  //       sub_count++;
-  //       sub_length--;
-  //     }
-  //     count++;
-  //     length--;
-  //   }
-  // },
   onLoad: function (options) {
-    
-
-
-    //console.log('onload1onload1onload1onload1onload1onload1');
     var timestamp0 = Date.parse(new Date());
     var timestamp1 = Date.parse(this.data.datetimeTo);
     if(timestamp1<timestamp0){
@@ -955,6 +993,8 @@ Page({
     var itemID = options.itemId;
     var that = this;
     this.getInfo(itemID);
+
+
     var interval = setInterval(function () {  
       console.log('刷新页面！');
       //这里放把存在本地的信息提交到后端的函数
@@ -1035,21 +1075,23 @@ Page({
                 'content-type': 'application/json'
               },
               success: function (res) {
-                var records_length = res.data.obj.length;
-                var records_count = 0;
-                var Userid = res.data.obj[records_length-1].userid;
-                while(records_length>0){
-                  var bid_list = 'bidList['+records_count+']';
-                  that.setData({
-                    [bid_list]:{
-                      item_id: res.data.obj[records_length-1].itemId, 
-                      user_id: res.data.obj[records_length-1].userid, 
-                      name: res.data.obj[records_length-1].userName, 
-                      price: res.data.obj[records_length-1].dealPrice,
-                    }
-                  });
-                  records_count++;
-                  records_length--;
+                if(res.data.obj[records_length-1]!=null){
+                  var records_length = res.data.obj.length;
+                  var records_count = 0;
+                  var Userid = res.data.obj[records_length-1].userId;
+                  while(records_length>0){
+                    var bid_list = 'bidList['+records_count+']';
+                    that.setData({
+                      [bid_list]:{
+                        item_id: res.data.obj[records_length-1].itemId, 
+                        user_id: res.data.obj[records_length-1].userId, 
+                        name: res.data.obj[records_length-1].userName, 
+                        price: res.data.obj[records_length-1].dealPrice,
+                      }
+                    });
+                    records_count++;
+                    records_length--;
+                  } 
                 } 
               },
               fail: function () {
@@ -1127,7 +1169,13 @@ Page({
                      var subsub_length = gettedData.length;
                      var comments_count = 0;
                      var subsub_count = 0;
-                     if(res.data.obj.length != that.data.subsub_comments_subsub.length){
+                     if((
+                       (res.data.obj.length!=null && that.data.subsub_comments_subsub!=null)
+                       && res.data.obj.length != that.data.subsub_comments_subsub.length) ||
+                       (res.data.obj.length==null && that.data.subsub_comments_subsub!=null) || 
+                       (res.data.obj.length!=null && that.data.subsub_comments_subsub==null)
+                       )
+                       {
                         console.log("发生了变化需要更新数据");
                         // console.log("新的长度"+that.data.subsub_comments_subsubsub.length);
                         // console.log("原来的长度"+that.data.subsub_comments_subsub.length);
@@ -1180,49 +1228,6 @@ Page({
           })
     }, 10000) //循环间隔 单位ms
   }
-//   function getItems(){
-//     wx.request({
-//         ... //
-//         success:(res)=>{
-//             if(num < pageNum) {
-//                 getItems(++num);
-//             }
-//         }
-//     })
-// }
-  // getSubrequset:function(count,that){
-  //   var comment_length = that.data.commentList.length;
-  //   wx.request({
-  //     url: app.globalData.apiurl+'/comments/getReviewsForComments?commentId='+count,
-  //     method: 'GET',
-  //     header: {
-  //       'content-type': 'application/json'
-  //     },
-  //     success: function (res) {
-  //       var sub_length = res.data.obj.length;
-  //       var sub_count = 0;
-  //       while(sub_length>0){
-  //         var comment_sub = 'commentList['+count+'].sub_comments['+sub_count+']';
-  //         that.setData({
-  //           [comment_sub]:res.data.obj[sub_count]
-  //         });
-  //         sub_length--;
-  //         sub_count++
-  //       }
-        
-  //       if(count < comment_length-1) {
-  //         getSubrequset(++count,that);
-  //       }
-  //     },
-  //     fail: function () {
-  //       // fail
-  //       console.log("fffffffff");
-  //     },
-  //     complete: function () {
-  //       // console.log("d");
-  //     }
-  //   })
-  // }
 })
 
 
