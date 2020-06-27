@@ -44,13 +44,4 @@ public class TypeOneImpl implements TypeService {
         return new Msg<>(0,"success",item.getItemId());
     }
 
-    @Override
-    public Msg updateItemType(Map<String, Object> map) throws Exception {
-        Item item= JsonXMLUtils.map2obj((Map<String, Object>) map.get("item"),Item.class);
-        JSONObject jsonObject= JsonXMLUtils.map2obj((Map<String, Object>) map.get("type"),JSONObject.class);
-        itemDao.updateItem(item);
-        jsonObject.put("itemId",item.getItemId());
-        typeOneDao.updateType(jsonObject);
-        return new Msg<>(0,"success",item.getItemId());
-    }
 }

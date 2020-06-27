@@ -122,20 +122,4 @@ public class ItemController {
             return Msg.err(e.toString());
         }
     }
-
-
-    @PostMapping("/updateItemType/{key}")
-    public Msg updateItemType(@PathVariable String key,@RequestBody Map<String,Object> map){
-        try{
-            return factoryForTypeService.getTypeService(key).updateItemType(map);
-        }catch (Exception e){
-            return Msg.err(e.toString());
-        }
-    }
-
-
-
-
-
-
 }
