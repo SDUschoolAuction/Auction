@@ -67,7 +67,7 @@
 
   <!-- 商品的标签 -->
   <view id="tags" class="align-center flex justify-start margin-xs  flex flex-wrap">
-    <view class="tags padding-xs" wx:for="{{list}}">
+    <view class="tags padding-xs" wx:for="{{list}}" wx:key="key">
       <view id="tag" class="padding text-lg cu-tag bg-blue light round">#{{item}}</view>
     </view>
   </view>
@@ -107,7 +107,7 @@
       </view>
     </view>
     <view hidden="{{!selectedFlag[0]}}">
-      <block wx:for="{{bidList}}" wx:for-item="item" wx:for-index="index">
+      <block wx:for="{{bidList}}" wx:for-item="item" wx:for-index="index"  wx:key="key">
         <view class="li">
           <view>
             <text class="text-blue">{{item.name}}</text>
@@ -121,7 +121,7 @@
       </block>
 
       <!-- 如果有新的出价则给出可视化表示「*」 -->
-      <block hidden="{{!new_bid_bool}}" wx:for="{{newBidlist}}" wx:for-item="item" wx:for-index="index">
+      <block hidden="{{!new_bid_bool}}" wx:for="{{newBidlist}}" wx:for-item="item" wx:for-index="index"  wx:key="key">
         <view hidden="{{!new_bid_bool}}" class="li">
           <view>
             <text class="text-blue">{{item.name}}</text>
@@ -151,7 +151,7 @@
   </view>
 
   <!-- 有新评论时显示，与新出价显示「*」的类似 -->
-  <view hidden="{{!new_comment_bool}}" id="comments_new" class="padding text-lg text-gray" wx:for="{{commentInput_list}}">
+  <view hidden="{{!new_comment_bool}}" id="comments_new" class="padding text-lg text-gray" wx:for="{{commentInput_list}}"  wx:key="key">
         <view class="comment align-center" hidden = "">
           <view id="comment_head" class="flex justify-start align-center">
             <view class="user_info_imgg1 margin-xs" > <open-data  type="userAvatarUrl"></open-data></view>
@@ -166,7 +166,7 @@
 
 
   <!-- 评论的显示 -->
-  <view id="comments" class="padding text-lg text-gray" wx:for="{{commentList}}">
+  <view id="comments" class="padding text-lg text-gray" wx:for="{{commentList}}"  wx:key="key">
         <view class="comment align-center">
           <view id="comment_head" class="flex justify-between align-center">
             <view class="flex justify-between align-center">
@@ -180,7 +180,7 @@
           <view class="padding-0 padding-bottom-sm text-sm comment_time">{{item.time}}</view>
 
           <!-- sub评论的显示 -->
-          <view wx:for="{{item.sub_comments}}">
+          <view wx:for="{{item.sub_comments}}"  wx:key="key">
             <view hidden="{{!item.show}}" class="subcomment padding comment_text text-df">
               <view hidden="{{!item.show}}" class="flex justify-between align-center">
                 <view class="subcomment_title flex justify-start align-center">
@@ -198,7 +198,7 @@
           </view>
 
           <!-- 新sub评论的显示 -->
-          <view hidden="{{!new_subcomment_bool}}" wx:for="{{subcommentInput_list}}" wx:for-item="subfor">
+          <view hidden="{{!new_subcomment_bool}}" wx:for="{{subcommentInput_list}}" wx:for-item="subfor"  wx:key="key">
             <view hidden="{{subfor.father!=item.id}}" class="subcomment padding comment_text text-df" >
               <view hidden="{{subfor.father!=item.id}}" class="subcomment_title flex justify-start align-center">    
                 <button  hidden="{{subfor.father!=item.id}}" bindtap="openSubcomment"  data-text="{{user.user_name}}" data-father="{{subfor.father}}" class="cu-btn padding-0 text-blue bg-white">{{user.user_name}}</button>

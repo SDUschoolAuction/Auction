@@ -604,13 +604,30 @@ Page({
           tags[i-1] = info_tags[i];
         }
         //console.log("info"+info);
+
+        if(res.data.itemImg1!=null){
+          that.setData({ 
+          item_image1:res.data.itemImg1,
+          })
+        }
+        if(res.data.itemImg2!=null){
+          that.setData({ 
+            item_image2:res.data.itemImg2,
+          })
+        }
+        if(res.data.itemImg3!=null){
+          that.setData({ 
+            item_image3:res.data.itemImg3,
+          })
+        }
+        if(res.data.itemImg4!=null){
+          that.setData({ 
+            item_image4:res.data.itemImg4,
+          })
+        }   
         that.setData({ 
           textdata: res.data,
           list:tags,
-          item_image1:res.data.itemImg1,
-          item_image2:res.data.itemImg2,
-          item_image3:res.data.itemImg3,
-          item_image4:res.data.itemImg4,
           item:{
             item_id:res.data.itemId,
             //current_price:res.data.finalPrice,//当前此商品的最高出价
@@ -678,7 +695,7 @@ Page({
               [seller_url]:res.data.userIcon,
             },function(){
               var sellerid = that.data.user.seller_id;
-              var userid = that.data.user.userid;
+              var userid = that.data.user.userId;
               var role = 'user.user_role';
               if(userid == sellerid){
                 that.setData({
@@ -711,9 +728,14 @@ Page({
             
             while(itemlist_length>0){
               if(res.data.obj[itemlist_count].itemId==itemID){
+                if(res.data.obj[itemlist_count].markupRange!=null){
+                  that.setData({ 
+                    min_bidAdd: res.data.obj[itemlist_count].markupRange,
+                })
+              }
                 that.setData({ 
                   datetimeTo: Time.formatTime(new Date(res.data.obj[itemlist_count].endTime)),
-                  min_bidAdd: res.data.obj[itemlist_count].markupRange,
+                 
                   //[current_price]: res.data.obj[itemlist_count].startPrice
                   
                 },function(){
@@ -920,9 +942,10 @@ Page({
             'content-type': 'application/json'
           },
           success: function (res) {
+            if(res.data.obj[records_length-1]!=null){
             var records_length = res.data.obj.length;
             var records_count = 0;
-            var Userid = res.data.obj[records_length-1].userid;
+            var Userid = res.data.obj[records_length-1].userId;
             var current_price = 'item.current_price';
             var user_new_price = 'user.user_new_price';
             that.setData({ 
@@ -950,6 +973,7 @@ Page({
             that.setData({ 
               getRecordsByItemId: res.data.obj
             });  
+          }
           },
           fail: function () {
             // fail
@@ -959,35 +983,7 @@ Page({
           }
         })
   },
-  // subFunction: function(){
-  //   var length = this.data.commentList.length;
-  //   var count = 0;
-  //   // console.log('onShowonShowonShowonShowonShow');
-  //   console.log('onShowlength'+length);
-  //   while(length>0){
-  //     console.log('onShowonShowonShowonShowonShow');
-  //     var sub_length = this.data.subsub_comments.length;
-  //     var sub_count = 0;
-  //     var sub_commentList = 'commentList['+count+'].sub_comments[1]';
-  //     while(sub_length>0){
-  //       if(this.data.subsub_comments[sub_count].commentId == this.data.commentList[count].id){
-  //         this.setData({
-  //           // [sub_commentList]:this.data.commentList[count].sub_comments.concat(this.data.subsub_comments[sub_count].content)
-  //           texttext:{title:11111111}
-  //       });
-  //       }
-  //       sub_count++;
-  //       sub_length--;
-  //     }
-  //     count++;
-  //     length--;
-  //   }
-  // },
   onLoad: function (options) {
-    
-
-
-    //console.log('onload1onload1onload1onload1onload1onload1');
     var timestamp0 = Date.parse(new Date());
     var timestamp1 = Date.parse(this.data.datetimeTo);
     if(timestamp1<timestamp0){
@@ -1079,21 +1075,23 @@ Page({
                 'content-type': 'application/json'
               },
               success: function (res) {
-                var records_length = res.data.obj.length;
-                var records_count = 0;
-                var Userid = res.data.obj[records_length-1].userid;
-                while(records_length>0){
-                  var bid_list = 'bidList['+records_count+']';
-                  that.setData({
-                    [bid_list]:{
-                      item_id: res.data.obj[records_length-1].itemId, 
-                      user_id: res.data.obj[records_length-1].userid, 
-                      name: res.data.obj[records_length-1].userName, 
-                      price: res.data.obj[records_length-1].dealPrice,
-                    }
-                  });
-                  records_count++;
-                  records_length--;
+                if(res.data.obj[records_length-1]!=null){
+                  var records_length = res.data.obj.length;
+                  var records_count = 0;
+                  var Userid = res.data.obj[records_length-1].userId;
+                  while(records_length>0){
+                    var bid_list = 'bidList['+records_count+']';
+                    that.setData({
+                      [bid_list]:{
+                        item_id: res.data.obj[records_length-1].itemId, 
+                        user_id: res.data.obj[records_length-1].userId, 
+                        name: res.data.obj[records_length-1].userName, 
+                        price: res.data.obj[records_length-1].dealPrice,
+                      }
+                    });
+                    records_count++;
+                    records_length--;
+                  } 
                 } 
               },
               fail: function () {
@@ -1171,7 +1169,13 @@ Page({
                      var subsub_length = gettedData.length;
                      var comments_count = 0;
                      var subsub_count = 0;
-                     if(res.data.obj.length != that.data.subsub_comments_subsub.length){
+                     if((
+                       (res.data.obj.length!=null && that.data.subsub_comments_subsub!=null)
+                       && res.data.obj.length != that.data.subsub_comments_subsub.length) ||
+                       (res.data.obj.length==null && that.data.subsub_comments_subsub!=null) || 
+                       (res.data.obj.length!=null && that.data.subsub_comments_subsub==null)
+                       )
+                       {
                         console.log("发生了变化需要更新数据");
                         // console.log("新的长度"+that.data.subsub_comments_subsubsub.length);
                         // console.log("原来的长度"+that.data.subsub_comments_subsub.length);
@@ -1222,51 +1226,8 @@ Page({
                   }
                 })
           })
-    }, 60000) //循环间隔 单位ms
+    }, 10000) //循环间隔 单位ms
   }
-//   function getItems(){
-//     wx.request({
-//         ... //
-//         success:(res)=>{
-//             if(num < pageNum) {
-//                 getItems(++num);
-//             }
-//         }
-//     })
-// }
-  // getSubrequset:function(count,that){
-  //   var comment_length = that.data.commentList.length;
-  //   wx.request({
-  //     url: app.globalData.apiurl+'/comments/getReviewsForComments?commentId='+count,
-  //     method: 'GET',
-  //     header: {
-  //       'content-type': 'application/json'
-  //     },
-  //     success: function (res) {
-  //       var sub_length = res.data.obj.length;
-  //       var sub_count = 0;
-  //       while(sub_length>0){
-  //         var comment_sub = 'commentList['+count+'].sub_comments['+sub_count+']';
-  //         that.setData({
-  //           [comment_sub]:res.data.obj[sub_count]
-  //         });
-  //         sub_length--;
-  //         sub_count++
-  //       }
-        
-  //       if(count < comment_length-1) {
-  //         getSubrequset(++count,that);
-  //       }
-  //     },
-  //     fail: function () {
-  //       // fail
-  //       console.log("fffffffff");
-  //     },
-  //     complete: function () {
-  //       // console.log("d");
-  //     }
-  //   })
-  // }
 })
 
 
