@@ -18,36 +18,15 @@ import java.util.Date;
 @Service
 public class DealServicelmpl implements DealService {
 
-    public static final Object lockHelper = new Object();
-
     @Resource
     private dealDao dealDao;
 
-    @Resource
-    private ItemDao itemDao;
-
-    @Override
-    public Msg addDealRecord(Record record){
-        try{
-            dealDao.insertRecord(record);
-            dealDao.updateItemFinalPrice(record);
-            System.out.println("ok");
-            return Msg.ok("success");
-        }catch (Exception e){
-            System.out.println(e.toString());
-            return Msg.err(e.toString());
-        }
-
-    }
-
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE,rollbackFor=Exception.class)
-    public Msg bid(Record record) throws InterruptedException {
-
+    public Msg bid(Record record){
         Item item=dealDao.getItemByIdLocked(record.getItemId());
         int finalPrice= item.getFinalPrice();
         if(record.getDealPrice()>finalPrice){
-            System.out.println(+finalPrice+" "+record.toString()+" start sleeping");
             Date date = new Date();
             record.setDealTime(date);
             dealDao.updateItemFinalPrice(record);
@@ -55,6 +34,23 @@ public class DealServicelmpl implements DealService {
             return Msg.ok("success");
         }else{
             return new Msg<>(0,"reload",finalPrice);
+        }
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE,rollbackFor = Exception.class)
+    public Msg purchase(Record record){
+        Item item=dealDao.getItemByIdLocked(record.getItemId());
+        int status=item.getStatus();
+        if(status==0){
+            Date date = new Date();
+            record.setDealTime(date);
+            dealDao.insertRecord(record);
+            dealDao.insertOrder(record);
+            dealDao.update_item_status(record);
+            return Msg.ok("success");
+        }else{
+            return new Msg<>(0,"Exception while purchasing",status);
         }
     }
 }

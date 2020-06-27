@@ -19,7 +19,7 @@ public interface ItemDao {
             "select * from (item right join type1 on item.itemId=type1.itemId) right join type2 on item.itemId=type2.itemId where item.itemId=#{itemId};")
     JSONObject getItemById(int itemId);
 
-    @Update("UPDATE item SET itemInfo=#{itemInfo},itemLocation=#{itemLocation},itemImg1=#{itemImg1},itemImg2=#{itemImg2},itemImg3=#{itemImg3},itemImg4=#{itemImg4},telephone=#{telephoneNumber} where itemId=#{itemId};")
+    @Update("UPDATE item SET itemInfo=#{itemInfo},itemLocation=#{itemLocation},itemImg1=#{itemImg1},itemImg2=#{itemImg2},itemImg3=#{itemImg3},itemImg4=#{itemImg4},telephone=#{telephoneNumber},itemHead=#{itemHead},itemTag=#{itemTag},finalPrice=#{finalPrice} where itemId=#{itemId};")
     Integer updateItem(Item item);
 
     @Update("UPDATE item SET STATUS=2 WHERE itemId=#{itemId};")

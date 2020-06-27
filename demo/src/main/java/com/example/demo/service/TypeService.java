@@ -9,4 +9,6 @@ public interface TypeService {
     Msg addType(JSONObject jsonObject);
 
     Msg addItemType(Map<String, Object> map) throws Exception;
+
+    Msg updateItemType(Map<String, Object> map) throws Exception;
 }

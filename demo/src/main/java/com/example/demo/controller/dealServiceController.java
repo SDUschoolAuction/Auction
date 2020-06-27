@@ -10,14 +10,8 @@ import javax.annotation.Resource;
 public class dealServiceController {
 @Resource private DealService dealService;
 
-    @PostMapping("/newbid")
-    public Msg addDealRecord(@RequestBody Record record){
-        System.out.println(record.toString());
-        return dealService.addDealRecord(record);
-    }
-
     /**
-     * @Description: 高并发异步出价请求，防止脏数据
+     * @Description: 高并发异步出价请求，防止脏数据，拍卖
      * @Param: [record]
      * @returns: com.example.demo.util.Msg
      * @Author: Exgc
@@ -27,6 +21,22 @@ public class dealServiceController {
     public Msg bid(@RequestBody Record record){
         try{
             return dealService.bid(record);
+        }catch (Exception e){
+            return Msg.err(e.toString());
+        }
+    }
+
+    /**
+     * @Description: 高并发异步出价请求，防止脏数据\，一口价
+     * @Param: [record]
+     * @returns: com.example.demo.util.Msg
+     * @Author: Exgc
+     * @Date: 2020/6/26 6:45
+     */
+    @PostMapping("/purchase")
+    public Msg purchase(@RequestBody Record record){
+        try{
+            return dealService.purchase(record);
         }catch (Exception e){
             return Msg.err(e.toString());
         }

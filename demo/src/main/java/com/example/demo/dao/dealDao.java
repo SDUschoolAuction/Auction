@@ -16,4 +16,11 @@ public interface dealDao {
 
     @Select("SELECT * from item where itemId=#{itemId} for update")
     Item getItemByIdLocked(Integer itemId);
+
+    @Insert("INSERT INTO orders(dealPrice, peopleCount,telephoneNumber,itemId, buyerId, dealTime) " +
+            "VALUES (#{record.dealPrice},1,#{record.telephoneNumber},#{record.itemId},#{record.userId},#{record.dealTime})")
+    int insertOrder(@Param("record") Record record);
+
+    @Update("update item set status=1 where itemId=#{record.itemId}")
+    int update_item_status(@Param("record") Record record);
 }
