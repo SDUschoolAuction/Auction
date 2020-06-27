@@ -7,7 +7,7 @@ const app = getApp();
 Page({
   data: {
     
-    userId:'',
+    userId: app.globalData.userId,
     subsub_comments:[],
     item_id_fromSwitch: '-1',
     comment_length:0,
@@ -17,6 +17,7 @@ Page({
 
     subcomment_father: -1,
     subcomment_target: '',
+    subcomment_id:0,
     new_subcomment_bool: false,
     subcomment_show: false,
     subCommentcount: 0,
@@ -134,13 +135,16 @@ Page({
   openSubcomment:function(e){//出价界面展开/收起切换函数
     var target = e.currentTarget.dataset.text;
     var father = e.currentTarget.dataset.father;
+    var id = e.currentTarget.dataset.id;
     // console.log(target);
-    // console.log(father);
+    // console.log(father); 
+    console.log(id);
     this.setData({
       sub_holder_text: "回复@"+target,
       subcomment_father:father,
       subcomment_target:target,
-      subcomment_show: true
+      subcomment_show: true,
+      subcomment_id :id,
     })
   },
   deleteComment:function(e){//出价界面展开/收起切换函数
@@ -344,9 +348,9 @@ Page({
         commentCount:count + 1
       });
       var that = this;
-      this.setData({
-        userId: app.globalData.userId
-      });
+ //     this.setData({
+ //       userId: app.globalData.userId
+  //    });
       console.log(app.globalData.userId);
       wx.request({
         url: app.globalData.apiurl + '/comments/addComments',
@@ -369,8 +373,10 @@ Page({
   submitSubcomment:function(e){//用来提交用户输入的sub评论
     console.log("输入的评论是："+this.data.commentInput);
     this.closeSubcomment();
+    var fatherid;
     var time = Time.formatTime(new Date());
     var commentId = this.data.subcomment_father;
+    var reviewId = this.data.subcomment_id;
     var input = this.data.commentInput;
     var subcount = this.data.subCommentcount;
     var list = "subcommentInput_list["+subcount+"]";//console.log(list);
@@ -378,6 +384,7 @@ Page({
       console.log("没有留言内容，此次判定为取消");
     }
     else{
+  
       this.setData({
         new_subcomment_bool: true,
         [list]: {
@@ -395,49 +402,59 @@ Page({
         subCommentcount:subcount + 1
       });
       var that = this;
-      this.setData({
-        userId: app.globalData.userId
-      });
+  //    this.setData({
+  //      userId: app.globalData.userId
+  //    });
+      
+      var that = this;
+      console.log(fatherid);
       console.log(app.globalData.userId);
       console.log(commentId);
-      wx.request({
-        url: app.globalData.apiurl + '/comments/getcomments?itemId='+this.data.item.item_id,
-        method: 'GET',
-        header: {
-          'content-type': 'application/json'
-        },
-        success: function (res) {
-          var count = 0;
-          var length = res.data.obj.data.length;
-          while(count<length){
-          if(commentId == res.data.obj.data[count].commentId ){
-           var fatherid = res.data.obj.data[count].userId;
-           break;
+      if (reviewId > 0) {
+        var n = 0;
+        var len = this.data.subsub_comments_subsub.length;
+        while (n < len) {
+          if (reviewId == this.data.subsub_comments_subsub[n].reviewId) {
+            fatherid = this.data.subsub_comments_subsub[n].fromUser;
+            console.log(this.data.subsub_comments_subsub[n].fromUser);
           }
-          count++;
+          n++;
         }
-          console.log(fatherid);
-          wx.request({
-            url: app.globalData.apiurl + '/comments/addReview',
-            method: 'POST',
-            header: {
-              'content-type': 'application/x-www-form-urlencoded'
-            },
-            data: {
-              commentId:commentId,
-              fromUser: app.globalData.userId,
-              toUser:fatherid,
-              content: input,
-              time: time
-            },
-          })
-          console.log(commentId);
-          console.log(app.globalData.userId,);
-          console.log(fatherid);
-          console.log(input);
-          console.log(time);
+      }
+      else {
+        var n = 0;
+        var len = this.data.comments.length;
+        while (n < len) {
+          if (commentId == this.data.comments[n].commentId) {
+            fatherid = this.data.comments[n].userId;
+            console.log(this.data.comments[n].userId);
+          }
+          n++;
         }
+      }
+      wx.request({
+        url: app.globalData.apiurl + '/comments/addReview',
+        method: 'POST',
+        header: {
+          "content-type": "application/x-www-form-urlencoded"
+        },
+        data: {
+          commentId: commentId,
+          content: input,
+          time: time,
+          fromUser: app.globalData.userId,
+          toUser: fatherid
+        },
+
+        success: function (res) {
+          console.log("success")
+        },
       })
+      console.log('commentId是：' + commentId);
+      console.log('fromUser是：' + app.globalData.userId,);
+      console.log('toUser是：' + fatherid);
+      console.log('输入的回复是：' + input);
+      console.log('回复时间是：' + time);
     }
   },
   submitBid:function(e){//提交新的出价的函数
@@ -491,20 +508,45 @@ Page({
         },
         data: {
           itemId: this.data.item.item_id,
-          userid: app.globalData.userId,
+          userId: app.globalData.userId,
           dealPrice: new_price,
           //dealTime:time,
           telephoneNumber:'55555',
         },
         success: function (res) {
-          console.log(666);
-        }
+          console.log(res);
+          console.log(app.globalData.userId); 
+        }   
       })
     }
   },
   submitBuyout:function(e){//确认一口价购买的函数
     console.log(this.data.user.user_name+"以一口价"+this.data.item.item_buyout_price+"买下了此商品");
     this.buyoutShow();
+
+    this.setData({
+      userId: app.globalData.userId
+    });
+    var that = this;
+    wx.request({
+      url: app.globalData.apiurl + '/purchase',
+      method: 'POST',
+      header: {
+        'content-type': 'application/json'
+      },
+      data: {
+        userId: app.globalData.userId,
+        itemId: this.data.item.item_id,
+        dealPrice: this.data.item.item_buyout_price,
+        //dealTime:time,
+        telephoneNumber: '55555',
+      },
+      success: function (res) {
+        console.log(res);
+        console.log(app.globalData.userId);
+      }
+    })
+
   },
   onShow: function () {//处理倒计时的函数
     if(this.data.bool && this.data.datetimeTo !=""){
@@ -955,6 +997,8 @@ Page({
     var itemID = options.itemId;
     var that = this;
     this.getInfo(itemID);
+
+
     var interval = setInterval(function () {  
       console.log('刷新页面！');
       //这里放把存在本地的信息提交到后端的函数
@@ -1178,7 +1222,7 @@ Page({
                   }
                 })
           })
-    }, 10000) //循环间隔 单位ms
+    }, 60000) //循环间隔 单位ms
   }
 //   function getItems(){
 //     wx.request({

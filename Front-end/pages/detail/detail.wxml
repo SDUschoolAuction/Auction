@@ -184,9 +184,11 @@
             <view hidden="{{!item.show}}" class="subcomment padding comment_text text-df">
               <view hidden="{{!item.show}}" class="flex justify-between align-center">
                 <view class="subcomment_title flex justify-start align-center">
-                  <button bindtap="openSubcomment"  data-text="{{item.name}}" data-father="{{item.father}}" class="cu-btn padding-0 text-blue bg-white">{{item.name}}</button>
+                  <button bindtap="openSubcomment"  data-text="{{item.name}}" data-father="{{item.father}}" 
+                  data-id="{{item.id}}"class="cu-btn padding-0 text-blue bg-white">{{item.name}}</button>
                   <text class="text-df padding-left-sm padding-right-sm">回复</text>
-                  <button bindtap="openSubcomment" data-text="{{item.target}}" data-father="{{item.father}}" class="cu-btn padding-0 text-blue bg-white">{{item.target}}</button>
+                  <button bindtap="openSubcomment" data-text="{{item.target}}" data-father="{{item.father}}" 
+                  data-id="{{item.id}}" class="cu-btn padding-0 text-blue bg-white">{{item.target}}</button>
                 </view>
                 <button wx:if="{{item.name == user.user_name}}" bindtap="deleteSubComment" data-deleteid="{{item.id}}" class="cu-btn padding-0 text-blue bg-white">删除</button>
               </view>
@@ -198,8 +200,7 @@
           <!-- 新sub评论的显示 -->
           <view hidden="{{!new_subcomment_bool}}" wx:for="{{subcommentInput_list}}" wx:for-item="subfor">
             <view hidden="{{subfor.father!=item.id}}" class="subcomment padding comment_text text-df" >
-              <view hidden="{{subfor.father!=item.id}}" class="subcomment_title flex justify-start align-center">
-              
+              <view hidden="{{subfor.father!=item.id}}" class="subcomment_title flex justify-start align-center">    
                 <button  hidden="{{subfor.father!=item.id}}" bindtap="openSubcomment"  data-text="{{user.user_name}}" data-father="{{subfor.father}}" class="cu-btn padding-0 text-blue bg-white">{{user.user_name}}</button>
                 <text  hidden="{{subfor.father!=item.id}}" class="text-df padding-left-sm padding-right-sm">回复</text>
                 <button  hidden="{{subfor.father!=item.id}}" bindtap="openSubcomment" data-text="{{subfor.target}}" data-father="{{subfor.father}}" class="cu-btn padding-0 text-blue bg-white">{{subfor.target}}</button>
