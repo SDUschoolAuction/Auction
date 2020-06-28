@@ -83,7 +83,7 @@
     //点击我的信息栏
     clickPersonInfo:function(res){
       wx.navigateTo({
-        url: '',
+        url: '../PersonInfo/PersonInfo',
       })
     },
   
