@@ -1,12 +1,15 @@
 package com.example.demo.controller;
 
 import com.example.demo.service.Impl.commentServiceImpl;
+import com.example.demo.service.commentService;
 import com.example.demo.util.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.sql.Timestamp;
 
 @RestController
@@ -18,8 +21,8 @@ import java.sql.Timestamp;
  * @create: 2020-06-15 09:52
  **/
 public class CommentController {
-    @Autowired
-    commentServiceImpl commentService;
+    @Resource
+    commentService commentService;
 
     /**
     * @Description:
@@ -100,6 +103,15 @@ public class CommentController {
     @RequestMapping("/getAllReviews")
     public Msg getAllReviews(){
         return commentService.getAllReviews();
+    }
+
+    @RequestMapping("/getCommentList/{itemId}")
+    public Msg getCommentList(@PathVariable int itemId){
+        try{
+            return commentService.getCommentList(itemId);
+        }catch (Exception e){
+            return Msg.err(e.toString());
+        }
     }
 
 }

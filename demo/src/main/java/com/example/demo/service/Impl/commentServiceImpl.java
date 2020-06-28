@@ -170,5 +170,20 @@ public class commentServiceImpl implements commentService {
         }
     }
 
+    @Override
+    public Msg getCommentList(int itemId) {
+        try{
+            System.out.println(1);
+            List<JSONObject> comments=commentDao.getCommentsByItemId(itemId);
+            System.out.println(comments.toString());
+            for(JSONObject jsonObject:comments) {
+                jsonObject.put("sub_comments",commentDao.getReviewsByCommentId((Integer) jsonObject.get("id")));
+            }
+            return new Msg<>(0,"success",comments);
+        }catch (Exception e){
+            return Msg.err(e.toString());
+        }
+    }
+
 
 }

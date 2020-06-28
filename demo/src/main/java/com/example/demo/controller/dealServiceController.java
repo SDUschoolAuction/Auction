@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 
 @RestController
 public class dealServiceController {
-@Resource private DealService dealService;
+    @Resource private DealService dealService;
 
     /**
      * @Description: 高并发异步出价请求，防止脏数据，拍卖
