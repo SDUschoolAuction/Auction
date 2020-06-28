@@ -42,6 +42,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Msg getUserInfoById(int userId) {
+        try{
+            return new Msg<>(0,"success",userDao.getUserInfoByInfo(userId));
+        }catch (Exception e){
+            return Msg.err(e.toString());
+        }
+    }
+
+    @Override
     public User getUserById(int userId) {
         return userDao.getUser(userId);
     }
