@@ -648,6 +648,17 @@ Page({
   },
 
   getInfo: function(itemID){
+    var userid = 'user.user_id';
+    var username = 'user.user_name';
+    var userurl = 'user.user_url';
+    this.setData({
+      [userid]: app.globalData.userId,
+      [username]: app.globalData.userInfo.nickName,
+      [userurl]: app.globalData.userInfo.avatarUrl
+    })
+    
+
+
     var sellerID=0;
     var that = this;
     var status = 'item.item_status';
@@ -757,7 +768,6 @@ Page({
           },
           success: function (res) {
             that.setData({ 
-              userid:app.globalData.userId,
               textdata1: res.data,
               [seller_id]:res.data.userId,
               [seller_name]:res.data.name,
@@ -987,6 +997,46 @@ Page({
     //             //       // console.log("d");
     //             //     }
     //             //   })
+
+    wx.request({//获取此商品所有的评论
+        url: app.globalData.apiurl+'/comments/getcomments?itemId='+itemID,
+        method: 'GET',
+        header: {
+          'content-type': 'application/json'
+        },
+        success: function (res) {
+          that.setData({ 
+            comments: res.data.obj.data,
+          }); 
+        },
+        fail: function () {
+          // fail
+          console.log("fffffffff");
+        },
+          complete: function () {
+            //// console.log("d");
+        }
+     })   
+    wx.request({//获取全部的子评论
+                      url: app.globalData.apiurl+'/comments/getAllReviews',
+                      method: 'GET',
+                      header: {
+                        'content-type': 'application/json'
+                      },
+                      success: function (res) {
+                        that.setData({
+                          subsub_comments_subsub:res.data.obj
+                        })
+                      },
+                      fail: function () {
+                        // fail
+                        console.log("fffffffff");
+                      },
+                        complete: function () {
+                          //// console.log("d");
+                      }
+                   })   
+                        
 
 
     //               wx.request({//获取全部的子评论

@@ -157,7 +157,7 @@
             <view class="user_info_imgg1 margin-xs" > <open-data  type="userAvatarUrl"></open-data></view>
             <view class="comment_text margin text-black"><open-data type="userNickName"></open-data></view>
             <view wx:if="{{user.user_role=='seller'}}" class="text-lg margin-xs cu-tag bg-green light radius">卖家</view>
-            <button wx:if="{{item.name == user.user_name}}" class="delete cu-btn padding-0 text-blue bg-white">删除</button>
+            <!-- <button wx:if="{{item.user_id == user.user_id}}" class="delete cu-btn padding-0 text-blue bg-white">删除</button> -->
           </view>
           <view class="padding comment_text">{{item.text}}</view>
           <view class="padding-0 padding-bottom-sm text-sm comment_time">{{item.time}}</view>
@@ -174,7 +174,7 @@
               <button  bindtap="openSubcomment_1" data-text="{{item.name}}" data-father="{{item.id}}" class="text-lg cu-btn padding-0 text-blue bg-white">{{item.name}}</button>
               <view wx:if="{{item.role=='seller'}}" class="text-lg margin-xs cu-tag bg-green light radius">卖家</view>
             </view>
-            <button wx:if="{{item.name == user.user_name}}" bindtap="deleteComment" data-deleteid="{{item.id}}" class="text-lg cu-btn padding-0 text-blue bg-white">删除</button>
+            <button wx:if="{{item.user_id == user.user_id}}" bindtap="deleteComment" data-deleteid="{{item.id}}" class="text-lg cu-btn padding-0 text-blue bg-white">删除</button>
           </view>
           <view class="padding comment_text">{{item.text}}</view>
           <view class="padding-0 padding-bottom-sm text-sm comment_time">{{item.time}}</view>
@@ -190,7 +190,7 @@
                   <button bindtap="openSubcomment" data-text="{{item.target}}" data-father="{{item.father}}" 
                   data-id="{{item.id}}" class="cu-btn padding-0 text-blue bg-white">{{item.target}}</button>
                 </view>
-                <button wx:if="{{item.name == user.user_name}}" bindtap="deleteSubComment" data-deleteid="{{item.id}}" class="cu-btn padding-0 text-blue bg-white">删除</button>
+                <button wx:if="{{item.user_id == user.user_id}}" bindtap="deleteSubComment" data-deleteid="{{item.id}}" class="cu-btn padding-0 text-blue bg-white">删除</button>
               </view>
               <text hidden="{{!item.show}}" >{{item.text}}</text>
               <view hidden="{{!item.show}}"  class="padding-0 text-sm comment_time_sub">{{item.time}}</view>
@@ -299,13 +299,13 @@
 
 <!-- 评论界面 -->
 <view hidden="{{!comment_show}}" id="fixed_buttom_comment" class="bg-white padding flex justify-between align-center">
-  <input class="input radius" placeholder="{{holder_text}}" bindinput="getComment" value="{{commentInput_set}}"/>
+  <input class="input radius" placeholder="{{holder_text}}" bindinput="getComment" value="{{commentInput_set}}" cursor-spacing="20"/>
   <button bindtap='submitComment' class="text-lg padding cu-btn round bg-green {{shadow?'shadow':''}}">{{comment_button_text}}</button>
 </view>
 
 <!-- sub评论界面 -->
 <view hidden="{{!subcomment_show}}" id="fixed_buttom_comment" class="bg-white padding flex justify-between align-center">
-  <input class="input radius" placeholder="{{sub_holder_text}}" bindinput="getComment" value="{{commentInput_set}}"/>
+  <input class="input radius" placeholder="{{sub_holder_text}}" bindinput="getComment" value="{{commentInput_set}}"  cursor-spacing="20"/>
   <button bindtap='submitSubcomment' class="text-lg padding cu-btn round bg-green {{shadow?'shadow':''}}">{{comment_button_text}}</button>
 </view>
 
