@@ -32,6 +32,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Msg updateUser(User user) {
+        try{
+            userDao.updateUser(user);
+            return Msg.ok("success");
+        }catch (Exception e){
+            return Msg.err(e.toString());
+        }
+    }
+
+    @Override
     public User getUserById(int userId) {
         return userDao.getUser(userId);
     }

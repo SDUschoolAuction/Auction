@@ -82,4 +82,14 @@ public class UserController{
     public User getUserById(@PathVariable int userId){
         return userService.getUserById(userId);
     }
+
+
+    @PostMapping("/updateUser")
+    public Msg updateUser(@RequestBody User user){
+        try{
+            return userService.updateUser(user);
+        }catch (Exception e){
+            return Msg.err(e.toString());
+        }
+    }
 }
