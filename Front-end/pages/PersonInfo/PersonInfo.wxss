@@ -1,0 +1,12 @@
+/* pages/PersonalInfo/PersonalInfo.wxss */
+.cu-form-group .title {
+  min-width: calc(4em + 30rpx);
+}
+
+.box {  
+  margin: 20rpx 0; 
+}
+
+.box view.cu-bar {
+  margin-top: 20rpx; 
+}

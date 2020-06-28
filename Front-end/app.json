@@ -10,10 +10,9 @@
     "pages/my/my",
     "pages/myparticipation/myparticipation",
     "pages/myproducts/myproducts",
-    
     "pages/search/search",
-    "pages/logs/logs"
-   
+    "pages/logs/logs",
+    "pages/PersonInfo/PersonInfo"
   ],
   "window":{
     "backgroundTextStyle":"light",
