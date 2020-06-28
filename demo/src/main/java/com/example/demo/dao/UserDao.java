@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.entity.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -22,4 +23,7 @@ public interface UserDao {
 
     @Update("UPDATE users SET location=#{location},telephoneNumber=#{telephoneNumber} WHERE userid=#{userId};")
     void updateUser(User user);
+
+    @Select("Select * from users,school where users.userId=#{userId} and school.schoolId=users.schoolId")
+    JSONObject getUserInfoByInfo(int userId);
 }

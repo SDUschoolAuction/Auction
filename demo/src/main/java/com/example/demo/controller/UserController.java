@@ -92,4 +92,9 @@ public class UserController{
             return Msg.err(e.toString());
         }
     }
+
+    @RequestMapping("/userInfo/{userId}")
+    public Msg getUserInfoById(@PathVariable int userId){
+        return userService.getUserInfoById(userId);
+    }
 }
