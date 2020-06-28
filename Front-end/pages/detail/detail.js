@@ -7,6 +7,8 @@ const app = getApp();
 Page({
   data: {
     
+    phone:'',
+    hiddenmodalput:true,
     userId: app.globalData.userId,
     subsub_comments:[],
     item_id_fromSwitch: '-1',
@@ -472,6 +474,7 @@ Page({
     // var list_name = "newBidlist["+bidCount+"].name";
     // var list_price = "newBidlist["+bidCount+"].price";
     var user_name = this.data.user.user_name;
+    var phone = this.data.user.user_phone;
     if(new_price - old_price < this.data.min_bidAdd){
       this.setData({
         bid_text: "加价小于最小要求"
@@ -500,24 +503,12 @@ Page({
       this.setData({
         [bidCount_x]:bidCount+1,
       });
-      wx.request({
-        url: app.globalData.apiurl + '/bid',
-        method: 'POST',
-        header: {
-          'content-type': 'application/json'
-        },
-        data: {
-          itemId: this.data.item.item_id,
-          userId: app.globalData.userId,
-          dealPrice: new_price,
-          //dealTime:time,
-          telephoneNumber:'55555',
-        },
-        success: function (res) {
-          console.log(res);
-          console.log(app.globalData.userId); 
-        }   
-      })
+      this.setData({
+        hiddenmodalput: false
+      }) 
+      this.iPhoneNum();
+      console.log(this.data.user.user_phone);
+
     }
   },
   submitBuyout:function(e){//确认一口价购买的函数
@@ -547,6 +538,71 @@ Page({
       }
     })
 
+  },
+
+  iPhoneNum: function (e) {
+    this.setData({
+      phone : e.detail.value
+    })
+
+  },
+  cancel: function(){//电话弹窗取消按钮
+    this.setData({
+    hiddenmodalput: true
+  });
+  },
+
+  confirm: function(){   //确认
+    var new_price = this.data.user.user_new_price;
+    this.setData({ 
+      "user.user_phone":this.data.phone,
+      hiddenmodalput: true
+    })
+    console.log(this.data.user.user_phone);
+    if (this.data.user.user_phone.length==11){
+      wx.request({
+        url: app.globalData.apiurl + '/bid',
+        method: 'POST',
+        header: {
+          'content-type': 'application/json'
+        },
+        data: {
+          itemId: this.data.item.item_id,
+          userId: app.globalData.userId,
+          dealPrice: new_price,
+          //dealTime:time,
+          telephoneNumber:this.data.user.user_phone,
+        },
+        success: function (res) {
+          console.log(res);
+          if(res.data.status == "success"){
+            wx.showToast({
+              title:'出价成功',
+              duration:2000,
+              mask:true,//是否显示透明蒙层，防止触摸穿透，默认：false  
+              icon:'success', 
+            })
+          }
+          else if(res.data.status == "reload"){
+            wx.showModal({
+              content:'您的出价低于当前价格，请刷新页面',
+              confirmText: '确定',
+              confirmColor: '#56BD5B',
+            })
+          }
+          console.log(app.globalData.userId); 
+        }   
+      })
+    }
+    else{
+      wx.showToast({
+        title:'请输入正确的手机号码',
+        duration:2000,
+        mask:true,//是否显示透明蒙层，防止触摸穿透，默认：false  
+        icon:'none', 
+        //image: '/images/tan.png',
+      })
+    }
   },
   onShow: function () {//处理倒计时的函数
     if(this.data.bool && this.data.datetimeTo !=""){
@@ -763,7 +819,8 @@ Page({
                 if(that.data.item.item_type == 1){//拍卖
                   if(that.data.item.current_price != res.data.obj[itemlist_count].finalPrice){
                     that.setData({ 
-                      [current_price]: res.data.obj[itemlist_count].finalPrice
+                      [current_price]: res.data.obj[itemlist_count].finalPrice,
+                      [user_new_price]: res.data.obj[itemlist_count].finalPrice
                     });
                   }
                 }
@@ -1226,7 +1283,7 @@ Page({
                   }
                 })
           })
-    }, 10000) //循环间隔 单位ms
+    }, 999999999) //循环间隔 单位ms
   }
 })
 
