@@ -517,6 +517,9 @@ Page({
     this.setData({
       userId: app.globalData.userId
     });
+    this.setData({
+      hiddenmodalput: false
+    }) 
     this.iPhoneNum();
   },
 
@@ -592,6 +595,14 @@ Page({
           },
           success: function (res) {
             console.log(res);
+            if(res.data.status == "success"){
+              wx.showToast({
+                title:'购买成功',
+                duration:2000,
+                mask:true,//是否显示透明蒙层，防止触摸穿透，默认：false  
+                icon:'success', 
+              })
+            }
             console.log(app.globalData.userId);
           }
         })
