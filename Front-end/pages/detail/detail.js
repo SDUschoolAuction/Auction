@@ -514,30 +514,10 @@ Page({
   submitBuyout:function(e){//确认一口价购买的函数
     console.log(this.data.user.user_name+"以一口价"+this.data.item.item_buyout_price+"买下了此商品");
     this.buyoutShow();
-
     this.setData({
       userId: app.globalData.userId
     });
-    var that = this;
-    wx.request({
-      url: app.globalData.apiurl + '/purchase',
-      method: 'POST',
-      header: {
-        'content-type': 'application/json'
-      },
-      data: {
-        userId: app.globalData.userId,
-        itemId: this.data.item.item_id,
-        dealPrice: this.data.item.item_buyout_price,
-        //dealTime:time,
-        telephoneNumber: '55555',
-      },
-      success: function (res) {
-        console.log(res);
-        console.log(app.globalData.userId);
-      }
-    })
-
+    this.iPhoneNum();
   },
 
   iPhoneNum: function (e) {
@@ -552,7 +532,7 @@ Page({
   });
   },
 
-  confirm: function(){   //确认
+  confirm: function(){   //电话号码确认
     var new_price = this.data.user.user_new_price;
     this.setData({ 
       "user.user_phone":this.data.phone,
@@ -560,39 +540,62 @@ Page({
     })
     console.log(this.data.user.user_phone);
     if (this.data.user.user_phone.length==11){
-      wx.request({
-        url: app.globalData.apiurl + '/bid',
-        method: 'POST',
-        header: {
-          'content-type': 'application/json'
-        },
-        data: {
-          itemId: this.data.item.item_id,
-          userId: app.globalData.userId,
-          dealPrice: new_price,
-          //dealTime:time,
-          telephoneNumber:this.data.user.user_phone,
-        },
-        success: function (res) {
-          console.log(res);
-          if(res.data.status == "success"){
-            wx.showToast({
-              title:'出价成功',
-              duration:2000,
-              mask:true,//是否显示透明蒙层，防止触摸穿透，默认：false  
-              icon:'success', 
-            })
+      if(this.data.item.item_type == 1){ //出价
+        wx.request({
+          url: app.globalData.apiurl + '/bid',
+          method: 'POST',
+          header: {
+            'content-type': 'application/json'
+          },
+          data: {
+            itemId: this.data.item.item_id,
+            userId: app.globalData.userId,
+            dealPrice: new_price,
+            //dealTime:time,
+            telephoneNumber:this.data.user.user_phone,
+          },
+          success: function (res) {
+            console.log(res);
+            if(res.data.status == "success"){
+              wx.showToast({
+                title:'出价成功',
+                duration:2000,
+                mask:true,//是否显示透明蒙层，防止触摸穿透，默认：false  
+                icon:'success', 
+              })
+            }
+            else if(res.data.status == "reload"){
+              wx.showModal({
+                content:'您的出价低于当前价格，请刷新页面',
+                confirmText: '确定',
+                confirmColor: '#56BD5B',
+              })
+            }
+            console.log(app.globalData.userId); 
+          }   
+        })
+      }
+      else if (this.data.item.item_type  == 2){//一口价
+        var that = this;
+        wx.request({
+          url: app.globalData.apiurl + '/purchase',
+          method: 'POST',
+          header: {
+            'content-type': 'application/json'
+          },
+          data: {
+            userId: app.globalData.userId,
+            itemId: this.data.item.item_id,
+            dealPrice: this.data.item.item_buyout_price,
+            //dealTime:time,
+            telephoneNumber: this.data.user.user_phone,
+          },
+          success: function (res) {
+            console.log(res);
+            console.log(app.globalData.userId);
           }
-          else if(res.data.status == "reload"){
-            wx.showModal({
-              content:'您的出价低于当前价格，请刷新页面',
-              confirmText: '确定',
-              confirmColor: '#56BD5B',
-            })
-          }
-          console.log(app.globalData.userId); 
-        }   
-      })
+        })
+      }
     }
     else{
       wx.showToast({
