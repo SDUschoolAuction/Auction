@@ -319,3 +319,7 @@
     <button bindtap='buyoutShow' class="margin-left text-lg padding cu-btn round bg-green light {{shadow?'shadow':''}}">取消</button>
   </view>
 </view>
+<!-- 电话号码弹窗 -->
+<modal hidden="{{hiddenmodalput}}" title="请输入您的手机号码"  confirm-text="提交" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm"> 
+ <input bindinput='iPhoneNum' type='number' placeholder="请在此输入" auto-focus/>
+</modal>
