@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface TypeTwoDao {
 
     @Insert("INSERT INTO type2(itemId,itemPrice) values (#{itemId},#{itemPrice})")
-    Msg addType(JSONObject jsonObject);
+    void addType(JSONObject jsonObject);
 }

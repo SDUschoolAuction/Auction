@@ -8,4 +8,6 @@ public interface UserService {
 
     User getUserById(int userId);
     User getUserByWechatId(String openid);
+
+    Msg updateUser(User user);
 }
