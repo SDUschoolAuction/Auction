@@ -17,6 +17,7 @@ Page({
    */
   onLoad: function (options) {
     app.editTabbar();
+    console.log(app.globalData)
     var that=this;
     that.get_goodsList()
   },
@@ -25,16 +26,37 @@ Page({
     wx.request({
       url: 'https://yyzcowtodd.cn/Auction/itemList',
       success: (result) => {
-        //console.log(result)
+        console.log(result)
         this.setData({
           goodsList:result.data
         })
+        this.count();
         this.countDown();
 
         }
     })
     wx.stopPullDownRefresh();
   },
+    //添加想要的人数
+    count(){
+  
+      for(let i=0;i<this.data.goodsList.length;i++){
+        /* var itemId = this.data.goodsList[i].itemId;*/
+        /* console.log(i) */
+        wx.request({
+          url: 'https://yyzcowtodd.cn/Auction/records/getRecordsCountByItemId/'+i,
+          success: (result) => {
+            /* console.log(i)  */         
+            var up = "goodsList[" + i + "].count";
+          this.setData({
+            [up]:result.data.obj
+          }) 
+          },
+        })
+       /*  console.log(i)      */
+      }
+  
+    },
   // 倒计时
   countDown:function(){
     
@@ -143,7 +165,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    app.hidetabbar()
+    //app.hidetabbar()
 
   },
 

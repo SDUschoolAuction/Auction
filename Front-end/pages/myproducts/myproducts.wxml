@@ -6,6 +6,7 @@
     </view>
   </scroll-view>
   <view wx:if="{{TabCur==0}}">
+<!-- 
     <view style="margin-top:3px">
       <view class="flex" wx:for="{{shangpinList}}">
         <view class="flex-sub  padding-sm margin-xs radius">
@@ -34,39 +35,80 @@
           </view>
         </view>
       </view>
+       -->
+<view class="blo_out" wx:for="{{shangpinList}}">
+  <view class="blo">
+    <!-- 左侧框架 -->
+    <view class="left">
+      <!-- 图片 -->
+        <image class="img_left" src="{{item.imageUrl}}"></image>
+      <!-- 倒计时 -->
+      <view class="count_down" wx:if="{{item.times!='已卖出'}}">
+         <view class="one.show">
+                  <text class="time_end" decode="{{true}}" space="{{true}}">倒计时&nbsp;&nbsp;</text>
+                      <view wx:if="{{item.day>1}}" class="cu bg-white radius text-red">{{item.day}}</view>
+                      <view wx:if="{{item.day>1}}" class="bolder1">天</view>
+                      <view class="cu bg-white radius text-red" >{{item.hou}}</view>
+                      <view class="bolder">:</view>
+                      <view class="cu bg-white radius text-red" >{{item.min}}</view>
+                      <view class="bolder">:</view>
+                      <view class="cu bg-white radius text-red" >{{item.sec}}</view>
+          </view>
+      </view>
+      <view class="count_down" wx:if="{{item.times=='已卖出'}}">
+        商品已卖出
+      </view>
+    </view>
+    <!-- 右侧框架 -->
+    <view class="right">
+    <!-- 产品标题 -->
+      <view class="title_right" wx:if="{{item.name==null}}">标题</view>
+      <view class="title_right" wx:if="{{item.name!=null}}">{{item.name}}</view>
+      <view class="info_right">{{item.info}}</view>
+      <!-- 当前价 -->
+      <view class="price_right">
+        <view class="price_right1">当前价</view>
+        <view class="price_right2">¥{{item.price}}</view>
+      </view>
+      
+      <!-- 管理 -->
+      <view class="button_right">
+        <button class="cu-btn round bg-green ">管理</button>
+      </view>
       
     </view>
+  </view>
+</view>
 
 
   </view>
   <view wx:if="{{TabCur==1}}">
-      <view class="flex" wx:for="{{inList}}">
-        <view class="flex-sub  padding-sm margin-xs radius">
-          
-          <view>
-            <image style="width:100%;height:150px" src="{{item.imageUrl}}" mode="aspectFill">
-            </image>
-          </view>
-        </view>
-        <view class="flex-sub  padding-sm margin-xs radius">
-
-          <view style="margin-top:20px">
-            <text>{{item.name}}</text>
-
-          </view>
-          <view style="color:red;font-size:20px;margin-top:10px">
-            <text>成交价￥{{item.price}}</text>
-          </view>
-          <view style="color:#ccc">
-            <text>
-          {{item.people}}人参拍
-          </text>
-          </view>
-          <view style="margin-top:10px;margin-left:20px">
-            <button class="cu-btn round bg-green " bindtap='queren'>确认已交易</button>
-          </view>
-        </view>
+      <view class="blo_out" wx:for="{{inList}}">
+  <view class="blo">
+    <!-- 左侧框架 -->
+    <view class="left">
+      <!-- 图片 -->
+        <image class="img_left" src="{{item.imageUrl}}"></image>
+    </view>
+    <!-- 右侧框架 -->
+    <view class="right">
+    <!-- 产品标题 -->
+      <view class="title_right">{{item.name}}</view>
+      <view class="info_right">{{item.info}}</view>
+      <!-- 当前价 -->
+      <!-- 当前价 -->
+      <view class="price_right">
+        <view class="price_right1">成交价</view>
+        <view class="price_right2">¥{{item.price}}</view>
       </view>
+
+      <!-- 管理 -->
+      <view class="button_right">
+        <button class="cu-btn round bg-green " bindtap='queren'>确认已交易</button>
+      </view>
+    </view>
+  </view>
+</view>
   </view>
 
 

@@ -10,8 +10,14 @@ page{
   z-index: -1;
 }
 .btn{
-
+vertical-align: middle;
  text-align: center;
-top: 50%;
-  
+ height: 100rpx;
+ width: 300rpx;
+ top: 200rpx;
 }
+.text{
+
+  font-size:40rpx;
+  
+  }

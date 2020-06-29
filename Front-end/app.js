@@ -2,7 +2,7 @@
 App({
   onLaunch: function () {
     //隐藏系统tabbar
-    this.hidetabbar();
+    //this.hidetabbar();
     //获取设备信息
     this.getSystemInfo();
     // 展示本地存储能力
@@ -13,7 +13,6 @@ App({
     // 获取用户信息
     wx.getSetting({
       success: res => {
-        //console.log("dss")
         if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
