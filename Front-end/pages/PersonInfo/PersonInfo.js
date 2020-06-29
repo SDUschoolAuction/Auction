@@ -16,7 +16,7 @@ Page({
       location:[],
       text:"编辑",
       schooldata:items.schools,
-      region: ["省","市","区"],
+      region: ["","",""],
       imageUrl:"",
       nownumber:'',
       locationchange: false
@@ -37,21 +37,40 @@ Page({
       url: app.globalData.apiurl+'/user/'+app.globalData.userId,
       success: (result) => {
         var d;
-        if(result.data.location){
-          d=JSON.parse(this.data.region).split("\"")
-        }else{
-          d=result.data.location.split("\"")
+       if(result.data.location.length==3){
+          thispage.setData({
+            region: result.data.location
+          })
         }
-        var x="region["+0+"]"
-        var y="region["+1+"]"
-        var z="region["+2+"]" 
-        var newnumber ="";
-        if(!result.data.telephoneNumber){
-          newnumber=result.data.telephoneNumber
+        if(result.data.location.length>3){
+         d=result.data.location.split("\"")
+         var x="region["+0+"]"
+         var y="region["+1+"]"
+         var z="region["+2+"]" 
+         thispage.setData({
+          [x]:d[1],
+          [y]:d[3],
+          [z]:d[5],
+         })
         }
         
-        
-        
+       // var newnumber =result.data.telephoneNumber.split("\"")
+       if(result.data.telephoneNumber){
+        if(result.data.telephoneNumber[0]=="\"")
+        {
+        var newnumber =result.data.telephoneNumber.split("\"")
+        console.log(newnumber)
+        thispage.setData({
+          number:newnumber[1]
+        })
+     }
+    
+    else{
+      thispage.setData({
+        number:result.data.telephoneNumber
+      })
+    }
+      }
         thispage.setData({  
           id:result.data.userId,
           name:result.data.name,
@@ -59,10 +78,8 @@ Page({
         //  number:result.data.telephoneNumber,
           schoolid:thispage.data.schooldata[result.data.schoolId-1].schoolName,
           imageUrl:result.data.userIcon,
-          [x]:d[1],
-          [y]:d[3],
-          [z]:d[5],
-          number:parseInt(newnumber)
+          
+          //number:result.data.telephoneNumber
           
         })
        
@@ -72,57 +89,6 @@ Page({
    
   },
 
-
- 
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
   numberInput:function(e)
   {
       this.setData({
@@ -164,8 +130,10 @@ Page({
            
            wx.showToast({
             title: '修改成功'
+            
 
           })
+          console.log(newtelephoneNumber)
          },
          fail: function(res) {
            console.log(JSON.stringify(res));
