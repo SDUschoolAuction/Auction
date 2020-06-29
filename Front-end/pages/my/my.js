@@ -1,6 +1,6 @@
   // pages/mine/mine.js
   var app=getApp()
-  var that
+
   Page({
   
     /**
@@ -9,6 +9,9 @@
     data: {
       userInfo:app.globalData.userInfo,
       personInfo:app.globalData.personInfo,
+      openid:app.globalData.openid,
+      one_1:5,
+      two_1:0
     },
   
     /**
@@ -16,7 +19,7 @@
      */
     onLoad: function (options) {
       app.editTabbar();
-      that=this
+     var that=this
       wx.getUserInfo({
         success: function (res) {
           that.setData({ userInfo: res.userInfo })
@@ -24,9 +27,20 @@
       }),
   
         that.setData({ personInfo: wx.getStorageSync("personInfo") })
-  
+        
+      that.get_credit()
     },
-  
+  get_credit(){
+    wx.request({
+      url: app.globalData.apiurl+'/user/'+app.globalData.userId,
+      success:(result)=>{
+       this.setData({
+        one_1:result.data.credit/20,
+        two_1:5-result.data.credit/20
+      })
+      }
+    })
+  },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
