@@ -1,4 +1,5 @@
 {  "usingComponents": {
   "date-time-picker": "/colorui/components/date-time-picker/index"
-}
+},
+"enablePullDownRefresh": false
 }

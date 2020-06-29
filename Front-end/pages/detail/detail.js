@@ -795,11 +795,21 @@ Page({
             'content-type': 'application/json'
           },
           success: function (res) {
+            if(res.data.telephoneNumber==null){
+              that.setData({ 
+              [seller_info1]:'手机号码未登记',
+              })
+            }
+            else{
+              that.setData({ 
+              [seller_info1]:res.data.telephoneNumber,
+              })
+            }
             that.setData({ 
               textdata1: res.data,
               [seller_id]:res.data.userId,
               [seller_name]:res.data.name,
-              [seller_info1]:res.data.telephoneNumber,
+             
               [seller_info2]:res.data.location,
               [seller_url]:res.data.userIcon,
             },function(){
@@ -1442,6 +1452,18 @@ Page({
 
       }      //结束后的回调(成功，失败都会执行)
     })
+  },
+  onPullDownRefresh: function () {
+    wx.stopPullDownRefresh();
+    var timestamp0 = Date.parse(new Date());
+    var timestamp1 = Date.parse(this.data.datetimeTo);
+    if(timestamp1<timestamp0){
+      this.data.bool=false;
+    }
+    var itemID = options.finalPrice;
+    var itemID = options.itemId;
+    var that = this;
+    this.getInfo(itemID);
   }
 })
 
