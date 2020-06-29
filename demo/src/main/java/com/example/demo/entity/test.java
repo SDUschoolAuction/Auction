@@ -2,6 +2,10 @@ package com.example.demo.entity;
 
 public class test {
 
+    public test(int id,String name){
+        this.id = id;
+        this.name = name;
+    }
     private int id;
 
     private String name;
