@@ -68,38 +68,38 @@
 .one.show{
   display: flex;
   background-color: rgb(250, 223, 15);
-  font-size: 20rpx;
   height: 34rpx;
+  font-size: 20rpx;
   align-items: center;
-
 }
 .yikoujia_tianjia{
-  display: flex;
-  background-color: rgb(170, 230, 75);
-  font-size: 20rpx;
+  background-color: rgb(90, 187, 58);
+  font-size: 21rpx;
   height: 34rpx;
   align-items: center;
-  justify-content: center;
+  padding-top: 4rpx;
 }
 .one.hide{
   display: flex;
   background-color: grey;
-  font-size: 20rpx;
+  font-size: 21rpx;
   height: 34rpx;
   align-items: center;
-
 }
 .count_down_end{
   background-color: grey;
   height: 34rpx;
-  font-size: 25rpx;
-
+  font-size: 21rpx;
+display: flex;
+justify-content: center;
+padding-top: 4rpx;
+padding-left: 20rpx;
 }
 .count_down_end1{
   padding-left: 20rpx;
   height: 34rpx;
-  font-size: 25rpx;
-
+  font-size: 21rpx;
+  align-items: center;
 }
 .hide{
   display: none;
@@ -109,9 +109,17 @@
 }
 .time_end{
   display: flex;
-  margin-top: 2rpx;
   align-items: center;
-  font-size:19rpx;
+  font-size:21rpx;
+  height: 34rpx;
+
+}
+.time_end1{
+  display: flex;
+  align-items: center;
+  font-size:21rpx;
+  height: 34rpx;
+  padding-left: 20rpx;
 }
 .goods_num_participants{
   margin-top: 10rpx;

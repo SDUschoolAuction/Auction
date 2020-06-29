@@ -1,1 +1,151 @@
-/* pages/myproducts/myproducts.wxss */
+/* pages/myproducts/myproducts.wxss *//* pages/mypart/mypart.wxss */
+.bg-green{
+  height:60rpx;
+  width:200rpx
+}
+.bg-grey{
+  height:60rpx;
+  width:200rpx
+}
+.blo{
+  display: flex;
+  margin-top: 12rpx;
+  margin-bottom: 10rpx;
+  height: 390rpx;
+  width: 700rpx;
+  background-color: white;
+  border-radius: 20rpx;
+
+
+}
+.blo_out{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.left{
+  width: 250rpx;
+  height: 350rpx;
+  justify-content: left;
+  margin-top: 40rpx;
+  margin-left: 40rpx;
+
+}
+.img_left{
+  border-radius: 10rpx;
+  width: 250rpx;
+  height: 250rpx;
+  justify-content: left;
+  overflow:hidden; /*隐藏溢出*/
+}
+.count_down{
+  margin-top: 20rpx;
+  font-size:24rpx;
+  width: 400rpx;
+}
+.right{
+  margin-top: 40rpx;
+  margin-left: 40rpx;
+  width: 330rpx;
+  height: 300rpx;
+}
+
+
+.price_right{
+  display: flex;
+  margin-left: 130rpx;
+  width: 210rpx;
+  height: 40rpx;
+  color: red;
+  font-size: 30rpx;
+  font-weight: 550;
+  margin-top: 10rpx;
+}
+.price_right1{
+  font-size: 28rpx;
+  font-weight: 400;
+  width: 100rpx;
+}
+.price_right11{
+  display: flex;
+  margin-left: 130rpx;
+  width: 210rpx;
+  height: 60rpx;
+  color: red;
+  font-size: 30rpx;
+  font-weight: 550;
+}
+.price_right2{
+  font-size: 36rpx;
+  font-weight: 550;
+  width: 100rpx;
+}
+.myprice{
+  font-size: 24rpx;
+  font-weight: 350;
+  color: gray;
+  margin-left: 130rpx;
+  height: 30rpx;
+}
+.button_right{
+  width: 180rpx;
+  height: 50rpx;
+  margin-left: 125rpx;
+}
+.title_right{
+  font-size: 30rpx;
+  font-weight: 550;
+  width: 330rpx;
+  height: 50rpx;
+  overflow:hidden; /*隐藏溢出*/
+  text-overflow:ellipsis;/*当文本溢出包含元素时显示省略符号来代表被修剪的文本*/
+  white-space:nowrap; /*规定段落中的文本不进行换行*/
+}
+.info_right{
+  font-weight: 500;
+  font-size: 26rpx;
+  margin-top: 15rpx;
+  width: 330rpx;
+  height: 140rpx;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+.info_right_d{
+  font-weight: 500;
+  font-size: 26rpx;
+  margin-top: 15rpx;
+  width: 330rpx;
+  height: 130rpx;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+.cu{
+
+  height: 36rpx;
+  padding: 2rpx 4rpx 4rpx 4rpx;
+  align-content: center;
+  border:2rpx solid rgb(147, 147, 147);
+}
+.time_end{
+  display: flex;
+  align-items: center;
+  font-size:26rpx;
+}
+.one.show{
+  display: flex;
+  font-size: 26rpx;
+  height: 34rpx;
+}
+.bolder{
+  font-weight: 700;
+  margin-left: 3rpx;
+  margin-right: 3rpx;
+}
+.bolder1{
+  margin-left: 4rpx;
+  margin-right: 4rpx;
+}
