@@ -116,7 +116,7 @@ timeFormin(param) {
  get_shangpinList(){
   var thispage=this
  wx.request({
-   url: app.globalData.apiurl+'/orders/getItemListBySellerId/48',//+app.globalData.userId,
+   url: app.globalData.apiurl+'/orders/getItemListBySellerId/'+app.globalData.userId,
    success:(result)=>{
    // console.log(result.data.obj)
      thispage.setData({
