@@ -28,6 +28,7 @@ Page({
    * 年月日时分选择类型的回调函数，可以在该函数得到选择的时间
    */
   selectDateMinuteChange(ev) {
+    
     this.setData({
       dateMinute: ev.detail.value
     })

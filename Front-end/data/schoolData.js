@@ -18,7 +18,6 @@ const schools = [
   { "id": "17", "schoolName": "安阳工学院" , "simplepinyin": "A", "isshowletter": false},
   { "id": "18", "schoolName": "安阳师范学院" , "simplepinyin": "A", "isshowletter": false},
   { "id": "19", "schoolName": "鞍山师范学院" , "simplepinyin": "A", "isshowletter": false},
-
   { "id": "20", "schoolName": "白城师范学院" , "simplepinyin": "B", "isshowletter": true},
   { "id": "21", "schoolName": "百色学院" , "simplepinyin": "B", "isshowletter": false},
   { "id": "22", "schoolName": "蚌埠学院" , "simplepinyin": "B", "isshowletter": false},
@@ -64,7 +63,6 @@ const schools = [
   { "id": "62", "schoolName": "滨州医学院" , "simplepinyin": "B", "isshowletter": false},
   { "id": "63", "schoolName": "亳州学院" , "simplepinyin": "B", "isshowletter": false},
   { "id": "64", "schoolName": "渤海大学" , "simplepinyin": "B", "isshowletter": false},
-
   { "id": "65", "schoolName": "沧州师范学院" , "simplepinyin": "C", "isshowletter": true},
   { "id": "66", "schoolName": "昌吉学院" , "simplepinyin": "C", "isshowletter": false},
   { "id": "67", "schoolName": "常熟理工学院" , "simplepinyin": "C", "isshowletter": false},
