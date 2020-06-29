@@ -1,5 +1,6 @@
 
 const app = getApp();
+import { checkTime, timeGap} from "../../utils/util";
 Page({
   data: {
     StatusBar: app.globalData.StatusBar,
@@ -27,15 +28,39 @@ Page({
     tel_length:0,
   },
 
-
   /**
    * 年月日时分选择类型的回调函数，可以在该函数得到选择的时间
    */
   selectDateMinuteChange(ev) {
-    
+    console.log(ev)
     this.setData({
       dateMinute: ev.detail.value
     })
+    console.log(this.data.dateMinute)
+    if(this.data.dateSecond){
+      var time =checkTime(this.data.dateSecond,this.data.dateMinute);
+      if (!time){
+        this.setData({
+          dateMinute: ""
+        })
+        wx.showModal({
+          title: '提示',
+          content: '结束时间应晚于起始时间',
+          success: function (res) {
+          }
+        })
+      }
+    }else{
+      this.setData({
+        dateMinute: ""
+      })
+      wx.showModal({
+        title: '提示',
+        content: '请先选择起始时间',
+        success: function (res) {
+        }
+      })
+    }
   },
   /**
    * 年月日时分秒选择类型的回调函数，可以在该函数得到选择的时间
@@ -44,6 +69,18 @@ Page({
     this.setData({
       dateSecond: ev.detail.value
     })
+    var min=timeGap(this.data.dateSecond)
+    if(min<5){
+      this.setData({
+        dateSecond: ""
+      })
+      wx.showModal({
+        title: '提示',
+        content: '发布时间必须晚于当前时间5分钟',
+        success: function (res) {
+        }
+      })
+    }
   },
 
   tabSelect(e) {
@@ -133,8 +170,6 @@ Page({
     })
   },
 
-
-
   
   thingConditionsChange(e) {//商品成色
     
@@ -190,7 +225,6 @@ Page({
             if(data.Location!=0){
                 that.setData({
                   imgList:that.data.imgList.concat("http://"+data.Location)
-                  
                 })  
             }
             

@@ -76,7 +76,7 @@
 			</view>
 		</picker>
 	</view>
- <date-time-picker mode="datetime" value="{{dateSecond}}" bindchange="selectDateSecondChange"> 
+ <date-time-picker  mode="datetime" value="{{dateSecond}}" bindchange="selectDateSecondChange"> 
   <view class="cu-form-group margin-top">
 	<view class="title">起拍时间</view>
 	<view class="picker"> {{dateSecond}}</view>

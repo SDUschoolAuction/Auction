@@ -25,7 +25,7 @@ Page({
     wx.request({
       url: 'https://yyzcowtodd.cn/Auction/itemList',
       success: (result) => {
-        console.log(result)
+        //console.log(result)
         this.setData({
           goodsList:result.data
         })
