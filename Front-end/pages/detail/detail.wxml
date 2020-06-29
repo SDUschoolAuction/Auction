@@ -233,7 +233,7 @@
   </view>
   <view id="bid_button_changeshow" class="flex justify-center algin-center">
     <button bindtap='submitBid' class="margin-right text-lg padding cu-btn round bg-green {{shadow?'shadow':''}}">{{bid_text}}</button>
-    <button bindtap='changeShow' class="margin-left text-lg padding cu-btn round bg-green light {{shadow?'shadow':''}}">取消</button>
+    <button bindtap='changeShowCancel' class="margin-left text-lg padding cu-btn round bg-green light {{shadow?'shadow':''}}">取消</button>
   </view>
 </view>
 
@@ -261,7 +261,7 @@
   </view>
   <view id="bid_button_changeshow" class="flex justify-center algin-center">
     <button bindtap='submitBid' class="margin-right text-lg padding cu-btn round bg-green {{shadow?'shadow':''}}">{{bid_text}}</button>
-    <button bindtap='changeShow' class="margin-left text-lg padding cu-btn round bg-green light {{shadow?'shadow':''}}">取消</button>
+    <button bindtap='changeShowCancel' class="margin-left text-lg padding cu-btn round bg-green light {{shadow?'shadow':''}}">取消</button>
   </view>
 </view>
 

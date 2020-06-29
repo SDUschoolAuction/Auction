@@ -281,6 +281,14 @@ Page({
       bid_show: !this.data.bid_show
     })
   },
+  changeShowCancel: function (e) {//取消出价后将new_price置为原始价格
+    console.log("恢复前的new_price：" + this.data.user.user_new_price)
+    this.setData({
+      bid_show: !this.data.bid_show,
+      "user.user_new_price": this.data.item.current_price,
+    })
+    console.log("恢复后的new_price：" + this.data.user.user_new_price)
+  },
   priceReduce:function(e){//出价减少按钮函数
     if(this.data.user.user_new_price <= this.data.item.current_price){
       console.log("出价不能比商品当前价格更低");
@@ -462,17 +470,6 @@ Page({
   submitBid:function(e){//提交新的出价的函数
     var new_price = this.data.user.user_new_price;
     var old_price = this.data.user.user_old_price;
-    var old_price_x = "user.user_old_price";
-    var user_price = "user.user_price";
-    var current_price ="item.current_price";
-    var user_role ="user.user_role";
-    var new_role ="buyer";
-    var bidCount = this.data.bidCount;
-    var bidCount_x = "bidCount";
-    var list = "newBidlist["+bidCount+"]";
-    // var list_item_id = "newBidlist["+bidCount+"].item_id";
-    // var list_name = "newBidlist["+bidCount+"].name";
-    // var list_price = "newBidlist["+bidCount+"].price";
     var user_name = this.data.user.user_name;
     var phone = this.data.user.user_phone;
     if(new_price - old_price < this.data.min_bidAdd){
@@ -480,28 +477,15 @@ Page({
         bid_text: "加价小于最小要求"
       });
     }
+    else if(new_price <= old_price){
+      this.setData({
+        bid_text: "出价不能小于当前价"
+      });
+    }
     else{
       this.changeShow();//更换底部操作栏回出价-回复的界面
       this.setData({
-        [user_role]: new_role,
-        [user_price]: new_price,
-        [old_price_x]: new_price,
-        [current_price]: new_price,
-        [list]: {
-          item_id:bidCount+1,
-          name: user_name,
-          price: new_price
-        },
-        // [list_item_id]:bidCount+1,
-        // [list_name]: user_name,
-        // [list_price]: new_price,
-        new_bid_bool:true,
         bid_text: "出价"
-      });
-      console.log("bidlist："+this.data.newBidlist[bidCount].price);
-      console.log("新："+this.data.user.user_new_price+"旧："+this.data.user.user_old_price);
-      this.setData({
-        [bidCount_x]:bidCount+1,
       });
       this.setData({
         hiddenmodalput: false
@@ -528,10 +512,44 @@ Page({
      phone : e.detail.value
     })
   },
-  cancel: function(){//电话弹窗取消按钮
+  showMyPrice: function () {  //防止出现还未输入手机号，页面出价已经改变的情况
+    var new_price = this.data.user.user_new_price;
+    var old_price = this.data.user.user_old_price;
+    var old_price_x = "user.user_old_price";
+    var user_price = "user.user_price";
+    var current_price = "item.current_price";
+    var user_role = "user.user_role";
+    var new_role = "buyer";
+    var bidCount = this.data.bidCount;
+    var bidCount_x = "bidCount";
+    var list = "newBidlist[" + bidCount + "]";
+    var user_name = this.data.user.user_name;
     this.setData({
-    hiddenmodalput: true
-  });
+      [user_role]: new_role,
+      [user_price]: new_price,
+      [old_price_x]: new_price,
+      [current_price]: new_price,
+      [list]: {
+        item_id: bidCount + 1,
+        name: user_name,
+        price: new_price
+      },
+      "user.user_price": this.data.user.user_new_price,
+      new_bid_bool: true,
+    })
+    console.log("bidlist：" + this.data.newBidlist[bidCount].price);
+    console.log("新：" + this.data.user.user_new_price + "旧：" + this.data.user.user_old_price);
+    this.setData({
+      [bidCount_x]: bidCount + 1,
+    });
+  },
+  cancel: function(){//电话弹窗取消按钮
+    console.log("恢复前的new_price：：：" + this.data.user.user_new_price)
+    this.setData({
+      hiddenmodalput: true,
+      "user.user_new_price": this.data.item.current_price,
+    });
+    console.log("恢复后的new_price：：：" + this.data.user.user_new_price)
   },
 
   confirm: function(){   //电话号码确认
@@ -572,6 +590,11 @@ Page({
                 confirmText: '确定',
                 confirmColor: '#56BD5B',
               })
+              console.log("恢复前的new_price：" + this.data.user.user_new_price)
+              this.setData({
+                "user.user_new_price": this.data.item.current_price,
+              });
+              console.log("恢复后的new_price：" + this.data.user.user_new_price)
             }
             console.log(app.globalData.userId); 
           }   
@@ -615,6 +638,11 @@ Page({
         icon:'none', 
         //image: '/images/tan.png',
       })
+      console.log("恢复前的new_price：" + this.data.user.user_new_price)
+      this.setData({
+        "user.user_new_price": this.data.item.current_price,
+      });
+      console.log("恢复后的new_price：" + this.data.user.user_new_price)
     }
   },
   onShow: function () {//处理倒计时的函数
