@@ -39,6 +39,16 @@ Page({
             app.globalData.openid=e.data.openid;
             if(e.data.login==1){
               app.globalData.userId=e.data.userId;
+              wx.request({
+                url: 'https://yyzcowtodd.cn/Auction/userInfo/'+app.globalData.userId,
+                success:function(e){
+                  //console.log(e)
+                  
+                  app.globalData.schoolName = e.data.obj.schoolName
+                  console.log(app.globalData.schoolName)
+                  app.globalData.schoolId = e.data.obj.schoolId
+                }
+              })
               wx.switchTab({
                 url: '/pages/switch/switch',
               })

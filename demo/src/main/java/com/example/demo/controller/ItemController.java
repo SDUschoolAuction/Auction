@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.entity.Item;
 import com.example.demo.factory.FactoryForTypeService;
@@ -10,6 +12,8 @@ import com.example.demo.util.Msg;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +25,6 @@ public class ItemController {
 
     @Resource
     private FactoryForTypeService factoryForTypeService;
-
 
 
     /**
@@ -53,7 +56,6 @@ public class ItemController {
     /**
      * @Description: 更新商品信息
      * @Param: [item]
-     *
      * @returns: com.example.demo.entity.Item
      * @Author: Exgc
      * @Date: 2020/6/15 12:35
@@ -123,4 +125,25 @@ public class ItemController {
             return Msg.err(e.toString());
         }
     }
+
+    /**
+     * @Author xu yingliang
+     * @Description
+     * @Date 16:58 2020/6/28
+     * @Param [item] 传入item,用于筛选的条件有item.itemhead,item.info(查询的关键字),item.location,item.tag
+     * @return java.util.List<java.util.Map<java.lang.String,java.lang.Object>>
+     **/
+    @RequestMapping(value = "/search")
+    public List<Map<String,Object>> selectItem(
+                                               @RequestBody Item item) throws IOException {
+        System.out.println(item.getItemInfo());
+        return  itemService.search(item);
+
+    }
+
+
+
+
+
+
 }
