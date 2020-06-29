@@ -1125,10 +1125,13 @@ Page({
             that.setData({ 
               
             })
+            var temp_price=0;
+            var price = 'user.user_price';
             while(records_length>0){
               var bid_list = 'bidList['+records_count+']';
-              var role = 'user.user_role';
+              var role = 'user.user_role'; 
               if(res.data.obj[records_length-1].userId == app.globalData.userId){
+                temp_price = res.data.obj[records_length-1].dealPrice;
                 that.setData({
                   [role]:'buyer'
                 })
@@ -1145,6 +1148,7 @@ Page({
               records_length--;
             }
             that.setData({ 
+              [price]:temp_price,
               getRecordsByItemId: res.data.obj
             });  
         //  }
