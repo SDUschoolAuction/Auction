@@ -17,6 +17,7 @@ Page({
    */
   onLoad: function (options) {
     app.editTabbar();
+    console.log(app.globalData)
     var that=this;
     that.get_goodsList()
   },
@@ -143,7 +144,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    app.hidetabbar()
+    //app.hidetabbar()
 
   },
 

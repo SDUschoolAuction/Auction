@@ -7,7 +7,7 @@
 
 <view class="container">
   
-<button class="btn" open-type="getUserInfo" bindgetuserinfo="auth" bindtap="myopenid" wx:if="{{needauth}}" bindtap="jumpPage"> 授权登录 </button>
+<button class="btn" open-type="getUserInfo" bindgetuserinfo="auth" wx:if="{{needauth}}"> 授权登录 </button>
     
 
 </view>

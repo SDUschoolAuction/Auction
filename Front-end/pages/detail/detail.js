@@ -674,6 +674,7 @@ Page({
   },
 
   getInfo: function(itemID){
+    console.log(app.globalData)
     var userid = 'user.user_id';
     var username = 'user.user_name';
     var userurl = 'user.user_url';
@@ -682,6 +683,7 @@ Page({
       [username]: app.globalData.userInfo.nickName,
       [userurl]: app.globalData.userInfo.avatarUrl
     })
+    
     
 
 
@@ -1193,8 +1195,6 @@ Page({
     var itemID = options.itemId;
     var that = this;
     this.getInfo(itemID);
-
-
     var interval = setInterval(function () {  
       console.log('刷新页面！');
       //这里放把存在本地的信息提交到后端的函数
