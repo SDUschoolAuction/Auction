@@ -141,8 +141,10 @@ public class ItemController {
 
     }
 
-
-
+    @RequestMapping("/getItemListCount")
+    public List<JSONObject> getItemListCount(){
+        return itemService.getItemListCount();
+    }
 
 
 
