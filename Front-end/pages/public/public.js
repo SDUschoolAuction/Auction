@@ -290,6 +290,7 @@ Page({
                 'content-type': 'application/json'
               },
               success: function(res) {
+                console.log("cxz");
                 console.log(res);
                 
               },
