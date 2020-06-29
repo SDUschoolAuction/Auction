@@ -31,14 +31,13 @@
     </view>
     <view class="one.hide"  wx:if="{{item.showView==false}}">
         <view class="count_down_end"> 
-              <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;拍卖已结束</text>
+              <text>拍卖已结束</text>
         </view>
     </view>
   </view>
 <view wx:if="{{item.startTime>item.nowTime}}">
 <view  class="one.show">
-        <!-- <view class="count_down"> -->
-                  <text class="time_end" decode="{{true}}" space="{{true}}">距离拍卖开始 &nbsp;&nbsp;</text>
+                  <text class="time_end1" decode="{{true}}" space="{{true}}">距离拍卖开始 &nbsp;&nbsp;</text>
                
                       <view wx:if="{{item.day>1}}" class="cu bg-black radius text-yellow">{{item.day}}</view>
                       <view wx:if="{{item.day>1}}" class="bolder1">天</view>
@@ -68,7 +67,10 @@
         <view class="goods_top_price1">¥{{item.finalPrice}}</view>
         <!-- 商品的想要人数 -->
       
-        <view class="goods_num_participants">11人想要</view>
+         <!-- 商品的想要人数 -->
+        <view wx:if="{{item.count!=null}}">
+        <view class="goods_num_participants">{{item.count}}人想要</view>
+        </view>
       </view>
     </view>
   <!-- IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII -->

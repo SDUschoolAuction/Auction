@@ -125,6 +125,7 @@
 }
 
 .comment{
+  
   border-bottom: 3rpx solid  #f1f1f1;
 }
 
@@ -172,9 +173,16 @@
 }
 
 .subcomment{
-  border-top: 2rpx solid  #f1f1f1;
+
+}
+.subcomment0{
+
 }
 .subcomment_title{
+
+}
+
+.xxxxx{
 
 }
 

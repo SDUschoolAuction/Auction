@@ -36,7 +36,7 @@ Page({
   get_inList(){
     var thispage=this
    wx.request({
-     url: app.globalData.apiurl+'/orders/sellerorders/1',//+app.globalData.userId,
+     url: app.globalData.apiurl+'/orders/sellerorders/48',//+app.globalData.userId,
      success:(result)=>{
      // console.log(result.data.obj)
        thispage.setData({
@@ -50,12 +50,13 @@ Page({
          if(thispage.data.goodsList[i].status==1)
          {     
            var name ="inList["+x+"].name"
-          
+           var info ="inList["+x+"].info"
            var price ="inList["+x+"].price"
            var imageUrl ="inList["+x+"].imageUrl"
            var people = "inList["+x+"].people"
            this.setData({
-           [name]:thispage.data.goodsList[i].itemInfo,
+          [info]:thispage.data.goodsList[i].itemInfo,
+           [name]:thispage.data.goodsList[i].itemHead,
            [price]:thispage.data.goodsList[i].finalPrice,
            [imageUrl]:thispage.data.goodsList[i].itemImg1,
            [people]:thispage.data.goodsList[i].peopleCount,
@@ -72,10 +73,50 @@ Page({
    })
   
  },
+ /* 倒计时 */
+count_Down:function(){
+  for(let i = 0, len = this.data.shangpinList.length; i < len; i++){
+    if(this.data.shangpinList[i].times!='已卖出'){
+    var nowTime = new Date().getTime();//现在时间（时间戳）
+    var endTime = new Date(this.data.shangpinList[i].times).getTime();//结束时间（时间戳）
+    var count_down_time = (endTime-nowTime)/1000;//距离结束的毫秒数
+          // 获取天、时、分、秒
+          let day = parseInt(count_down_time / (60 * 60 * 24));
+          let hou = parseInt(count_down_time % (60 * 60 * 24) / 3600);
+          let min = parseInt(count_down_time % (60 * 60 * 24) % 3600 / 60);
+          let sec = parseInt(count_down_time % (60 * 60 * 24) % 3600 % 60);
+          // console.log(day + "," + hou + "," + min + "," + sec)
+          day = this.timeFormin(day);
+          hou = this.timeFormin(hou);
+          min = this.timeFormin(min);
+          sec = this.timeFormin(sec);
+          var day1 = "shangpinList[" + i + "].day"
+          var hou2 = "shangpinList[" + i + "].hou"
+          var min3 = "shangpinList[" + i + "].min"
+          var sec4 = "shangpinList[" + i + "].sec"
+          this.setData({
+            [day1]: this.timeFormat(day),
+            [hou2]: this.timeFormat(hou),
+            [min3]: this.timeFormat(min),
+            [sec4]: this.timeFormat(sec),
+          })
+  }
+  
+  }
+  setTimeout(this.count_Down,1000)
+},
+//小于10的格式化函数（2变成02）
+timeFormat(param) {
+  return param < 10 ? '0' + param : param;
+},
+//小于0的格式化函数（不会出现负数）
+timeFormin(param) {
+  return param < 0 ? 0: param;
+},
  get_shangpinList(){
   var thispage=this
  wx.request({
-   url: app.globalData.apiurl+'/orders/getItemListBySellerId/1',//+app.globalData.userId,
+   url: app.globalData.apiurl+'/orders/getItemListBySellerId/48',//+app.globalData.userId,
    success:(result)=>{
    // console.log(result.data.obj)
      thispage.setData({
@@ -94,10 +135,11 @@ Page({
         var times ="shangpinList1["+x+"].times"
         var price ="shangpinList1["+x+"].price"
         var imageUrl ="shangpinList1["+x+"].imageUrl"
-
+        var info ="shangpinList1["+x+"].info"
         this.setData({
         [times]:thispage.data.goodsList[i].endTime,
-        [name]:thispage.data.goodsList[i].itemInfo,
+        [name]:thispage.data.goodsList[i].itemHead,
+        [info]:thispage.data.goodsList[i].itemInfo,
         [price]:thispage.data.goodsList[i].finalPrice,
         [imageUrl]:thispage.data.goodsList[i].itemImg1,
         [status]:thispage.data.goodsList[i].status
@@ -111,10 +153,11 @@ Page({
         var times ="shangpinList2["+y+"].times"
         var price ="shangpinList2["+y+"].price"
         var imageUrl ="shangpinList2["+y+"].imageUrl"
-
+        var info ="shangpinList2["+y+"].info"
         this.setData({
         [times]:"已卖出",
-        [name]:thispage.data.goodsList[i].itemInfo,
+        [info]:thispage.data.goodsList[i].itemInfo,
+        [name]:thispage.data.goodsList[i].itemHead,
         [price]:thispage.data.goodsList[i].finalPrice,
         [imageUrl]:thispage.data.goodsList[i].itemImg1,
         [status]:thispage.data.goodsList[i].status
@@ -129,7 +172,7 @@ Page({
    }
   }
  })
-
+this.count_Down()
 },
  
 
