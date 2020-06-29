@@ -25,8 +25,8 @@ public interface ItemDao {
     @Update("UPDATE item SET STATUS=2 WHERE itemId=#{itemId};")
     Integer deleteItemById(int itemId);
 
-    @Select("select * from (item left join type1 on item.itemId=type1.itemId) left join type2 on item.itemId=type2.itemId where item.status in (-1,0,1)\n" +
+    @Select("select * from (item left join type1 on item.itemId=type1.itemId) left join type2 on item.itemId=type2.itemId where item.status in (-1,0)\n" +
             "union\n" +
-            "select * from (item right join type1 on item.itemId=type1.itemId) right join type2 on item.itemId=type2.itemId where item.status in (-1,0,1);")
+            "select * from (item right join type1 on item.itemId=type1.itemId) right join type2 on item.itemId=type2.itemId where item.status in (-1,0);")
     List<JSONObject> getItemList();
 }

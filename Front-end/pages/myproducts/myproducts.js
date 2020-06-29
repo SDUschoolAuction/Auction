@@ -36,7 +36,7 @@ Page({
   get_inList(){
     var thispage=this
    wx.request({
-     url: app.globalData.apiurl+'/orders/sellerorders/48',//+app.globalData.userId,
+     url: app.globalData.apiurl+'/orders/sellerorders/'+app.globalData.userId,
      success:(result)=>{
      // console.log(result.data.obj)
        thispage.setData({

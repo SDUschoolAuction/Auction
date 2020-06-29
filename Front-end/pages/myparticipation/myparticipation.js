@@ -76,7 +76,7 @@ Page({
  get_shangpinList(){
   var thispage=this
  wx.request({
-   url: app.globalData.apiurl+'/orders/getItemListByCustomerId/1',//+app.globalData.userId,
+   url: app.globalData.apiurl+'/orders/getItemListByCustomerId/'+app.globalData.userId,
    success:(result)=>{
    // console.log(result.data.obj)
      thispage.setData({
