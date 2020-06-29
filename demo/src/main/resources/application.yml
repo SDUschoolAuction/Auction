@@ -1,5 +1,7 @@
 server:
+
   port: 8083 #访问端口号
+
 
   servlet:
     encoding:
@@ -8,6 +10,8 @@ server:
       force: true
 
 spring:
+
+
 
   datasource:
     username: ubuntu
@@ -26,3 +30,5 @@ spring:
     view:
       prefix: /
       suffix: .html
+
+

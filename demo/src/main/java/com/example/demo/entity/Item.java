@@ -1,8 +1,12 @@
 package com.example.demo.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
 import javax.xml.crypto.Data;
 import java.util.Date;
-
 public class Item {
     private Integer itemId;
     private Integer sellerId;

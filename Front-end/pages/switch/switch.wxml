@@ -14,7 +14,7 @@
       <image src="{{item.itemImg1}}" mode="aspextFit"></image>
     </view>
     <!-- 倒计时 -->
-    <view wx:if="{{item.stateGoods!=1}}">
+<view wx:if="{{item.stateGoods!=1}}">
 <view wx:if="{{item.startTime<item.nowTime}}">
     <view class="one.show" wx:if="{{item.showView!=false}}">
         <!-- <view class="count_down"> -->
@@ -50,12 +50,14 @@
 
     </view>
 
-</view>
-
-
 
 </view>
-
+</view>
+<view wx:if="{{item.stateGoods==1}}">
+<view class="yikoujia_tianjia">
+<view class="count_down_end1">该商品为一口价商品</view>
+</view>
+</view>
     <!-- 商品容器 -->
     <view class="goods_info_wrap">
       <!-- 商品名称 -->

@@ -1,0 +1,19 @@
+<view class='itembox'>
+<text class="txt">评价：</text>
+  <view wx:for="{{imgs}}" wx:key="{{item.id}}" bindtap='select' data-index="{{item.id}}">
+    <image class="star" src="{{item.id>starId?src2:src1}}"></image>
+  </view>
+  <view class='scorePin'>{{starId}}.00</view>
+</view>
+ <view class="weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <textarea class="weui-textarea" bindinput="bindTextAreaChange" placeholder="我要提出建议..." style="height: 8em" value="{{info}}" maxlength="{{noteMaxLen}}" focus />
+        <view class="weui-textarea-counter">{{noteNowLen}}/{{noteMaxLen}}</view>
+      </view>
+    </view>
+  </view>
+<!--发布按钮  -->
+<view class="btnSf">
+<button class="cu-btn bg-green {{shadow?'shadow':''}} lg" bindtap="bindSubmit">发布</button>
+</view>
