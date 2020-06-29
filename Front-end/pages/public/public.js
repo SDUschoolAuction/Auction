@@ -205,7 +205,7 @@ Page({
     wx.chooseImage({      
       count: 1, //默认9
       sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-      sourceType: ['album'], //从相册选择
+      sourceType: ['album', 'camera'], //从相册选择
       success: (res) => {
         var filePath = res.tempFiles[0].path;
         var filename = filePath.substr(filePath.lastIndexOf('/') + 1);
@@ -323,7 +323,7 @@ Page({
         success: function(res) {
           if (res.confirm) {
             console.log('用户点击确定')
-            wx.navigateTo({
+            wx.redirectTo({
               url: '../myproducts/myproducts',
             })
             var img1 = that.data.img1;
@@ -424,7 +424,7 @@ Page({
         success: function(res) {
           if (res.confirm) {
             console.log('用户点击确定')
-            wx.navigateTo({
+            wx.redirectTo({
               url: '../myproducts/myproducts',
             })
             var img1 = that.data.img1;

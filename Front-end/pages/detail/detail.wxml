@@ -151,15 +151,18 @@
   </view>
 
   <!-- 有新评论时显示，与新出价显示「*」的类似 -->
-  <view hidden="{{!new_comment_bool}}" id="comments_new" class="padding text-lg text-gray" wx:for="{{commentInput_list}}"  wx:key="key">
-        <view class="comment align-center" hidden = "">
+  <view hidden="{{!new_comment_bool}}" id="comments_new" class="text-lg text-gray" wx:for="{{commentInput_list}}"  wx:key="key">
+
+
+
+
+        <view class="padding-top-xs comment align-center padding-bottom-xss" hidden = "">
           <view id="comment_head" class="flex justify-start align-center">
             <view class="user_info_imgg1 margin-xs" > <open-data  type="userAvatarUrl"></open-data></view>
             <view class="comment_text margin text-black"><open-data type="userNickName"></open-data></view>
             <view wx:if="{{user.user_role=='seller'}}" class="text-lg margin-xs cu-tag bg-green light radius">卖家</view>
-            <!-- <button wx:if="{{item.user_id == user.user_id}}" class="delete cu-btn padding-0 text-blue bg-white">删除</button> -->
           </view>
-          <view class="padding comment_text">{{item.text}}</view>
+          <view class="padding-xs comment_text">{{item.text}}</view>
           <view class="padding-0 padding-bottom-sm text-sm comment_time">{{item.time}}</view>
         </view>
   </view>
@@ -167,16 +170,16 @@
 
   <!-- 评论的显示 -->
   <view id="comments" class="text-lg text-gray" wx:for="{{commentList}}"  wx:key="key">
-        <view class="padding-top comment align-center padding-bottom">
+        <view class="padding-top-xs comment align-center padding-bottom-xsss">
           <view id="comment_head" class="flex justify-between align-center">
             <view class="flex justify-between align-center">
-              <image class="user_info_imgg1 margin-xs" src="{{item.url}}"></image>
+              <image class="user_info_imgg1 margin-xs margin-bottom-0" src="{{item.url}}"></image>
               <button  bindtap="openSubcomment_1" data-text="{{item.name}}" data-father="{{item.id}}" class="text-lg cu-btn padding-0 text-blue bg-white">{{item.name}}</button>
               <view wx:if="{{item.role=='seller'}}" class="text-lg margin-xs cu-tag bg-green light radius">卖家</view>
             </view>
             <button wx:if="{{item.user_id == user.user_id}}" bindtap="deleteComment" data-deleteid="{{item.id}}" class="text-lg cu-btn padding-0 text-blue bg-white">删除</button>
           </view>
-          <view class="padding comment_text" bindtap="openSubcomment_1" data-text="{{item.name}}" data-father="{{item.id}}" >{{item.text}}</view>
+          <view class="padding-xs comment_text" bindtap="openSubcomment_1" data-text="{{item.name}}" data-father="{{item.id}}" >{{item.text}}</view>
           <view class="padding-0 padding-bottom-sm text-sm comment_time">{{item.time}}</view>
 
           <!-- sub评论的显示 -->

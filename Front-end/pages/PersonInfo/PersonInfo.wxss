@@ -10,20 +10,3 @@
 .box view.cu-bar {
   margin-top: 20rpx; 
 }
-.user-nickname {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 60rpx;
-}
-
-.user-avatar {
-  width: 140rpx;
-  height: 140rpx;
-  border-radius: 70rpx;
-  vertical-align: middle;
-}
-user-schoolId{
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 60rpx;
-}

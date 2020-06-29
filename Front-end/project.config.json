@@ -31,9 +31,9 @@
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.0.4",
+	"libVersion": "2.11.3",
 	"appid": "wx4af9dcf37a5a32bc",
-	"projectname": "%E6%A0%A1%E5%9B%AD%E5%B0%8F%E6%8B%8D",
+	"projectname": "miniprogram-1",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
@@ -66,8 +66,15 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "pages/my/my",
-					"pathName": "pages/my/my",
+					"name": "pages/PersonInfo/PersonInfo",
+					"pathName": "pages/PersonInfo/PersonInfo",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/star/star",
+					"pathName": "pages/star/star",
 					"scene": null
 				}
 			]
