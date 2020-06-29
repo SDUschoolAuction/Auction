@@ -1,0 +1,61 @@
+	<view class="cu-form-group margin-top">
+		<textarea maxlength="200" disabled="{{modalName!=null}}" bindinput="textareaInput" placeholder="请输入物品简介,最多200字" value='{{textareaValue}}'></textarea>
+	</view>
+	<view class="cu-bar bg-white ">
+		<view class="action">
+		</view>
+		<view class="action">
+			{{imgList.length}}/4
+		</view>
+	</view>
+	<view class="cu-form-group">
+		<view class="grid col-4 grid-square flex-sub">
+			<view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
+				<image src='{{imgList[index]}}' mode='aspectFill'></image>
+				<view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+					<text class="cuIcon-close"></text>
+				</view>
+			</view>
+			<view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<4}}">
+				<text class="cuIcon-cameraadd"></text>
+			</view>
+		</view>
+	</view>
+
+
+
+
+
+	<view class="cu-form-group ">
+		<view class="title">物品标题</view>
+		<input maxlength='30' placeholder="请输入物品名称" bindinput="bindThingNameInput" value="{{thingName}}" ></input>
+	</view>
+
+	<view class="cu-form-group">
+		<view class="title">联系方式</view>
+		<input  maxlength='11' type="number"  placeholder="请输入您的手机号码" bindinput="bindthingPhoneNumberInput" value="{{thingPhoneNumber}}"  ></input>
+	</view>
+
+	
+	<view class="cu-form-group ">
+		<view class="title">物品成色</view>
+		<picker bindchange="thingConditionsChange" value="{{thingConditionsIndex}}" range="{{thingConditions}}">
+			<view class="picker">
+				{{thingConditionsIndex?thingConditions[thingConditionsIndex]:'请输入物品损坏度'}}
+			</view>
+		</picker>
+	</view>
+		<view class="cu-form-group">
+		<view class="title">发货地区</view>
+		<picker mode="region" bindchange="RegionChange" value="{{region}}" custom-item="{{customItem}}">
+			<view class="picker">
+				{{region[0]}}，{{region[1]}}，{{region[2]}}
+			</view>
+		</picker>
+	</view>
+
+<view class="box">
+  <view class="cu-bar btn-group">
+    <button class="cu-btn bg-green shadow-blur round lg" type="primary" size="default" disabled="{{thingName == ''||thingPhoneNumber == ''|| imgList == '' || textareaValue == '' || region =='省,市,区'|| thingConditions == '' || thingPrice ==''||region ==''||buttonLoadingThing ? true : false}}" loading="{{buttonLoadingThing}}" bindtap="bindSubmitThingB">确认修改</button>
+  </view>
+    </view>
