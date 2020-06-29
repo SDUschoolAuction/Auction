@@ -131,10 +131,37 @@ export function get(url, data = {}) {
       })
     });
   }
+
+
+  function checkTime(startTime,endTime){
+    if(startTime == '' || endTime == ''){
+        return true
+    }
+    var DateOne = new Date(startTime);
+    var DateTwo = new Date(endTime);
+    if(DateOne.getTime() > DateTwo.getTime()){
+        return false
+    } else {
+        return true
+    }
+}
+
+function timeGap(start) {
+  let startTime = new Date(); 
+  let endTime = new Date(start); 
+  //console.log(endTime - startTime); // 毫秒数
+  //console.log(Math.floor((endTime - startTime) / 1000)); // 秒数
+  return Math.floor((endTime - startTime) / 1000 / 60); // 分钟
+  //console.log(Math.floor((endTime - startTime) / 1000 / 60 / 60)); // 小时
+  //console.log(Math.floor((endTime - startTime) / 1000 / 60 / 60 / 24)); // 天数
+}
+
 module.exports = {
   getTimeLeft: getTimeLeft,
   imageUtil: imageUtil,
   // wxPromisify: wxPromisify
   wxPromise: wxPromise,
-  get: get
+  get: get,
+  checkTime:checkTime,
+  timeGap:timeGap
 }

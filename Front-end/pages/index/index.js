@@ -33,7 +33,7 @@ Page({
       wxPromise(wx.login)()
       .then(res => get("/openid", { code: res.code }))
       .then(e =>{
-          console.log(e)
+          //console.log(e)
           wx.hideLoading();
           if(e.statusCode=="200"){
             app.globalData.openid=e.data.openid;
@@ -45,7 +45,7 @@ Page({
                   //console.log(e)
                   
                   app.globalData.schoolName = e.data.obj.schoolName
-                  console.log(app.globalData.schoolName)
+                  //console.log(app.globalData.schoolName)
                   app.globalData.schoolId = e.data.obj.schoolId
                 }
               })
@@ -56,7 +56,7 @@ Page({
           }else{
             console.log("dlsb")
           }
-          console.log(app.globalData)
+          //console.log(app.globalData)
           wx.setStorageSync("openID", e.data.openid)
           wx.setStorageSync("userID", e.data.userId)
       })
