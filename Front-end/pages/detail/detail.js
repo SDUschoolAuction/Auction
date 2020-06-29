@@ -1399,18 +1399,14 @@ Page({
                 // })
           })
     }, 999999999) //循环间隔 单位ms
-  }
-
-
-
-
-  ,
-
-
-
-  fTime: function(time){
-    return Time.formatTime(new Date(time));
-  }
+  },
+  showDealrole: function(){
+    wx.showToast({
+      title: '您的出价不能小于当前的出价金额，每次出价不能小于卖家设置的最小出价间隔',
+      icon: 'none',
+      duration: 5000//持续的时间
+    })
+  },
 })
 
 

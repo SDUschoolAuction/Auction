@@ -87,8 +87,8 @@
   
   <!-- body的底端文字部分 -->
   <view class="body_bottom padding">
-    <view id="deal_rule">
-      <text class="padding-right-xs cuIcon-question lg text-blue light"></text>
+    <view bindtap='showDealrole' id="deal_rule" class=" ">
+      <text class="padding-right-xs cuIcon-question text-blue light"></text>
       <text class="text-blue light">交易规则</text>
     </view>
     <view id="deal_num">
