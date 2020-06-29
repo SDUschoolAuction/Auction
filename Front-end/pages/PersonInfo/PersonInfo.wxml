@@ -4,24 +4,24 @@
 <form>
 	<view class="cu-form-group margin-top">
 		<view class="title">头像</view>
-		<input></input>
+		 <image class="user-avatar" mode="aspectFill" src="{{userInfo.avatarUrl}}"></image>
 	</view>
 	<view class="cu-form-group">
 		<view class="title">昵称</view>
-		<input></input>
+		 <text class="user-nickname font-size1">{{userInfo.nickName}}</text>
+	</view>
+	<view class="cu-form-group ">
+		<view class="title">学校</view>
+		<text class="user-schoolId font-size1">{{schoolName}}</text>
 	</view>
 	<view class="cu-form-group margin-top">
-		<view class="title">学校</view>
-		<input></input>
-	</view>
-	<view class="cu-form-group">
 		<view class="title">地址</view>
-		<input placeholder="输入框带个图标"></input>
-		<text class="cuIcon-locationfill text-orange"></text>
+		<input value="{{userInfo.city}}" bindinput='changecity'></input>
+	
 	</view>
 	<view class="cu-form-group">
 		<view class="title">手机号</view>
-		<input placeholder="输入框带标签"></input>
+		<input  placeholder="请输入手机号" value="{{phoneNumber}}" bindinput='changephonenumber'></input>
 		<view class="cu-capsule radius">
 			<view class="cu-tag bg-blue">
 				+86
@@ -36,6 +36,6 @@
 
 <view class="box">
   <view class="cu-bar btn-group">
-    <button class="cu-btn bg-green shadow-blur round lg">保存</button>
+    <button class="cu-btn bg-green shadow-blur round lg" bindtap="saveinformation">保存</button>
   </view>
 </view>

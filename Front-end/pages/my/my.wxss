@@ -9,6 +9,11 @@
   border-radius: 70rpx;
   vertical-align: middle;
 }
+.info .img{
+  width:24rpx;
+  height:26rpx;
+  display: inline-block;
+}
 
 .user-nickname {
   display: inline-block;

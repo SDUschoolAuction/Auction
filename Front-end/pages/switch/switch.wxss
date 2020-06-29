@@ -73,6 +73,14 @@
   align-items: center;
 
 }
+.yikoujia_tianjia{
+  display: flex;
+  background-color: rgb(170, 230, 75);
+  font-size: 20rpx;
+  height: 34rpx;
+  align-items: center;
+  justify-content: center;
+}
 .one.hide{
   display: flex;
   background-color: grey;
@@ -83,6 +91,12 @@
 }
 .count_down_end{
   background-color: grey;
+  height: 34rpx;
+  font-size: 25rpx;
+
+}
+.count_down_end1{
+  padding-left: 20rpx;
   height: 34rpx;
   font-size: 25rpx;
 

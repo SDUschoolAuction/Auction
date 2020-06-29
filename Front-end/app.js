@@ -73,6 +73,10 @@ App({
     userId:null,
     systemInfo: null,//客户端设备信息
     userInfo: null,
+    schoolId:null,
+    schoolName:null,
+   
+    phoneNumber:null,
     tabBar: {
       "backgroundColor": "#ffffff",
       "color": "#979795",

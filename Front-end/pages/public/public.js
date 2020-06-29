@@ -14,6 +14,10 @@ Page({
     thingCampusIndex: 0,
     region: ["省","市","区"],
     imgList: [],
+    img1:'',
+    img2:'',
+    img3:'',
+    img4:'',
     modalName: null,
     textareaValue: '',
     TabCur: 0,
@@ -69,25 +73,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    var that = this;
-    var itemId = that.data.itemId;
-    var nickName = that.data.nickName;
-    wx.getStorage({
-      key: 'itemId',
-      success: function(res) {
-        that.setData({
-          itemId: res.data
-        })
-      },
-    })
-    wx.getStorage({
-      key: 'nickName',
-      success: function(res) {
-        that.setData({
-          nickName: res.data
-        })
-      },
-    })
+    
   },
 
   /**
@@ -204,8 +190,59 @@ Page({
             if(data.Location!=0){
                 that.setData({
                   imgList:that.data.imgList.concat("http://"+data.Location)
+                  
                 })  
             }
+            
+            var imgList = that.data.imgList; //图片
+            var img1 = that.data.img1;
+            var img2 = that.data.img2;
+            var img3 = that.data.img3;
+            var img4 = that.data.img4;
+            if(imgList[0]!=null){
+              that.setData({
+                img1:imgList[0]
+              })
+            }
+            else{
+              that.setData({
+                img1:null
+              })
+            } 
+            if(imgList[1]!=null){
+              that.setData({
+                img2:imgList[1]
+              })
+            }
+            else{
+              that.setData({
+                img2:null
+              })
+            }
+            if(imgList[2]!=null){
+              that.setData({
+                img3:imgList[2]
+              })
+            }
+            else{
+              that.setData({
+                img3:null
+              })
+            }
+            if(imgList[3]!=null){
+              that.setData({
+                img4:imgList[3]
+              })
+            }
+            else{
+              that.setData({
+                img4:null
+              })
+            }
+            console.log(img1)
+            console.log(img2)
+            console.log(img3)
+            console.log(img4)
          });
       
           }
@@ -235,6 +272,7 @@ Page({
       }
     })
   },
+
   textareaInput(e) {
     this.setData({
       textareaValue: e.detail.value
@@ -254,8 +292,10 @@ Page({
             wx.navigateTo({
               url: '../myproducts/myproducts',
             })
-
-            var imgList = that.data.imgList; //图片
+            var img1 = that.data.img1;
+            var img2 = that.data.img2;
+            var img3 = that.data.img3;
+            var img4 = that.data.img4;
             var thingName = that.data.thingName; //名字
             var thingConditionIndex = that.data.thingConditionIndex; //成色索引值
             var thingConditions = that.data.thingConditions[thingConditionIndex]; //成色
@@ -267,24 +307,33 @@ Page({
             var dateSecond = that.data.dateSecond
             var dateMinute = that.data.dateMinute
             var region = that.data.region
-            var itemId = that.data.itemId;
-            var nickNmae = that.data.nickName;
-            var url = app.globalData.apiurl + '/addItemType/1'        
+            var type = 1
+            var sellerId = app. globalData. userId
+            var url = app.globalData.apiurl + '/addItemType/1'      
+            
             wx.request({
               url,
-              data: {                
-                itemHead: thingName,                
-                markupRange: thingCampus,                
-                startPrice: thingPrice,
-                startTime:dateSecond,
-                endTime:dateMinute,  
+              data: {       
+               item:{          
+                itemHead: thingName,       
                 itemTag: thingConditions,
                 itemInfo: textareaValue,
                 telephoneNumber: thingPhoneNumber,
                 itemLocation:region,  
-                itemImg:imgList,
-                itemId: itemId, //用户的学号
-                nickName: nickNmae, //用户昵称
+                finalPrice:thingPrice,
+                itemImg1:img1,
+                itemImg2:img2,
+                itemImg3:img3,
+                itemImg4:img4,
+                sellerId: sellerId, 
+                type:type
+              },
+                type:{
+                  startPrice: thingPrice,
+                  markupRange: thingCampus,                
+                  startTime:dateSecond,
+                  endTime:dateMinute,
+                }
               },
               method: "POST",
               header: {
@@ -333,7 +382,7 @@ Page({
   bindSubmitThingB: function() {
     var that = this;
     var tel_length = that.data.thingPhoneNumber.length;
-    if (tel_length==11) {    
+    if (tel_length==11) { 
       wx.showModal({
         title: '系统提示',
         content: '确定发布',
@@ -343,8 +392,10 @@ Page({
             wx.navigateTo({
               url: '../myproducts/myproducts',
             })
-
-            var imgList = that.data.imgList; //图片
+            var img1 = that.data.img1;
+            var img2 = that.data.img2;
+            var img3 = that.data.img3;
+            var img4 = that.data.img4;
             var thingName = that.data.thingName; //名字
             var thingConditionIndex = that.data.thingConditionIndex; //成色索引值
             var thingConditions = that.data.thingConditions[thingConditionIndex]; //成色
@@ -352,22 +403,30 @@ Page({
             var thingPhoneNumber = that.data.thingPhoneNumber; //电话
             var thingPrice = that.data.thingPrice; //价格
             var region = that.data.region
-            var itemId = that.data.itemId;
-            var nickNmae = that.data.nickName;
-            var url = app.globalData.apiurl + '/addItemType/2'         
+            var type = 2
+            var sellerId = app. globalData. userId
+            var url = app.globalData.apiurl + '/addItemType/2'      
+            
             wx.request({
               url,
-              data: {                
-                itemHead: thingName,                               
-                startPrice: thingPrice,
+              data: {       
+               item:{          
+                itemHead: thingName,       
                 itemTag: thingConditions,
                 itemInfo: textareaValue,
                 telephoneNumber: thingPhoneNumber,
                 itemLocation:region,  
-                itemImg:imgList,
-                itemId: itemId, //用户的学号
-                nickName: nickNmae, //用户昵称
-
+                finalPrice:thingPrice,
+                itemImg1:img1,
+                itemImg2:img2,
+                itemImg3:img3,
+                itemImg4:img4,
+                sellerId: sellerId, 
+                type:type
+              },
+                type:{
+                  itemPrice: thingPrice,
+                }
               },
               method: "POST",
               header: {
@@ -385,11 +444,14 @@ Page({
                   duration: 2000
                 })
                 that.setData({
-                  buttonLoadingThingB: false
+                  buttonLoadingThingA: false
                 })
               },
             })
-            
+
+          
+
+
           } else if (res.cancel) {
             console.log('用户点击取消')
           }
@@ -404,7 +466,6 @@ Page({
         
       })
     }
-     
     
   },
   

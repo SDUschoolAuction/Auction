@@ -185,3 +185,11 @@
 .comment_time_sub{
   text-align: end;
 }
+
+
+.bid_username{
+  width:50%;
+  white-space: nowrap;/*内容超宽后禁止换行显示*/
+  overflow: hidden;/*超出部分隐藏*/
+  text-overflow:ellipsis;/*文字超出部分以省略号显示*/
+}

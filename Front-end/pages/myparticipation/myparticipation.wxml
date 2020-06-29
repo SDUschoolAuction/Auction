@@ -10,7 +10,7 @@
       <view class="flex" wx:for="{{shangpinList}}">
         <view class="flex-sub  padding-sm margin-xs radius">
           <view class="bg-red" style="width:250rpx">
-            <text>距结束：{{item.times}}</text>
+            <text>结束时间：{{item.times}}</text>
           </view>
           <view>
             <image style="width:100%;height:150px" src="{{item.imageUrl}}" mode="aspectFill">
@@ -24,16 +24,17 @@
 
           </view>
           <view style="color:red;font-size:20px;margin-top:10px">
-            <text>当前价￥{{item.price}}</text>
+            <text>当前最高价￥{{item.price}}</text>
           </view>
-          <view style="color:#ccc">
+          <view style="color:#abc">
             <text>
-          {{item.people}}人参拍
+           <text>我的价格￥{{item.myprice}}</text>
           </text>
           </view>
-          <view style="margin-top:10px;margin-left:20px">
+          <view style="margin-top:10px;margin-left:20px" wx:if="{{item.status==0}}">
             <button class="cu-btn round bg-green ">出价</button>
           </view>
+          
         </view>
       </view>
       
@@ -57,13 +58,9 @@
 
           </view>
           <view style="color:red;font-size:20px;margin-top:10px">
-            <text>当前价￥{{item.price}}</text>
+            <text>成交价￥{{item.price}}</text>
           </view>
-          <view style="color:#ccc">
-            <text>
-          {{item.people}}人参拍
-          </text>
-          </view>
+         
           <view style="margin-top:10px;margin-left:20px">
             <button class="cu-btn round bg-green " bindtap='queren'>确认已交易</button>
           </view>

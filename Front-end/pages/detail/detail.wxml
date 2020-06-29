@@ -87,8 +87,8 @@
   
   <!-- body的底端文字部分 -->
   <view class="body_bottom padding">
-    <view id="deal_rule">
-      <text class="padding-right-xs cuIcon-question lg text-blue light"></text>
+    <view bindtap='showDealrole' id="deal_rule" class=" ">
+      <text class="padding-right-xs cuIcon-question text-blue light"></text>
       <text class="text-blue light">交易规则</text>
     </view>
     <view id="deal_num">
@@ -109,7 +109,7 @@
     <view hidden="{{!selectedFlag[0]}}">
       <block wx:for="{{bidList}}" wx:for-item="item" wx:for-index="index"  wx:key="key">
         <view class="li">
-          <view>
+          <view class='bid_username'>
             <text class="text-blue">{{item.name}}</text>
           </view>
           <view>
@@ -233,7 +233,7 @@
   </view>
   <view id="bid_button_changeshow" class="flex justify-center algin-center">
     <button bindtap='submitBid' class="margin-right text-lg padding cu-btn round bg-green {{shadow?'shadow':''}}">{{bid_text}}</button>
-    <button bindtap='changeShow' class="margin-left text-lg padding cu-btn round bg-green light {{shadow?'shadow':''}}">取消</button>
+    <button bindtap='changeShowCancel' class="margin-left text-lg padding cu-btn round bg-green light {{shadow?'shadow':''}}">取消</button>
   </view>
 </view>
 
@@ -261,7 +261,7 @@
   </view>
   <view id="bid_button_changeshow" class="flex justify-center algin-center">
     <button bindtap='submitBid' class="margin-right text-lg padding cu-btn round bg-green {{shadow?'shadow':''}}">{{bid_text}}</button>
-    <button bindtap='changeShow' class="margin-left text-lg padding cu-btn round bg-green light {{shadow?'shadow':''}}">取消</button>
+    <button bindtap='changeShowCancel' class="margin-left text-lg padding cu-btn round bg-green light {{shadow?'shadow':''}}">取消</button>
   </view>
 </view>
 
