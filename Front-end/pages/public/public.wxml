@@ -69,7 +69,7 @@
 		</picker>
 	</view>
 		<view class="cu-form-group">
-		<view class="title">发货地区</view>
+		<view class="title">物品位置</view>
 		<picker mode="region" bindchange="RegionChange" value="{{region}}" custom-item="{{customItem}}">
 			<view class="picker">
 				{{region[0]}}，{{region[1]}}，{{region[2]}}
@@ -152,7 +152,7 @@
 		</picker>
 	</view>
 		<view class="cu-form-group">
-		<view class="title">发货地区</view>
+		<view class="title">物品位置</view>
 		<picker mode="region" bindchange="RegionChange" value="{{region}}" custom-item="{{customItem}}">
 			<view class="picker">
 				{{region[0]}}，{{region[1]}}，{{region[2]}}
