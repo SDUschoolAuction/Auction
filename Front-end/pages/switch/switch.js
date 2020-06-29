@@ -207,8 +207,10 @@ Page({
   //下拉刷新事件
   onPullDownRefresh(){
     this.setData({
+      m:10,
       goodsList:[],
     })
+   
     this.get_goodsList()
   }
 })
