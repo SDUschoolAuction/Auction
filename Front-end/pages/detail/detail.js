@@ -358,9 +358,6 @@ Page({
         commentCount:count + 1
       });
       var that = this;
- //     this.setData({
- //       userId: app.globalData.userId
-  //    });
       console.log(app.globalData.userId);
       wx.request({
         url: app.globalData.apiurl + '/comments/addComments',
@@ -470,16 +467,17 @@ Page({
   submitBid:function(e){//提交新的出价的函数
     var new_price = this.data.user.user_new_price;
     var old_price = this.data.user.user_old_price;
+    var current_price = this.data.item.current_price;
     var user_name = this.data.user.user_name;
     var phone = this.data.user.user_phone;
-    if(new_price - old_price < this.data.min_bidAdd){
+    if (new_price <= current_price) {
       this.setData({
-        bid_text: "加价小于最小要求"
+        bid_text: "出价需大于当前价"
       });
     }
-    else if(new_price <= old_price){
+     else if(new_price - old_price < this.data.min_bidAdd){
       this.setData({
-        bid_text: "出价不能小于当前价"
+        bid_text: "加价小于最小要求"
       });
     }
     else{
@@ -544,12 +542,12 @@ Page({
     });
   },
   cancel: function(){//电话弹窗取消按钮
-    console.log("恢复前的new_price：：：" + this.data.user.user_new_price)
+    console.log("恢复前的new_price：" + this.data.user.user_new_price)
     this.setData({
       hiddenmodalput: true,
       "user.user_new_price": this.data.item.current_price,
     });
-    console.log("恢复后的new_price：：：" + this.data.user.user_new_price)
+    console.log("恢复后的new_price：" + this.data.user.user_new_price)
   },
 
   confirm: function(){   //电话号码确认
