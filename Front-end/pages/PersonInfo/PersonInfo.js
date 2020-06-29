@@ -1,67 +1,71 @@
 // pages/PersonalInfo/PersonalInfo.js
 var app=getApp()
-var that
+var items = require('../../data/schoolData.js')
 Page({
-  data: {
-    userInfo:app.globalData.userInfo,
-    phoneNumber:app.globalData.phoneNumber,
-    
-  },
+
   /**
    * 页面的初始数据
    */
-  
+  data: {
+      isDisabled:true,
+      id:'',
+      wxid:'',
+      name: "",
+      number:'',
+      schoolid:'',
+      location:[],
+      text:"编辑",
+      schooldata:items.schools,
+      region: [],
+      imageUrl:"",
+      nownumber:'',
+      locationchange: false
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(app.globalData.schoolName)
-    app.editTabbar();
-    that=this
+    var that =this;
+    that.get_data();
+    //console.log(app.globalData.schoolId[1])
+  },
+  get_data(){
+    var thispage =this
+   
     wx.request({
-      url: 'https://yyzcowtodd.cn/Auction/userInfo/'+app.globalData.userId,
-      success:function(e){
-        //console.log(e)
+      url: app.globalData.apiurl+'/user/343',//+app.globalData.userId,
+      success: (result) => {
+        var d=result.data.location.split("\"")
+        var x="region["+0+"]"
+        var y="region["+1+"]"
+        var z="region["+2+"]" 
+        var newnumber =result.data.telephoneNumber.split("\"")
         
-        that.setData({ schoolName: e.data.obj.schoolName })
         
-      }
-    })
-    wx.getUserInfo({
-      success: function (res) {
-        that.setData({ userInfo: res.userInfo })
-      }
-    })
-
-     
-
-  },
-
-
-  changecity:function(e){
-    
-    app.globalData.userInfo.city =e.detail.value
-    
-  },
-  changephonenumber:function(e){
-    var that = this
-     app.globalData.phoneNumber = e.detail.value
-     that.setData({phoneNumber:e.detail.value})
-  },
-  saveinformation:function(){
-    wx.request({
-      url: 'https://yyzcowtodd.cn/Auction/updateUser',
-      method: 'post',
-      data: {
-         userId:app.globalData.userId,
-         location:app.globalData.userInfo.city,
-         telephoneNumber:app.globalData.phoneNumber
         
-      },
-
+        thispage.setData({  
+          id:result.data.userId,
+          name:result.data.name,
+          wxid:result.data.weChatId,
+        //  number:result.data.telephoneNumber,
+          schoolid:thispage.data.schooldata[result.data.schoolId-1].schoolName,
+          imageUrl:result.data.userIcon,
+          [x]:d[1],
+          [y]:d[3],
+          [z]:d[5],
+          number:parseInt(newnumber[1])
+          
+        })
+       
+        }
+        
     })
-   console.log(app.globalData.phoneNumber)
+   
   },
+
+
+ 
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -110,5 +114,69 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  numberInput:function(e)
+  {
+      this.setData({
+        nownumber:e.detail.value
+      })
+  },
+  RegionChange: function(e) {
+    this.setData({
+      region: e.detail.value
+    })
+  },
+
+  change:function(e)
+  {
+    if (!this.data.isDisabled) { 
+      this.setData({  
+        isDisabled: true,  
+        text: "编辑"   
+      })
+      var newlocation=this.data.region
+      var newtelephoneNumber=this.data.nownumber
+      var myuserId=app.globalData.userId
+      console.log(newlocation)
+      console.log(newtelephoneNumber)
+      console.log(myuserId)
+      wx.request({
+        url: app.globalData.apiurl+'/updateUser',
+        data: {     
+          userId:JSON.stringify(343),
+          location:JSON.stringify(newlocation),
+          telephoneNumber:JSON.stringify(newtelephoneNumber)
+
+         },
+         method: "POST",
+         header: {
+           'content-type': 'application/json'
+         },
+         success: function(res) {
+           
+           wx.showToast({
+            title: '修改成功'
+
+          })
+         },
+         fail: function(res) {
+           console.log(JSON.stringify(res));
+           wx.showToast({
+             title: '修改失败',
+             icon: 'loading',
+             duration: 2000
+           })
+
+      }
+    })
+    console.log(this.data.region)
+    console.log(this.data.nownumber)
+  }
+    else {    
+      this.setData({  
+        isDisabled: false,    
+        text: "保存"  
+      })
+    }
   }
 })
