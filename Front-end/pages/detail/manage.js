@@ -150,7 +150,7 @@ Page({
 
   
   bindThingNameInput: function(e) { //商品名字
-var thingName=that.data.thingName
+  var thingName=that.data.thingName
     this.setData({
       thingName: e.detail.value
     })
@@ -321,9 +321,6 @@ var thingName=that.data.thingName
         success: function(res) {
           if (res.confirm) {
             console.log('用户点击确定')
-            wx.navigateTo({
-              url: '../myproducts/products',
-            })
             var img1 = that.data.img1;
             var img2 = that.data.img2;
             var img3 = that.data.img3;
@@ -335,8 +332,8 @@ var thingName=that.data.thingName
             var thingPhoneNumber = that.data.thingPhoneNumber; //电话
             var region = that.data.region
             var sellerId = app. globalData. userId
-            var url = app.globalData.apiurl + '/updateItem'      
-            
+            var url = app.globalData.apiurl + '/updateItem' 
+            var itemId = that.data.itemID
             wx.request({
               url,
               data: {       
@@ -345,13 +342,12 @@ var thingName=that.data.thingName
                 itemTag: thingConditions,
                 itemInfo: textareaValue,
                 telephoneNumber: thingPhoneNumber,
-                itemLocation:region,  
-                finalPrice:thingPrice,
+                itemLocation: JSON.stringify(region),  
                 itemImg1:img1,
                 itemImg2:img2,
                 itemImg3:img3,
                 itemImg4:img4,
-                sellerId: sellerId, 
+                itemId: itemId, 
               },
               method: "POST",
               header: {
@@ -372,6 +368,9 @@ var thingName=that.data.thingName
                   buttonLoadingThingA: false
                 })
               },
+            })
+            wx.navigateTo({
+              url: '../myproducts/myproducts',
             })
 
           
