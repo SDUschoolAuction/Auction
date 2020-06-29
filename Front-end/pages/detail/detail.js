@@ -6,7 +6,7 @@ const Time = require('../../utils/time.js')
 const app = getApp();
 Page({
   data: {
-    
+    getRecordsByItemId:[],
     phone:'',
     hiddenmodalput:true,
     userId: app.globalData.userId,
@@ -1119,12 +1119,8 @@ Page({
         //    if(res.data.obj[records_length-1]!=null){
             var records_length = res.data.obj.length;
             var records_count = 0;
-            var Userid = res.data.obj[records_length-1].userId;
             var current_price = 'item.current_price';
-            var user_new_price = 'user.user_new_price';
-            that.setData({ 
-              
-            })
+            var user_new_price = 'user.user_new_price'; 
             var temp_price=0;
             var price = 'user.user_price';
             while(records_length>0){
@@ -1149,8 +1145,8 @@ Page({
             }
             that.setData({ 
               [price]:temp_price,
-              getRecordsByItemId: res.data.obj
-            });  
+              getRecordsByItemId: res.data
+          });  
         //  }
           },
           fail: function () {

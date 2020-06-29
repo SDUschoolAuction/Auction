@@ -109,7 +109,7 @@
     <view hidden="{{!selectedFlag[0]}}">
       <block wx:for="{{bidList}}" wx:for-item="item" wx:for-index="index"  wx:key="key">
         <view class="li">
-          <view>
+          <view class='bid_username'>
             <text class="text-blue">{{item.name}}</text>
           </view>
           <view>
