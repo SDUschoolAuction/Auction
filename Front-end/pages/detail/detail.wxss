@@ -12,7 +12,7 @@
   font-size: 30rpx;
   width:750rpx;
   height: 80rpx;
-  background-color: greenyellow;
+  background-color: rgb(250, 223, 15);
 }
 
 #user_info,#body,#title,#description,#tags,#pics{
@@ -116,8 +116,8 @@
 
 .user_info_imgg1{
   float: left;
-  width: 80rpx;
-  height: 80rpx;
+  width: 60rpx;
+  height: 60rpx;
 }
 .comment_text{
   text-overflow:ellipsis;
