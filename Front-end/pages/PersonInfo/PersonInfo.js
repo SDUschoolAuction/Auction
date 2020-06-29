@@ -16,7 +16,7 @@ Page({
       location:[],
       text:"编辑",
       schooldata:items.schools,
-      region: [],
+      region: ["省","市","区"],
       imageUrl:"",
       nownumber:'',
       locationchange: false
@@ -32,15 +32,23 @@ Page({
   },
   get_data(){
     var thispage =this
-   
+    console.log(app.globalData.userId)
     wx.request({
-      url: app.globalData.apiurl+'/user/343',//+app.globalData.userId,
+      url: app.globalData.apiurl+'/user/'+app.globalData.userId,
       success: (result) => {
-        var d=result.data.location.split("\"")
+        var d;
+        if(result.data.location){
+          d=JSON.parse(this.data.region).split("\"")
+        }else{
+          d=result.data.location.split("\"")
+        }
         var x="region["+0+"]"
         var y="region["+1+"]"
         var z="region["+2+"]" 
-        var newnumber =result.data.telephoneNumber.split("\"")
+        var newnumber ="";
+        if(!result.data.telephoneNumber){
+          newnumber=result.data.telephoneNumber
+        }
         
         
         
@@ -54,7 +62,7 @@ Page({
           [x]:d[1],
           [y]:d[3],
           [z]:d[5],
-          number:parseInt(newnumber[1])
+          number:parseInt(newnumber)
           
         })
        
@@ -143,7 +151,7 @@ Page({
       wx.request({
         url: app.globalData.apiurl+'/updateUser',
         data: {     
-          userId:JSON.stringify(343),
+          userId:JSON.stringify(app.globalData.userId),
           location:JSON.stringify(newlocation),
           telephoneNumber:JSON.stringify(newtelephoneNumber)
 
