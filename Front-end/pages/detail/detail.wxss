@@ -124,6 +124,10 @@
   word-wrap:break-word;
 }
 
+.comment_text-hover{
+  background-color: #f1f1f1;
+}
+
 .comment{
   
   border-bottom: 3rpx solid  #f1f1f1;
