@@ -324,10 +324,10 @@ Page({
         success: function(res) {
           if (res.confirm) {
             console.log('用户点击确定')
-            var img1 = that.data.img1;
-            var img2 = that.data.img2;
-            var img3 = that.data.img3;
-            var img4 = that.data.img4;
+            var img1 = that.data.imgList[0];
+            var img2 = that.data.imgList[1];
+            var img3 = that.data.imgList[2];
+            var img4 = that.data.imgList[3];
             var thingName = that.data.thingName; //名字
             var thingConditionIndex = that.data.thingConditionIndex; //成色索引值
             var thingConditions = that.data.thingConditions[thingConditionIndex]; //成色

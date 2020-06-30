@@ -21,8 +21,8 @@
   </view>
   <view id="user_info_text" class="align-center">
     <text id="user_info_username">{{user.seller_name}}</text>
-    <text class="user_info_dec">\n{{user.seller_info1}}</text>
-    <text class="user_info_dec">{{user.seller_info2}}</text>
+    <text class="user_info_dec">\n{{item.telephoneNumber}}</text>
+    <text class="user_info_dec">{{item.item_location}}</text>
   </view>
 </view>
 

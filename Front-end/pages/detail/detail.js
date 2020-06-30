@@ -708,6 +708,7 @@ Page({
         'content-type': 'application/json'
       },
       success: function (res) {
+        console.log(res.data)
         sellerID = res.data.sellerId;
         var info_tags = res.data.itemInfo.split("#");
         var get_quality = res.data.itemTag; 
@@ -748,7 +749,9 @@ Page({
             //item_quality:"ninnew",//商品的色，包含：“brdnew”全新、“ninnew”九成新、“notnew”磨损、“NULL”未登记
             item_description:info_tags[0],
             //item_buyout_price:res.data.finalPrice,
-            item_type:res.data.type
+            item_type:res.data.type,
+            item_location: res.data.itemLocation,
+            telephoneNumber: res.data.telephoneNumber
           }
         });
         if(res.data.status=='-1'){
