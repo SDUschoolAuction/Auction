@@ -30,11 +30,11 @@ public interface ItemDao {
             "select * from (item right join type1 on item.itemId=type1.itemId) right join type2 on item.itemId=type2.itemId where item.status in (-1,0);")
     List<JSONObject> getItemList();
 
-    @Select("Select * from (item left join type1 on item.itemId=type1.itemId) left join\n" +
-            "\t(select  itemId,count(userId) con\n" +
-            "\t\tfrom records\n" +
-            "\t\tgroup by itemId\n" +
-            "\t) tmp on item.itemId=tmp.itemId" +
-            "\t order by item.itemId desc;")
+    @Select("Select item.itemId itemId,finalPrice,itemInfo,itemImg1,itemLocation,DATE_FORMAT(startTime,'%Y-%m-%d %H:%i:%s') startTime,DATE_FORMAT(endTime,'%Y-%m-%d %H:%i:%s') endTime,status,sellerId,itemTag,itemHead,con  from (item left join type1 on item.itemId=type1.itemId) left join\n" +
+            "        (select  itemId,count(userId) con\n" +
+            "\t\t\t\tfrom records\n" +
+            "\t\t\t\tgroup by itemId\n" +
+            "        ) tmp on item.itemId=tmp.itemId\n" +
+            "        order by item.itemId desc;")
     List<JSONObject> getItemListCount();
 }
