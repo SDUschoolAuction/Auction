@@ -26,22 +26,9 @@
 			"disablePlugins": [],
 			"outputPath": ""
 		},
-<<<<<<< HEAD
 		"useIsolateContext": true,
 		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false
-=======
-<<<<<<< HEAD
-		"useIsolateContext": true,
-		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false
-=======
-		"useCompilerModule": true,
-		"userConfirmedUseCompilerModuleSwitch": false,
-		"compileHotReLoad": false,
-		"useIsolateContext": true
->>>>>>> 01ab1e6d0c6d549cf6d118f32339caa75e7b413f
->>>>>>> c02ac504cee0d824bfd2fd073b6255009b46d44b
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.0.4",
