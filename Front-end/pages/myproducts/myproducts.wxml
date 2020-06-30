@@ -36,7 +36,8 @@
         </view>
       </view>
        -->
-<view class="blo_out" wx:for="{{shangpinList}}">
+<navigator  url="/pages/detail/detail?itemId={{item.itemId}}&finalPrice={{item.finalPrice}}>" class="blo_out" wx:for="{{shangpinList}}">
+
   <view class="blo">
     <!-- 左侧框架 -->
     <view class="left">
@@ -76,17 +77,20 @@
       
       <!-- 管理 -->
       <view class="button_right">
+      <navigator url="/pages/detail/manage?itemId={{item.itemId}}">
+
         <button class="cu-btn round bg-green ">管理</button>
+      </navigator>
       </view>
       
     </view>
   </view>
-</view>
+</navigator>
 
 
   </view>
   <view wx:if="{{TabCur==1}}">
-      <view class="blo_out" wx:for="{{inList}}">
+<navigator  url="/pages/detail/detail?itemId={{item.itemId}}&finalPrice={{item.finalPrice}}>" class="blo_out" wx:for="{{InList}}">
   <view class="blo">
     <!-- 左侧框架 -->
     <view class="left">
@@ -111,7 +115,7 @@
       </view>
     </view>
   </view>
-</view>
+</navigator>
   </view>
 
 

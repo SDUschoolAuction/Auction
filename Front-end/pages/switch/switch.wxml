@@ -68,8 +68,8 @@
         <!-- 商品的想要人数 -->
       
          <!-- 商品的想要人数 -->
-        <view wx:if="{{item.count!=null}}">
-        <view class="goods_num_participants">{{item.count}}人想要</view>
+        <view wx:if="{{item.con!=null}}">
+        <view class="goods_num_participants">{{item.con}}人想要</view>
         </view>
       </view>
     </view>

@@ -24,39 +24,38 @@ Page({
 
   get_goodsList(){
     wx.request({
-      url: 'https://yyzcowtodd.cn/Auction/itemList',
+      url: 'https://yyzcowtodd.cn/Auction/getItemListCount',
       success: (result) => {
         console.log(result)
         this.setData({
           goodsList:result.data
         })
-        this.count();
+        
         this.countDown();
 
         }
     })
     wx.stopPullDownRefresh();
   },
-    //添加想要的人数
+   /*  //添加想要的人数
     count(){
   
       for(let i=0;i<this.data.goodsList.length;i++){
-        /* var itemId = this.data.goodsList[i].itemId;*/
-        /* console.log(i) */
+      
         wx.request({
           url: 'https://yyzcowtodd.cn/Auction/records/getRecordsCountByItemId/'+i,
           success: (result) => {
-            /* console.log(i)  */         
+              
             var up = "goodsList[" + i + "].count";
           this.setData({
             [up]:result.data.obj
           }) 
           },
         })
-       /*  console.log(i)      */
+     
       }
   
-    },
+    }, */
   // 倒计时
   countDown:function(){
     

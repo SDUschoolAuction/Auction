@@ -323,9 +323,6 @@ Page({
         success: function(res) {
           if (res.confirm) {
             console.log('用户点击确定')
-            wx.redirectTo({
-              url: '../myproducts/myproducts',
-            })
             var img1 = that.data.img1;
             var img2 = that.data.img2;
             var img3 = that.data.img3;
@@ -374,9 +371,15 @@ Page({
                 'content-type': 'application/json'
               },
               success: function(res) {
-                console.log("cxz");
-                console.log(res);
-                
+                //console.log("cxz");
+                //console.log(res);
+                var itemId = res.data.obj.itemId;
+                var finalPrice = res.data.obj.finalPrice;
+               // console.log(itemId)
+                //console.log(finalPrice);
+                wx.redirectTo({
+                  url: '../detail/detail?itemId='+itemId+'&finalPrice='+finalPrice,
+                })
               },
               fail: function(res) {
                 console.log(JSON.stringify(res));
@@ -390,10 +393,6 @@ Page({
                 })
               },
             })
-
-          
-
-
           } else if (res.cancel) {
             console.log('用户点击取消')
           }
@@ -424,9 +423,7 @@ Page({
         success: function(res) {
           if (res.confirm) {
             console.log('用户点击确定')
-            wx.redirectTo({
-              url: '../myproducts/myproducts',
-            })
+            
             var img1 = that.data.img1;
             var img2 = that.data.img2;
             var img3 = that.data.img3;
@@ -468,8 +465,14 @@ Page({
                 'content-type': 'application/json'
               },
               success: function(res) {
-                console.log(res);
-                
+                //console.log(res);
+                var itemId = res.data.obj.itemId;
+                var finalPrice = res.data.obj.finalPrice;
+                //console.log(itemId)
+                //console.log(finalPrice);
+                wx.redirectTo({
+                  url: '../detail/detail?itemId='+itemId+'&finalPrice='+finalPrice,
+                })
               },
               fail: function(res) {
                 console.log(JSON.stringify(res));
