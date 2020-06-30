@@ -43,7 +43,7 @@
       <!-- 图片 -->
         <image class="img_left" src="{{item.imageUrl}}"></image>
       <!-- 倒计时 -->
-      <view class="count_down" wx:if="{{item.times!='已卖出'}}">
+      <view class="count_down" wx:if="{{item.times!='已卖出'&&item.times!='未开始'}}">
          <view class="one.show">
                   <text class="time_end" decode="{{true}}" space="{{true}}">倒计时&nbsp;&nbsp;</text>
                       <view wx:if="{{item.day>1}}" class="cu bg-white radius text-red">{{item.day}}</view>
@@ -57,6 +57,9 @@
       </view>
       <view class="count_down" wx:if="{{item.times=='已卖出'}}">
         商品已卖出
+      </view>
+      <view class="count_down" wx:if="{{item.times=='未开始'}}">
+        商品未开始
       </view>
     </view>
     <!-- 右侧框架 -->

@@ -125,6 +125,7 @@ timeFormin(param) {
      //console.log(thispage.data.goodsList)
      var x=0
      var y=0
+     var z=0
      for(let i=0,len=thispage.data.goodsList.length;i<len;i++)
      {
       // console.log(thispage.data.goodsList[i].dealPrice)
@@ -164,11 +165,31 @@ timeFormin(param) {
         })
           y++ 
      }
+     if(thispage.data.goodsList[i].status=='-1')
+      { 
+        var status ="shangpinList3["+z+"].status"
+        var name ="shangpinList3["+z+"].name"
+        var times ="shangpinList3["+z+"].times"
+        var price ="shangpinList3["+z+"].price"
+        var imageUrl ="shangpinList3["+z+"].imageUrl"
+        var info ="shangpinList3["+z+"].info"
+        this.setData({
+        [times]:"未开始",
+        [info]:thispage.data.goodsList[i].itemInfo,
+        [name]:thispage.data.goodsList[i].itemHead,
+        [price]:thispage.data.goodsList[i].finalPrice,
+        [imageUrl]:thispage.data.goodsList[i].itemImg1,
+        [status]:thispage.data.goodsList[i].status
+        })
+          z++ 
+     }
 
      thispage.setData({
       shangpinList: thispage.data.shangpinList1.concat(thispage.data.shangpinList2)
     })
-
+    thispage.setData({
+      shangpinList: thispage.data.shangpinList.concat(thispage.data.shangpinList3)
+    })
    }
   }
  })
