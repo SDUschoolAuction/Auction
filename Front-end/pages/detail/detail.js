@@ -558,6 +558,10 @@ Page({
     })
     console.log(this.data.user.user_phone);
     if (this.data.user.user_phone.length==11){
+      this.setData({
+        "item.current_price": new_price,
+        "user.user_price": new_price
+      })
       if(this.data.item.item_type == 1){ //出价
         wx.request({
           url: app.globalData.apiurl + '/bid',
