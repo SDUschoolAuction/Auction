@@ -3,6 +3,14 @@
   height:60rpx;
   width:200rpx
 }
+.sp_1{
+  width: 750rpx;
+  height: 800rpx;
+  font-size: 34rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .bg-grey{
   height:60rpx;
   width:200rpx

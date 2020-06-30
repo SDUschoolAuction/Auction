@@ -227,7 +227,13 @@ this.count_Down()
   onHide: function() {
 
   },
-
+  manag(e){
+    var i = e.currentTarget.id
+  
+    wx.navigateTo({
+      url:'/pages/manage/manage?itemId='+this.data.shangpinList[i].itemId
+    })
+  },
   /**
    * 生命周期函数--监听页面卸载
    */
