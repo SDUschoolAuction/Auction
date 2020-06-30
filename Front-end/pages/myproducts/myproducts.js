@@ -13,6 +13,7 @@ Page({
     shangpinList: [],
     shangpinList1: [],
     shangpinList2: [],
+    shangpinList3: [],
     inList: []
   },
 
@@ -133,12 +134,14 @@ timeFormin(param) {
       { 
         var status ="shangpinList1["+x+"].status"
         var name ="shangpinList1["+x+"].name"
+        var itemId ="shangpinList1["+x+"].itemId"
         var times ="shangpinList1["+x+"].times"
         var price ="shangpinList1["+x+"].price"
         var imageUrl ="shangpinList1["+x+"].imageUrl"
         var info ="shangpinList1["+x+"].info"
         this.setData({
         [times]:thispage.data.goodsList[i].endTime,
+        [itemId]:thispage.data.goodsList[i].itemId,
         [name]:thispage.data.goodsList[i].itemHead,
         [info]:thispage.data.goodsList[i].itemInfo,
         [price]:thispage.data.goodsList[i].finalPrice,
@@ -151,6 +154,7 @@ timeFormin(param) {
       { 
         var status ="shangpinList2["+y+"].status"
         var name ="shangpinList2["+y+"].name"
+        var itemId ="shangpinList2["+y+"].itemId"
         var times ="shangpinList2["+y+"].times"
         var price ="shangpinList2["+y+"].price"
         var imageUrl ="shangpinList2["+y+"].imageUrl"
@@ -158,6 +162,7 @@ timeFormin(param) {
         this.setData({
         [times]:"已卖出",
         [info]:thispage.data.goodsList[i].itemInfo,
+        [itemId]:thispage.data.goodsList[i].itemId,
         [name]:thispage.data.goodsList[i].itemHead,
         [price]:thispage.data.goodsList[i].finalPrice,
         [imageUrl]:thispage.data.goodsList[i].itemImg1,
@@ -169,6 +174,7 @@ timeFormin(param) {
       { 
         var status ="shangpinList3["+z+"].status"
         var name ="shangpinList3["+z+"].name"
+        var itemId ="shangpinList3["+z+"].itemId"
         var times ="shangpinList3["+z+"].times"
         var price ="shangpinList3["+z+"].price"
         var imageUrl ="shangpinList3["+z+"].imageUrl"
@@ -176,6 +182,7 @@ timeFormin(param) {
         this.setData({
         [times]:"未开始",
         [info]:thispage.data.goodsList[i].itemInfo,
+        [itemId]:thispage.data.goodsList[i].itemId,
         [name]:thispage.data.goodsList[i].itemHead,
         [price]:thispage.data.goodsList[i].finalPrice,
         [imageUrl]:thispage.data.goodsList[i].itemImg1,

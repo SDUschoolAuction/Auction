@@ -76,7 +76,10 @@
       
       <!-- 管理 -->
       <view class="button_right">
+      <navigator url="/pages/detail/manage?itemId={{item.itemId}}">
+
         <button class="cu-btn round bg-green ">管理</button>
+      </navigator>
       </view>
       
     </view>
