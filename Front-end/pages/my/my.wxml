@@ -1,52 +1,41 @@
 <view class="personcontainer">
-    <view class="wx-info" >
-        <image class="user-avatar" mode="aspectFill" src="{{userInfo.avatarUrl}}"></image>
-        <text class="user-nickname font-size1">{{personInfo.name||userInfo.nickName}}</text>
-    </view>
-    <view class="stu-info main">
-        <view class="info"  bindtap='clickMylevel'>
-            <image class="smallicon" mode="aspectFill" src=""></image>
-                <text decode="{{true}}" class="labletext font-size2" >我的星级: &nbsp; </text>
-
+    <!-- 个人信息栏 -->
+    <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius" >
+         <view class="cu-item arrow">
+          <image class="user-avatar" mode="aspectFill" src="{{userInfo.avatarUrl}}"></image>
+          <text class="user-nickname font-size1">{{personInfo.name||userInfo.nickName}}</text>
+         </view>
+  </view>
+  <!--详细信息栏-->
+  <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+    <!-- 我的星级 -->
+             <view class="cu-item arrow"  bindtap='clickMylevel'>
+             <text  class="labletext font-size2" >我的星级: </text>
             <block wx:for="{{one_1}}">
             <image class='img' src='../../image/yellowstar.png'></image>
             </block>
-
             <block wx:for="{{two_1}}">
             <image class='img' src ='../../image/blackstar.png'></image>
             </block>
-            
+            <text decode="{{true}}"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </text>
         </view>
-         <view class="info"  bindtap='clickPersonInfo'>
-            <image class="smallicon" mode="aspectFill" src=""></image>
-            <text class="labletext font-size2" >我的信息</text>
-            
+
+         <!-- 我的信息 -->
+         <view class="cu-item arrow"  bindtap='clickPersonInfo'>
+            <text class="labletext font-size2" >我的信息</text>     
         </view>
-       <view class="info" bindtap="clickMyproducts">
-                <image class="smallicon" mode="aspectFill" src=""></image>
-                <text class="labletext font-size2">我的发布</text>
-            </view>
-       
-       
-        
-    </view>
-    <view class="about">
-        
-            
-    <view class="info" bindtap='clickMyparticipation'>
-            <image class="smallicon" mode="aspectFill" src=""></image>
+         <!--我的发布-->
+        <view class="cu-item arrow" bindtap="clickMyproducts">          
+             <text class="labletext font-size2">我的发布</text>
+          </view>
+           <!--我的参拍-->
+         <view class="cu-item arrow" bindtap='clickMyparticipation'>          
             <text class="labletext font-size2" >我的参拍</text>
         </view>
-       
-            <view class="info" style="border-bottom:none;" bindtap="clickPropose">
-                <image class="smallicon" mode="aspectFill" src=""></image>
-                <text class="labletext font-size2">问题反馈</text>
-                <view style="float:right;margin-top:0.2em;">
-                    <view class="pointer"></view>
-                    <view class="pseudopointer"></view>
-                </view>
-            </view>
-         
+         <!--问题反馈-->
+        <view class="cu-item arrow" style="border-bottom:none;" bindtap="clickPropose">             
+          <text class="labletext font-size2">问题反馈</text>
+            </view>     
     </view>
  <tabbar tabbar="{{tabbar}}"></tabbar>
 </view>

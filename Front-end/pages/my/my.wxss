@@ -1,15 +1,16 @@
 .wx-info {
   padding: 40rpx;
   border-bottom: 1rpx solid rgba(221,221,221,0.5);
+  background-color: #fff;
 }
 
 .user-avatar {
-  width: 140rpx;
-  height: 140rpx;
+  width: 80rpx;
+  height: 80rpx;
   border-radius: 70rpx;
   vertical-align: middle;
 }
-.info .img{
+.img{
   width:24rpx;
   height:26rpx;
   display: inline-block;
