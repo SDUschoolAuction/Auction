@@ -11,18 +11,16 @@ import java.util.List;
 @Mapper
 public interface OrdersDao {
 
-    @Select ("SELECT * FROM orders,item WHERE buyerId = #{buyerId} and orders.itemId=item.itemId")
+    @Select ("SELECT dealPrice,peopleCount,item.telephoneNumber sellerTelephoneNumber,item.itemId itemId,buyerId,DATE_FORMAT(dealTime,'%Y-%m-%d %H:%i:%s') dealTime,itemTag,itemInfo,finalPrice,itemLocation,`status`,itemImg1,orders.telephoneNumber buyerTelephoneNumber,sellerId,type,itemHead FROM orders,item WHERE buyerId = 1 and orders.itemId=item.itemId")
     List<JSONObject> getbuyerOrders(int buyerId);
 
-    @Select("SELECT * FROM orders,item WHERE orders.itemId=item.itemId and item.sellerId=#{sellerId}")
+    @Select("SELECT dealPrice,peopleCount,item.telephoneNumber sellerTelephoneNumber,item.itemId itemId,buyerId,DATE_FORMAT(dealTime,'%Y-%m-%d %H:%i:%s') dealTime,itemTag,itemInfo,finalPrice,itemLocation,`status`,itemImg1,orders.telephoneNumber buyerTelephoneNumber,sellerId,type,itemHead FROM orders,item WHERE orders.itemId=item.itemId and item.sellerId=#{sellerId};")
     List<JSONObject> getsellerOrders (int sellerId);
 
-    @Select("select * from (item left join type1 on item.itemId=type1.itemId) left join type2 on item.itemId=type2.itemId where item.sellerId=#{sellerId}\n" +
-            "union\n" +
-            "select * from (item right join type1 on item.itemId=type1.itemId) right join type2 on item.itemId=type2.itemId where item.sellerId=#{sellerId};")
+    @Select("select startPrice,markupRange,itemTag,telephoneNumber,finalPrice,itemInfo,itemImg1,itemLocation,type,item.itemId itemId,sellerId,itemHead,DATE_FORMAT(startTime,'%Y-%m-%d %H:%i:%s') startTime,DATE_FORMAT(endTime,'%Y-%m-%d %H:%i:%s') endTime,status from (item left join type1 on item.itemId=type1.itemId) left join type2 on item.itemId=type2.itemId where item.sellerId=#{sellerId};")
     List<JSONObject> getItemListBySellerId(int sellerId);
 
-    @Select("select itemTag,item.itemId itemId,itemInfo,finalPrice,itemLocation,status,itemImg1,itemImg2,itemImg3,itemImg4,item.telephoneNumber sellerTelephoneNumber,sellerId,`type`,itemHead,startTime,endTime,dealPrice,red.telephoneNumber comstumerTelephoneNumber\n" +
+    @Select("select itemTag,item.itemId itemId,itemInfo,finalPrice,itemLocation,status,itemImg1,itemImg2,itemImg3,itemImg4,item.telephoneNumber sellerTelephoneNumber,sellerId,`type`,itemHead,DATE_FORMAT(startTime,'%Y-%m-%d %H:%i:%s') startTime,DATE_FORMAT(endTime,'%Y-%m-%d %H:%i:%s') endTime,dealPrice,red.telephoneNumber comstumerTelephoneNumber\n" +
             "\tfrom (item left join type1 on item.itemId=type1.itemId),records as red\n" +
             "\twhere item.itemId=red.itemId AND red.userId=#{customerId} AND (red.itemId,red.dealPrice) IN \n" +
             "\t(SELECT records.itemId,MAX(dealPrice)\n" +
