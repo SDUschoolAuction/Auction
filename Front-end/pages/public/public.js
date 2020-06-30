@@ -323,7 +323,7 @@ Page({
         success: function(res) {
           if (res.confirm) {
             console.log('用户点击确定')
-            wx.navigateTo({
+            wx.redirectTo({
               url: '../myproducts/myproducts',
             })
             var img1 = that.data.img1;
@@ -424,7 +424,7 @@ Page({
         success: function(res) {
           if (res.confirm) {
             console.log('用户点击确定')
-            wx.navigateTo({
+            wx.redirectTo({
               url: '../myproducts/myproducts',
             })
             var img1 = that.data.img1;

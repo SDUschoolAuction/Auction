@@ -51,8 +51,8 @@ Component({
     // 提交清空当前值
     bindSubmit: function () {
      
-      wx.navigateTo({
-        url: '../../pages/switch/switch',
+      wx.navigateBack({
+        delta: 1,
       })
   
     }

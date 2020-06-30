@@ -16,4 +16,6 @@ public interface RecordsDao {
 
     @Select("select count(userId) from records where itemId=#{itemId} group by itemId;")
     int getRecordsCountByItemId(int itemId);
+
+
 }

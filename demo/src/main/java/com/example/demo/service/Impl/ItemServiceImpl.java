@@ -118,6 +118,11 @@ public class ItemServiceImpl implements ItemService {
         return list;
     }
 
+    @Override
+    public List<JSONObject> getItemListCount() {
+        return itemDao.getItemListCount();
+    }
+
     private BoolQueryBuilder addFilters(Item item){
         BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
 

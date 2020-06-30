@@ -21,4 +21,6 @@ public interface ItemService {
     List<JSONObject> getItemList();
 
     List<Map<String,Object>> search(Item item) throws IOException;
+
+    List<JSONObject> getItemListCount();
 }

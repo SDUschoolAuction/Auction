@@ -1,114 +1,158 @@
 // pages/PersonalInfo/PersonalInfo.js
 var app=getApp()
-var that
+var items = require('../../data/schoolData.js')
 Page({
-  data: {
-    userInfo:app.globalData.userInfo,
-    phoneNumber:app.globalData.phoneNumber,
-    
-  },
+
   /**
    * 页面的初始数据
    */
-  
+  data: {
+      isDisabled:true,
+      id:'',
+      wxid:'',
+      name: "",
+      number:'',
+      schoolid:'',
+      location:[],
+      text:"编辑",
+      schooldata:items.schools,
+      region: ["","",""],
+      imageUrl:"",
+      nownumber:'',
+      locationchange: false
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(app.globalData.schoolName)
-    app.editTabbar();
-    that=this
+    var that =this;
+    that.get_data();
+    //console.log(app.globalData.schoolId[1])
+  },
+  get_data(){
+    var thispage =this
+    console.log(app.globalData.userId)
     wx.request({
-      url: 'https://yyzcowtodd.cn/Auction/userInfo/'+app.globalData.userId,
-      success:function(e){
-        //console.log(e)
+      url: app.globalData.apiurl+'/user/'+app.globalData.userId,
+      success: (result) => {
+        var d;
+       if(result.data.location.length==3){
+          thispage.setData({
+            region: result.data.location
+          })
+        }
+        if(result.data.location.length>3){
+         d=result.data.location.split("\"")
+         var x="region["+0+"]"
+         var y="region["+1+"]"
+         var z="region["+2+"]" 
+         thispage.setData({
+          [x]:d[1],
+          [y]:d[3],
+          [z]:d[5],
+         })
+        }
         
-        that.setData({ schoolName: e.data.obj.schoolName })
+       // var newnumber =result.data.telephoneNumber.split("\"")
+       if(result.data.telephoneNumber){
+        if(result.data.telephoneNumber[0]=="\"")
+        {
+        var newnumber =result.data.telephoneNumber.split("\"")
+        console.log(newnumber)
+        thispage.setData({
+          number:newnumber[1]
+        })
+     }
+    
+    else{
+      thispage.setData({
+        number:result.data.telephoneNumber
+      })
+    }
+      }
+        thispage.setData({  
+          id:result.data.userId,
+          name:result.data.name,
+          wxid:result.data.weChatId,
+        //  number:result.data.telephoneNumber,
+          schoolid:thispage.data.schooldata[result.data.schoolId-1].schoolName,
+          imageUrl:result.data.userIcon,
+          
+          //number:result.data.telephoneNumber
+          
+        })
+       
+        }
         
+    })
+   
+  },
+
+  numberInput:function(e)
+  {
+      this.setData({
+        nownumber:e.detail.value
+      })
+  },
+  RegionChange: function(e) {
+    this.setData({
+      region: e.detail.value
+    })
+  },
+
+  change:function(e)
+  {
+    if (!this.data.isDisabled) { 
+      this.setData({  
+        isDisabled: true,  
+        text: "编辑"   
+      })
+      var newlocation=this.data.region
+      var newtelephoneNumber=this.data.nownumber
+      var myuserId=app.globalData.userId
+      console.log(newlocation)
+      console.log(newtelephoneNumber)
+      console.log(myuserId)
+      wx.request({
+        url: app.globalData.apiurl+'/updateUser',
+        data: {     
+          userId:JSON.stringify(app.globalData.userId),
+          location:JSON.stringify(newlocation),
+          telephoneNumber:JSON.stringify(newtelephoneNumber)
+
+         },
+         method: "POST",
+         header: {
+           'content-type': 'application/json'
+         },
+         success: function(res) {
+           
+           wx.showToast({
+            title: '修改成功'
+            
+
+          })
+          console.log(newtelephoneNumber)
+         },
+         fail: function(res) {
+           console.log(JSON.stringify(res));
+           wx.showToast({
+             title: '修改失败',
+             icon: 'loading',
+             duration: 2000
+           })
+
       }
     })
-    wx.getUserInfo({
-      success: function (res) {
-        that.setData({ userInfo: res.userInfo })
-      }
-    })
-
-     
-
-  },
-
-
-  changecity:function(e){
-    
-    app.globalData.userInfo.city =e.detail.value
-    
-  },
-  changephonenumber:function(e){
-    var that = this
-     app.globalData.phoneNumber = e.detail.value
-     that.setData({phoneNumber:e.detail.value})
-  },
-  saveinformation:function(){
-    wx.request({
-      url: 'https://yyzcowtodd.cn/Auction/updateUser',
-      method: 'post',
-      data: {
-         userId:app.globalData.userId,
-         location:app.globalData.userInfo.city,
-         telephoneNumber:app.globalData.phoneNumber
-        
-      },
-
-    })
-   console.log(app.globalData.phoneNumber)
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+    console.log(this.data.region)
+    console.log(this.data.nownumber)
+  }
+    else {    
+      this.setData({  
+        isDisabled: false,    
+        text: "保存"  
+      })
+    }
   }
 })
