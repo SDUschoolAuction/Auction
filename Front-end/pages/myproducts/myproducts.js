@@ -51,12 +51,14 @@ Page({
          if(thispage.data.goodsList[i].status==1)
          {     
            var name ="inList["+x+"].name"
+           var itemId ="inList["+x+"].itemId"
            var info ="inList["+x+"].info"
            var price ="inList["+x+"].price"
            var imageUrl ="inList["+x+"].imageUrl"
            var people = "inList["+x+"].people"
            this.setData({
           [info]:thispage.data.goodsList[i].itemInfo,
+           [itemId]:thispage.data.goodsList[i].itemId,
            [name]:thispage.data.goodsList[i].itemHead,
            [price]:thispage.data.goodsList[i].finalPrice,
            [imageUrl]:thispage.data.goodsList[i].itemImg1,

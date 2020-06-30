@@ -50,11 +50,13 @@ Page({
          if(thispage.data.goodsList[i].status==1)
          {     
            var name ="inList["+x+"].name"
+           var itemId ="inList["+x+"].itemId"
            var info = "inList["+x+"].itemInfo"
            var price ="inList["+x+"].price"
            var imageUrl ="inList["+x+"].imageUrl"
            var people = "inList["+x+"].people"
            this.setData({
+           [itemId]:thispage.data.goodsList[i].itemId,
            [name]:thispage.data.goodsList[i].itemHead,
            [info]:thispage.data.goodsList[i].itemInfo,
            [price]:thispage.data.goodsList[i].finalPrice,
@@ -93,6 +95,7 @@ Page({
       { 
         var status ="shangpinList1["+x+"].status"
         var name ="shangpinList1["+x+"].name"
+        var itemId ="shangpinList1["+x+"].itemId"
         var times ="shangpinList1["+x+"].times"
         var price ="shangpinList1["+x+"].price"
         var imageUrl ="shangpinList1["+x+"].imageUrl"
@@ -100,6 +103,7 @@ Page({
         var myprice="shangpinList1["+x+"].myprice"
         this.setData({
         [times]:thispage.data.goodsList[i].endTime,
+        [itemId]:thispage.data.goodsList[i].itemId,
         [name]:thispage.data.goodsList[i].itemHead,
         [info]:thispage.data.goodsList[i].itemInfo,
         [price]:thispage.data.goodsList[i].finalPrice,
@@ -113,6 +117,7 @@ Page({
       { 
         var status ="shangpinList2["+y+"].status"
         var name ="shangpinList2["+y+"].name"
+        var itemId ="shangpinList2["+y+"].itemId"
         var times ="shangpinList2["+y+"].times"
         var price ="shangpinList2["+y+"].price"
         var imageUrl ="shangpinList2["+y+"].imageUrl"
@@ -120,6 +125,7 @@ Page({
         var myprice="shangpinList2["+y+"].myprice"
         this.setData({
         [times]:"已卖出",
+        [itemId]:thispage.data.goodsList[i].itemId,
         [name]:thispage.data.goodsList[i].itemHead,
         [info]:thispage.data.goodsList[i].itemInfo,
         [price]:thispage.data.goodsList[i].finalPrice,
