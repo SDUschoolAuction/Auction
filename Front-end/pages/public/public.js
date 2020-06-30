@@ -3,6 +3,7 @@ const app = getApp();
 import { checkTime, timeGap} from "../../utils/util";
 Page({
   data: {
+    placeholder:"请输入物品简介，最多200字 \n \t 结尾可用#添加标签",
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
     index: null,

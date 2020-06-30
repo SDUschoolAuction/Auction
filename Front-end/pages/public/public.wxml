@@ -12,7 +12,7 @@
 
 <view wx:if='{{0==TabCur}}' class="padding center">
 	<view class="cu-form-group margin-top">
-		<textarea maxlength="200" disabled="{{modalName!=null}}" bindinput="textareaInput" placeholder="请输入物品简介，最多200字"></textarea>
+		<textarea maxlength="200" disabled="{{modalName!=null}}" bindinput="textareaInput" placeholder="{{placeholder}}"></textarea>
 	</view>
 	<view class="cu-bar bg-white ">
 		<view class="action">
