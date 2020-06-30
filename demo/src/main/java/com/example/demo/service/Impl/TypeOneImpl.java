@@ -41,7 +41,7 @@ public class TypeOneImpl implements TypeService {
         itemDao.addItem(item);
         jsonObject.put("itemId",item.getItemId());
         typeOneDao.addType(jsonObject);
-        return new Msg<>(0,"success",item.getItemId());
+        return new Msg<>(0,"success",item);
     }
 
 }

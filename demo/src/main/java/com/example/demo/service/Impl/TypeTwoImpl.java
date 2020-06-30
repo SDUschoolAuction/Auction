@@ -39,6 +39,6 @@ public class TypeTwoImpl implements TypeService {
         itemDao.addItem(item);
         jsonObject.put("itemId",item.getItemId());
         typeTwoDao.addType(jsonObject);
-        return new Msg<>(0,"success",item.getItemId());
+        return new Msg<>(0,"success",item);
     }
 }
