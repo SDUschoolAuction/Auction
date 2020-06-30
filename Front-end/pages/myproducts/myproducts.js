@@ -8,7 +8,7 @@ Page({
   data: {
     TabCur: 0,
     scrollLeft: 0,
-    tab: ["拍卖中", "已拍卖"],
+    tab: ["已发布", "已卖出"],
     goodsList:[],
     shangpinList: [],
     shangpinList1: [],
