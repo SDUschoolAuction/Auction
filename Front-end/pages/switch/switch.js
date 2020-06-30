@@ -219,7 +219,6 @@ Page({
     }
     else{
       this.setData({
-    
         m:this.data.m+10,
       });
     }

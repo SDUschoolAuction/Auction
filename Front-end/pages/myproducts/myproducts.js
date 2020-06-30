@@ -43,7 +43,7 @@ Page({
        thispage.setData({
          goodsList:result.data.obj
        })
-       console.log(thispage.data.goodsList)
+       //console.log(thispage.data.goodsList)
        var x=0
        for(let i=0,len=thispage.data.goodsList.length;i<len;i++)
        {
@@ -239,7 +239,9 @@ this.count_Down()
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-
+    this.get_inList()
+    this.get_shangpinList()
+    wx.stopPullDownRefresh();
   },
 
   /**

@@ -192,5 +192,11 @@ queren:function(e)
   wx.navigateTo({
     url: '../../pages/star/star',
   })
+},
+
+onPullDownRefresh: function() {
+  this.get_inList()
+  this.get_shangpinList()
+  wx.stopPullDownRefresh();
 }
 })
