@@ -371,7 +371,7 @@ Page({
                 'content-type': 'application/json'
               },
               success: function(res) {
-                //console.log("cxz");
+                console.log("cxz");
                 //console.log(res);
                 var itemId = res.data.obj.itemId;
                 var finalPrice = res.data.obj.finalPrice;

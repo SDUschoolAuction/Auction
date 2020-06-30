@@ -1444,8 +1444,8 @@ Page({
     })
   },
   manageShow: function(itemID){
-    wx.navigateTo({
-      url:'/pages/detail/manage?itemId='+this.data.item.item_id,  //跳转页面的路径，可带参数 ？隔开，不同参数用 & 分隔；相对路径，不需要.wxml后缀
+    wx.redirectTo({
+      url:'/pages/manage/manage?itemId='+this.data.item.item_id,  //跳转页面的路径，可带参数 ？隔开，不同参数用 & 分隔；相对路径，不需要.wxml后缀
       success:function(){
 
       },  //成功后的回调；
@@ -1466,7 +1466,7 @@ Page({
     }
     var itemID = options.finalPrice;
     var itemID = options.itemId;
-    var that = this;
+    //var that = this;
     this.getInfo(itemID);
   }
 })

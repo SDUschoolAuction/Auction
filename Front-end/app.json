@@ -9,13 +9,12 @@
     "pages/star/star",
     "pages/search_school/search_school",
     "pages/my/my",
-    
+    "pages/manage/manage",
     "pages/myparticipation/myparticipation",
     "pages/myproducts/myproducts",
     "pages/search/search",
     "pages/logs/logs",
-    "pages/PersonInfo/PersonInfo",
-    "pages/detail/manage"
+    "pages/PersonInfo/PersonInfo"
   ],
   "window": {
     "backgroundTextStyle": "light",

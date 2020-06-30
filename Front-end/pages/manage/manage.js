@@ -1,4 +1,3 @@
-
 const app = getApp();
 Page({
   data: {
@@ -40,6 +39,20 @@ Page({
         'content-type': 'application/json'
       },
       success: function (res) {
+        console.log(res)
+        var imageList = []
+        if(res.data.itemImg1){
+          imageList.push(res.data.itemImg1)
+        }
+        if(res.data.itemImg2){
+          imageList.push(res.data.itemImg2)
+        }
+        if(res.data.itemImg3){
+          imageList.push(res.data.itemImg3)
+        }
+        if(res.data.itemImg4){
+          imageList.push(res.data.itemImg4)
+        }
         that.setData({ 
           textdata: res.data,
           img1: res.data.itemImg1,
@@ -49,7 +62,8 @@ Page({
           thingName: res.data.itemHead,
           textareaValue: res.data.itemInfo,
           thingPhoneNumber:res.data.telephoneNumber,
-          imgList: [res.data.itemImg1,res.data.itemImg2,res.data.itemImg3,res.data.itemImg4],
+          finalPrice:res.data.finalPrice,
+          imgList: imageList,
         })
         if(res.data.itemTag == '全新'){
           that.setData({ 
@@ -150,14 +164,13 @@ Page({
 
   
   bindThingNameInput: function(e) { //商品名字
-  var thingName=that.data.thingName
+  var thingName=this.data.thingName
     this.setData({
       thingName: e.detail.value
     })
   },
   
   bindthingPhoneNumberInput: function(e) { //联系电话
-    
     this.setData({
       thingPhoneNumber: e.detail.value
     })
@@ -181,7 +194,7 @@ Page({
 
   //图片
   ChooseImage() {
-    var COS = require('./cos-wx-sdk-v5');  
+    var COS = require('../public/cos-wx-sdk-v5');  
     var Bucket = 'auction-1300038466';
     var Region = 'ap-nanjing';
     // 初始化实例
@@ -337,7 +350,6 @@ Page({
             wx.request({
               url,
               data: {       
-                
                 itemHead: thingName,       
                 itemTag: thingConditions,
                 itemInfo: textareaValue,
@@ -368,12 +380,12 @@ Page({
                   buttonLoadingThingA: false
                 })
               },
+            });
+            var itemId=that.data.itemID
+            var finalPrice=that.data.finalPrice
+            wx.redirectTo({
+              url: '../detail/detail?itemId='+itemId+'&finalPrice='+finalPrice,
             })
-            wx.navigateTo({
-              url: '../myproducts/myproducts',
-            })
-
-          
 
 
           } else if (res.cancel) {
