@@ -6,9 +6,10 @@
     "pages/detail/detail",
     "pages/public/public",
     "pages/school/school",
+    "pages/star/star",
     "pages/search_school/search_school",
     "pages/my/my",
-    "pages/star/star",
+    
     "pages/myparticipation/myparticipation",
     "pages/myproducts/myproducts",
     "pages/search/search",

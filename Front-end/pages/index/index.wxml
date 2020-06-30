@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <!--页面根标签-->
 <view class="content">
-    <image class='background' src="../../image/背景1.png" mode="aspectFill"></image>
+    <image class='background' src="https://auction-1300038466.cos.ap-nanjing.myqcloud.com/%E8%83%8C%E6%99%AF1.png" mode="aspectFill"></image>
 <view class="container">
 <button class="btn" open-type="getUserInfo" bindgetuserinfo="auth" wx:if="{{needauth}}"> 授权登录 </button>
 </view>
