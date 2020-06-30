@@ -38,6 +38,7 @@ public class TypeOneImpl implements TypeService {
     public Msg addItemType(Map<String, Object> map) throws Exception {
         Item item= JsonXMLUtils.map2obj((Map<String, Object>) map.get("item"),Item.class);
         JSONObject jsonObject= JsonXMLUtils.map2obj((Map<String, Object>) map.get("type"),JSONObject.class);
+        item.setStatus(-1);
         itemDao.addItem(item);
         jsonObject.put("itemId",item.getItemId());
         typeOneDao.addType(jsonObject);

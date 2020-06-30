@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface ItemDao {
 
-    @Insert("INSERT INTO item(`itemInfo`,`itemLocation`,`status`,`itemImg1`,`itemImg2`,`itemImg3`,`itemImg4`,`telephoneNumber`,`sellerId`,`type`,`itemHead`,`finalPrice`,`itemTag`) values(#{itemInfo},#{itemLocation},-1,#{itemImg1},#{itemImg2},#{itemImg3},#{itemImg4},#{telephoneNumber},#{sellerId},#{type},#{itemHead},#{finalPrice},#{itemTag});")
+    @Insert("INSERT INTO item(`itemInfo`,`itemLocation`,`status`,`itemImg1`,`itemImg2`,`itemImg3`,`itemImg4`,`telephoneNumber`,`sellerId`,`type`,`itemHead`,`finalPrice`,`itemTag`) values(#{itemInfo},#{itemLocation},#{status},#{itemImg1},#{itemImg2},#{itemImg3},#{itemImg4},#{telephoneNumber},#{sellerId},#{type},#{itemHead},#{finalPrice},#{itemTag});")
     @Options(useGeneratedKeys = true,keyProperty = "itemId",keyColumn = "itemId")
     Integer addItem(Item item);
 
@@ -34,6 +34,7 @@ public interface ItemDao {
             "\t(select  itemId,count(userId) con\n" +
             "\t\tfrom records\n" +
             "\t\tgroup by itemId\n" +
-            "\t) tmp on item.itemId=tmp.itemId;")
+            "\t) tmp on item.itemId=tmp.itemId" +
+            "\t order by item.itemId desc;")
     List<JSONObject> getItemListCount();
 }
