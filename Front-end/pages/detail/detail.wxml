@@ -179,7 +179,7 @@
             </view>
             <button wx:if="{{item.user_id == user.user_id}}" bindtap="deleteComment" data-deleteid="{{item.id}}" class="text-lg cu-btn padding-0 text-blue bg-white">删除</button>
           </view>
-          <view class="padding-xs comment_text" bindtap="openSubcomment_1" data-text="{{item.name}}" data-father="{{item.id}}" >{{item.text}}</view>
+          <view class="padding-xs comment_text" hover-class='comment_text-hover' bindtap="openSubcomment_1" data-text="{{item.name}}" data-father="{{item.id}}" >{{item.text}}</view>
           <view class="padding-0 padding-bottom-sm text-sm comment_time">{{item.time}}</view>
 
           <!-- sub评论的显示 -->
@@ -196,8 +196,8 @@
                 </view>
                 <view wx:if="{{item.user_id == user.user_id}}" bindtap="deleteSubComment" data-deleteid="{{item.id}}" class="padding-0 text-blue">删除</view>
               </view>
-              <text hidden="{{!item.show}}" bindtap="openSubcomment"  data-text="{{item.name}}" data-father="{{item.father}}" 
-                  data-id="{{item.id}}" >{{item.text}}</text>
+              <view class="comment_text"  hover-class='comment_text-hover' hidden="{{!item.show}}" bindtap="openSubcomment"  data-text="{{item.name}}" data-father="{{item.father}}" 
+                  data-id="{{item.id}}" >{{item.text}}</view>
               <!-- <view hidden="{{!item.show}}"  class="padding-0 text-sm comment_time_sub">{{item.time}}</view> -->
             </view>
           </view>
