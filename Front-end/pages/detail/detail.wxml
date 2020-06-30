@@ -139,14 +139,14 @@
 
 <!-- 评论，当用户为中标者即拍卖已结束时不显示，因为没有了出价的需求所以没有底端栏了，
      这个和winner的区分开来只是为了不同的margin-bottom                       -->
-<view wx:if="{{user.user_role!='winner' && item.item_status!='preparing'}}" id="comment" class="padding margin-bottom-xl bg-white align-center">
+<view wx:if="{{user.user_role!='winner' && item.item_status!='preparing'}}" id="comment" class="padding padding-bottom-xl margin-bottom-xl bg-white align-center">
   <view id="comment_title" class="padding text-xl bolder text-gray align-center">
     <text>留言</text>
     <view id="comment_button" ><button bindtap='changeComment' class="text-lg cu-btn round bg-green">我要留言</button></view>
   </view>
 
   <!-- 如果没有评论显示无评论的提示图片 -->
-  <view wx:if="{{commentList.length==0}}" class="padding-lg" class="padding flex align-center justify-center">
+  <view wx:if="{{commentList.length==0 && commentInput_list.length==0}}" class="padding-lg" class="padding flex align-center justify-center">
     <image id="no_comment" src="{{no_comment_url}}"></image>
   </view>
 
