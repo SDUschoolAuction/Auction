@@ -6,7 +6,7 @@
     </view>
   </scroll-view>
   <view wx:if="{{TabCur==0}}">
-<view wx:if="{{shangpinList!=null}}">
+<view wx:if="{{shangpinList.length!=0}}">
 <navigator  url="/pages/detail/detail?itemId={{item.itemId}}&finalPrice={{item.finalPrice}}>" class="blo_out" wx:for="{{shangpinList}}">
   <view class="blo">
     <!-- 左侧框架 -->
@@ -47,7 +47,7 @@
         <button class="cu-btn round bg-green ">出价</button>
       </view>
       <view class="button_right" wx:if="{{item.times=='已卖出'}}">
-        <view class="cu-btn round bg-grey ">出价</view>
+        <view class="cu-btn round bg-grey " catchtap="mag">出价</view>
       </view>
     </view>
   </view>
@@ -58,7 +58,7 @@
 </view>
 </view>
   <view wx:if="{{TabCur==1}}">
-  <view wx:if="{{inList!=null}}">
+  <view wx:if="{{inList.length!=0}}">
      <!--  <view class="flex" wx:for="{{inList}}">
         <view class="flex-sub  padding-sm margin-xs radius">
           
@@ -103,13 +103,13 @@
 
       <!-- 管理 -->
       <view class="button_right">
-        <button class="cu-btn round bg-green " bindtap='queren'>确认已交易</button>
+        <button class="cu-btn round bg-green " catchtap='queren'>确认已交易</button>
       </view>
     </view>
   </view>
   </navigator>
 </view>
-<view wx:if="{{inList==null}}">
+<view wx:if="{{inList.length==0}}">
   <view class="sp_1">还没有商品已中标哦！</view>
 </view>
 </view>
