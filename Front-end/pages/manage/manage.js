@@ -64,6 +64,7 @@ Page({
           thingPhoneNumber:res.data.telephoneNumber,
           finalPrice:res.data.finalPrice,
           imgList: imageList,
+          region: res.data.itemLocation
         })
         if(res.data.itemTag == '全新'){
           that.setData({ 
