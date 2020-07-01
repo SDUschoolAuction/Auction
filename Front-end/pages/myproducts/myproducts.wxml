@@ -63,8 +63,8 @@
 </view>
 
   <view wx:if="{{TabCur==1}}">
-    <view wx:if="{{InList!=null}}">
-<navigator  url="/pages/detail/detail?itemId={{item.itemId}}&finalPrice={{item.finalPrice}}>" class="blo_out" wx:for="{{InList}}">
+    <view wx:if="{{inList!=null}}">
+<navigator  url="/pages/detail/detail?itemId={{item.itemId}}&finalPrice={{item.finalPrice}}>" class="blo_out" wx:for="{{inList}}">
   <view class="blo">
     <!-- 左侧框架 -->
     <view class="left">
@@ -92,7 +92,7 @@
 </navigator>
   </view>
  
-  <view wx:if="{{InList==null}}">
+  <view wx:if="{{inList==null}}">
   <view class="sp_1">还没有商品已卖出哦！</view>
   </view>
   </view>

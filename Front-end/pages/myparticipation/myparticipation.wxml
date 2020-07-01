@@ -58,7 +58,7 @@
 </view>
 </view>
   <view wx:if="{{TabCur==1}}">
-  <view wx:if="{{InList!=null}}">
+  <view wx:if="{{inList!=null}}">
      <!--  <view class="flex" wx:for="{{inList}}">
         <view class="flex-sub  padding-sm margin-xs radius">
           
@@ -82,7 +82,7 @@
           </view>
         </view>
       </view> -->
-<navigator  url="/pages/detail/detail?itemId={{item.itemId}}&finalPrice={{item.finalPrice}}>" class="blo_out" wx:for="{{InList}}">
+<navigator  url="/pages/detail/detail?itemId={{item.itemId}}&finalPrice={{item.finalPrice}}>" class="blo_out" wx:for="{{inList}}">
   <view class="blo">
     <!-- 左侧框架 -->
     <view class="left">
@@ -109,7 +109,7 @@
   </view>
   </navigator>
 </view>
-<view wx:if="{{InList==null}}">
+<view wx:if="{{inList==null}}">
   <view class="sp_1">还没有商品已中标哦！</view>
 </view>
 </view>
