@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface RecordsDao {
 
-    @Select("SELECT users.userId userId,users.name userName,users.userIcon userIcon,records.telephoneNumber telephoneNumber,records.dealPrice dealPrice,records.itemId itemId,,DATE_FORMAT(records.dealTime,'%Y-%m-%d %H:%i:%s') dealTime from records,users\n" +
+    @Select("SELECT users.userId userId,users.name userName,users.userIcon userIcon,records.telephoneNumber telephoneNumber,records.dealPrice dealPrice,records.itemId itemId,DATE_FORMAT(records.dealTime,'%Y-%m-%d %H:%i:%s') dealTime from records,users\n" +
             "\twhere records.itemId=#{itemId} and records.userId=users.userid\n" +
             "\torder by dealPrice;")
     List<JSONObject> getRecordsByItemId(int itemId);
