@@ -16,7 +16,7 @@ Component({
     }, {
       id: 5
     }],
-    starId: 0,
+    starId: 5,
     src1: '/image/yellowstar.png',
     src2: '/image/blackStar.png',
 

@@ -1,3 +1,4 @@
+<view class="padding center">
 <view class="cu-form-group">
 <view class="title">评价：</view>
   <view calss ="padding" wx:for="{{imgs}}" wx:key="{{item.id}}" bindtap='select' data-index="{{item.id}}">
@@ -5,16 +6,21 @@
   </view>
   <view class='scorePin'>{{starId}}.00</view>
 </view>
-<view class="cu-form-group">
- <view class="weui-cells_after-title">
-    <view class="weui-cell">
-      <view class="weui-cell__bd">
-        <textarea class="weui-textarea" bindinput="bindTextAreaChange" placeholder="我要提出建议..." style="height: 8em" value="{{info}}" maxlength="{{noteMaxLen}}" focus />
-        <view class="weui-textarea-counter">{{noteNowLen}}/{{noteMaxLen}}</view>
-      </view>
-    </view>
+
+<view class="cu-form-group margin-top">
+		<textarea maxlength="200" disabled="{{modalName!=null}}" bindinput="bindTextAreaChange" placeholder="我要提出建议..." value="{{info}}" maxlength="{{noteMaxLen}}" ></textarea>
+	</view>
+	<view class="cu-bar bg-white ">
+		<view class="action">
+		</view>
+		<view class="action">
+			{{noteNowLen}}/{{noteMaxLen}}
+		</view>
+	</view>
   </view>
-  </view>
+
+
+
   
 <!--发布按钮  -->
 <view class="btnSf">
