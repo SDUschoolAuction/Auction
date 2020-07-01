@@ -13,7 +13,7 @@
     <!-- 左侧框架 -->
     <view class="left">
       <!-- 图片 -->
-        <image class="img_left" src="{{item.imageUrl}}"></image>
+        <image class="img_left" src="{{item.imageUrl}}" mode="aspectFit"></image>
       <!-- 倒计时 -->
       <view class="count_down" wx:if="{{item.times!='已卖出'&&item.times!='未开始'}}">
          <view class="one.show">
@@ -28,7 +28,7 @@
           </view>
       </view>
       <view class="count_down" wx:if="{{item.times=='已卖出'}}">
-        商品已卖出
+        拍卖已结束
       </view>
       <view class="count_down" wx:if="{{item.times=='未开始'}}">
         商品未开始
