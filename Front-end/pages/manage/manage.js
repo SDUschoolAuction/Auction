@@ -7,7 +7,7 @@ Page({
     thingName: '',
     thingPhoneNumber:'',
     thingConditions: ["全新", "九新", "磨损", "未登记"],
-    thingConditionIndex: 0,
+    thingConditionIndex: null,
     region: ["省","市","区"],
     imgList: [],
     img1:'',
@@ -53,6 +53,8 @@ Page({
         if(res.data.itemImg4){
           imageList.push(res.data.itemImg4)
         }
+        var region = res.data.itemLocation.slice(1,-1).replace(/\"/g,'').split(',');
+        console.log(region)
         that.setData({ 
           textdata: res.data,
           img1: res.data.itemImg1,
@@ -64,19 +66,22 @@ Page({
           thingPhoneNumber:res.data.telephoneNumber,
           finalPrice:res.data.finalPrice,
           imgList: imageList,
-          region: res.data.itemLocation
+          region: region
         })
         if(res.data.itemTag == '全新'){
+          //console.log(res.data.itemTag)
           that.setData({ 
             thingConditionIndex:0
           })
         }
         else if(res.data.itemTag == '九新'){
+          //console.log(res.data.itemTag)
           that.setData({ 
             thingConditionIndex:1
           })
         }
         else if(res.data.itemTag == '磨損'){
+         // console.log(res.data.itemTag)
           that.setData({ 
             thingConditionIndex:2
           })
@@ -88,37 +93,6 @@ Page({
         }
       },
     })
-
-
-
-
-
-    // wx.request({
-    // url:"app.globalData.apiurl + '/updateItem",
-    // method: "GET",
-    // header: {
-    //   'content-type': 'application/json'
-    // },
-    //   success: function(options) {
-    //     console.log(res);
-    //     that.setData({
-    //       thingName:res.data.thingHead,       
-    //       thingConditions:res.data.itemTag,
-    //       textareaValue:res.data.itemInfo,
-    //       thingPhoneNumber:res.data.telephoneNumber,
-    //       region:res.data.itemLocation,  
-    //       thingPrice:res.data.finalPrice,
-    //       img1:res.data.itemImg1,
-    //       img2:res.data.itemImg2,
-    //       img3:res.data.itemImg3,
-    //       img4:res.data.itemImg4,
-    //       sellerId: res.data.sellerId, 
-    //     })        
-    //    },
-    //   fail: function(res) {
-    //   onsole.log(JSON.stringify(res));
-    // },
-  // })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

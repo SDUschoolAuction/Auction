@@ -39,9 +39,9 @@
 	
 	<view class="cu-form-group ">
 		<view class="title">物品成色</view>
-		<picker bindchange="thingConditionsChange" value="{{thingConditionsIndex}}" range="{{thingConditions}}">
+		<picker bindchange="thingConditionsChange" value="{{thingConditionIndex}}" range="{{thingConditions}}">
 			<view class="picker">
-				{{thingConditionsIndex?thingConditions[thingConditionsIndex]:'请输入物品损坏度'}}
+				{{thingConditionIndex!=null?thingConditions[thingConditionIndex]:'请输入物品损坏度'}}
 			</view>
 		</picker>
 	</view>
