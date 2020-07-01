@@ -22,10 +22,10 @@ public interface OrdersDao {
 
     @Select("select itemTag,item.itemId itemId,itemInfo,finalPrice,itemLocation,status,itemImg1,itemImg2,itemImg3,itemImg4,item.telephoneNumber sellerTelephoneNumber,sellerId,`type`,itemHead,DATE_FORMAT(startTime,'%Y-%m-%d %H:%i:%s') startTime,DATE_FORMAT(endTime,'%Y-%m-%d %H:%i:%s') endTime,dealPrice,red.telephoneNumber comstumerTelephoneNumber\n" +
             "\tfrom (item left join type1 on item.itemId=type1.itemId),records as red\n" +
-            "\twhere item.itemId=red.itemId AND red.userId=#{customerId} AND (red.itemId,red.dealPrice) IN \n" +
-            "\t(SELECT records.itemId,MAX(dealPrice)\n" +
+            "\twhere item.itemId=red.itemId AND red.userId=#{customerId} AND (red.itemId,red.userId,red.dealPrice) IN \n" +
+            "\t(SELECT records.itemId,records.userId,MAX(dealPrice)\n" +
             "\t\tFROM records\n" +
-            "\t\tGROUP BY records.itemId\n" +
+            "\t\tGROUP BY records.itemId,records.userId\n" +
             "\t) ;")
     List<JSONObject> getItemListByCustomerId(int customerId);
 }
