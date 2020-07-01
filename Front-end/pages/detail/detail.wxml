@@ -35,8 +35,8 @@
    
     <!-- 如果是中标者则显示成交价，否则都显示当前价 -->
     <text wx:if="{{user.user_role !='winner' && item.item_status!='sold'}}" id="price_text" class="text-gray padding">当前价</text>
-    <text wx:if="{{user.user_role =='winner' || item.item_status=='sold'}}" id="price_text" class="text-gray padding">成交价</text>
-    
+    <text wx:if="{{user.user_role =='winner' || (item.item_status=='sold'&&records_count>0)}}" id="price_text" class="text-gray padding">成交价</text>
+    <text wx:if="{{user.user_role =='winner' || (item.item_status=='sold'&&records_count==0)}}" id="price_text" class="text-gray padding">未卖出</text>
     <!-- 如果是竞拍者则还会额外显示用户当前的出价 -->
     <text wx:if="{{user.user_role=='buyer' && item.item_status=='selling'}}" id="price_yuan" class="text-red text-lg padding-left">¥</text>
     <text wx:if="{{user.user_role=='buyer' && item.item_status=='selling'}}" id="price_num"  class="text-red text-xl padding-right-xs">{{user.user_price}}</text>
