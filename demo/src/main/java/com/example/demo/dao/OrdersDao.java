@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface OrdersDao {
 
-    @Select ("SELECT dealPrice,peopleCount,item.telephoneNumber sellerTelephoneNumber,item.itemId itemId,buyerId,DATE_FORMAT(dealTime,'%Y-%m-%d %H:%i:%s') dealTime,itemTag,itemInfo,finalPrice,itemLocation,`status`,itemImg1,orders.telephoneNumber buyerTelephoneNumber,sellerId,type,itemHead FROM orders,item WHERE buyerId = 1 and orders.itemId=item.itemId")
+    @Select ("SELECT dealPrice,peopleCount,item.telephoneNumber sellerTelephoneNumber,item.itemId itemId,buyerId,DATE_FORMAT(dealTime,'%Y-%m-%d %H:%i:%s') dealTime,itemTag,itemInfo,finalPrice,itemLocation,`status`,itemImg1,orders.telephoneNumber buyerTelephoneNumber,sellerId,type,itemHead FROM orders,item WHERE buyerId = #{buyerId} and orders.itemId=item.itemId")
     List<JSONObject> getbuyerOrders(int buyerId);
 
     @Select("SELECT dealPrice,peopleCount,item.telephoneNumber sellerTelephoneNumber,item.itemId itemId,buyerId,DATE_FORMAT(dealTime,'%Y-%m-%d %H:%i:%s') dealTime,itemTag,itemInfo,finalPrice,itemLocation,`status`,itemImg1,orders.telephoneNumber buyerTelephoneNumber,sellerId,type,itemHead FROM orders,item WHERE orders.itemId=item.itemId and item.sellerId=#{sellerId};")
