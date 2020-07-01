@@ -193,7 +193,9 @@ queren:function(e)
     url: '../../pages/star/star',
   })
 },
+mag(){
 
+},
 onPullDownRefresh: function() {
   this.get_inList()
   this.get_shangpinList()

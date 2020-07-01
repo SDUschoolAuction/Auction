@@ -6,7 +6,7 @@
     </view>
   </scroll-view>
   <view wx:if="{{TabCur==0}}">
-<view wx:if="{{shangpinList!=null}}">
+<view wx:if="{{shangpinList.length!=0}}">
 <navigator  url="/pages/detail/detail?itemId={{item.itemId}}&finalPrice={{item.finalPrice}}>" class="blo_out" wx:for="{{shangpinList}}" wx:for-index="item_id">
 
   <view class="blo">
@@ -63,7 +63,7 @@
 </view>
 
   <view wx:if="{{TabCur==1}}">
-    <view wx:if="{{inList!=null}}">
+    <view wx:if="{{inList.length!=0}}">
 <navigator  url="/pages/detail/detail?itemId={{item.itemId}}&finalPrice={{item.finalPrice}}>" class="blo_out" wx:for="{{inList}}">
   <view class="blo">
     <!-- 左侧框架 -->
@@ -85,14 +85,14 @@
 
       <!-- 管理 -->
       <view class="button_right">
-        <button class="cu-btn round bg-green " bindtap='queren'>确认已交易</button>
+        <button class="cu-btn round bg-green " catchtap='queren'>确认已交易</button>
       </view>
     </view>
   </view>
 </navigator>
   </view>
  
-  <view wx:if="{{inList==null}}">
+  <view wx:if="{{inList.length==0}}">
   <view class="sp_1">还没有商品已卖出哦！</view>
   </view>
   </view>
