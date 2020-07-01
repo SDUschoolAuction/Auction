@@ -4,13 +4,13 @@
 
 <!-- 关于拍卖倒计时的展示组件，判断当前用户的身份是不是中标者，若是中标者直接显示拍卖已结束；
      判断剩余时间是不是置空，是则不显示倒计时，表示此拍卖长期有效；以上均不满足则输出剩余时间-->
-<view wx:if="{{timeLeft != '' && user.user_role!='winner' && item.item_status=='selling'}}" class='text-grey text-center' id="count_down">
+<view wx:if="{{item.item_type != 2 && timeLeft != '' && user.user_role!='winner' && item.item_status=='selling'}}" class='text-grey text-center' id="count_down">
   <text>距离拍卖结束：{{timeLeft}}</text>
 </view>
-<view wx:if="{{user.user_role=='winner' || item.item_status=='sold'}}" class='text-grey text-center' id="count_down">
+<view wx:if="{{item.item_type != 2 && user.user_role=='winner' || item.item_status=='sold'}}" class='text-grey text-center' id="count_down">
   <text>距离拍卖结束：拍卖已结束</text>
 </view>
-<view wx:if="{{item.item_status=='preparing'}}" class='text-grey text-center' id="count_down_pre">
+<view wx:if="{{item.item_type != 2 && item.item_status=='preparing'}}" class='text-grey text-center' id="count_down_pre">
   <text>拍卖还未开始</text>
 </view>
 
