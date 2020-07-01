@@ -505,7 +505,7 @@ Page({
     this.iPhoneNum();
   },
   iPhoneNum: function(e) {
-    //console.log(e.detail.value);
+    console.log(e.detail.value);
     this.setData({
      phone : e.detail.value
     })
