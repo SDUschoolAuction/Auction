@@ -474,9 +474,11 @@ Page({
     var user_name = this.data.user.user_name;
     var phone = this.data.user.user_phone;
     if (new_price <= current_price) {
-      this.setData({
-        bid_text: "出价需大于当前价"
-      });
+      wx.showToast({
+        title: '出价需大于当前价',
+        icon: 'none',
+        duration: 5000//持续的时间
+      })
     }
      else if(new_price - old_price < this.data.min_bidAdd){
       this.setData({
