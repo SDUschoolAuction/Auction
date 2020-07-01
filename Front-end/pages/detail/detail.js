@@ -6,6 +6,7 @@ const Time = require('../../utils/time.js')
 const app = getApp();
 Page({
   data: {
+    refresh_time:60000,//页面自动刷新的时间=秒数*1000
     getRecordsByItemId:[],
     phone:'',
     hiddenmodalput:true,
@@ -49,10 +50,12 @@ Page({
     new_comment_bool: false,
     commentInput: null,
     commentCount: 0,
-    commentInput_list:[{
-      text:"",
-      time:""
-    }],//----------
+    commentInput_list:[
+      //{
+      // text:"",
+      // time:""
+    //}
+  ],//----------
     commentInput_set: null,
 
     bid_show: false,
@@ -490,7 +493,6 @@ Page({
       }) 
       this.iPhoneNum();
       console.log(this.data.user.user_phone);
-
     }
   },
   submitBuyout:function(e){//确认一口价购买的函数
@@ -551,6 +553,9 @@ Page({
   },
 
   confirm: function(){   //电话号码确认
+    var bidCount = this.data.bidCount;
+    var list = "newBidlist[" + bidCount + "]";
+    var user_name = this.data.user.user_name;
     var new_price = this.data.user.user_new_price;
     this.setData({ 
       "user.user_phone":this.data.phone,
@@ -559,8 +564,14 @@ Page({
     console.log(this.data.user.user_phone);
     if (this.data.user.user_phone.length==11){
       this.setData({
+        new_bid_bool:true,
         "item.current_price": new_price,
-        "user.user_price": new_price
+        "user.user_price": new_price,
+        [list]: {
+          item_id: bidCount + 1,
+          name: user_name,
+          price: new_price
+        }
       })
       if(this.data.item.item_type == 1){ //出价
         wx.request({
@@ -1285,39 +1296,39 @@ Page({
 
 
 
-            // wx.request({//更新出价记录
-            //   url: app.globalData.apiurl+'/records/getRecordsByItemId/'+itemID,
-            //   method: 'GET',
-            //   header: {
-            //     'content-type': 'application/json'
-            //   },
-            //   success: function (res) {
-            //     if(res.data.obj[records_length-1]!=null){
-            //       var records_length = res.data.obj.length;
-            //       var records_count = 0;
-            //       var Userid = res.data.obj[records_length-1].userId;
-            //       while(records_length>0){
-            //         var bid_list = 'bidList['+records_count+']';
-            //         that.setData({
-            //           [bid_list]:{
-            //             item_id: res.data.obj[records_length-1].itemId, 
-            //             user_id: res.data.obj[records_length-1].userId, 
-            //             name: res.data.obj[records_length-1].userName, 
-            //             price: res.data.obj[records_length-1].dealPrice,
-            //           }
-            //         });
-            //         records_count++;
-            //         records_length--;
-            //       } 
-            //     } 
-            //   },
-            //   fail: function () {
-            //     // fail
-            //   },
-            //   complete: function () {
-            //     // // console.log("d");
-            //   }
-            // })
+            wx.request({//更新出价记录
+              url: app.globalData.apiurl+'/records/getRecordsByItemId/'+itemID,
+              method: 'GET',
+              header: {
+                'content-type': 'application/json'
+              },
+              success: function (res) {
+                if(res.data.obj[records_length-1]!=null){
+                  var records_length = res.data.obj.length;
+                  var records_count = 0;
+                  var Userid = res.data.obj[records_length-1].userId;
+                  while(records_length>0){
+                    var bid_list = 'bidList['+records_count+']';
+                    that.setData({
+                      [bid_list]:{
+                        item_id: res.data.obj[records_length-1].itemId, 
+                        user_id: res.data.obj[records_length-1].userId, 
+                        name: res.data.obj[records_length-1].userName, 
+                        price: res.data.obj[records_length-1].dealPrice,
+                      }
+                    });
+                    records_count++;
+                    records_length--;
+                  } 
+                } 
+              },
+              fail: function () {
+                // fail
+              },
+              complete: function () {
+                // // console.log("d");
+              }
+            })
             // wx.request({
             //   url: app.globalData.apiurl+'/comments/getcomments?itemId='+itemID,
             //   method: 'GET',
@@ -1437,7 +1448,7 @@ Page({
                 //   }
                 // })
           })
-    }, 999999999) //循环间隔 单位ms
+    }, this.data.refresh_time) //循环间隔 单位ms
   },
   showDealrole: function(){
     wx.showToast({
