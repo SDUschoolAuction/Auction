@@ -17,13 +17,19 @@ Page({
   auth:function(e){
     //var userInfo = JSON.stringify(e.detail.userInfo);
     //console.log(userInfo);
-    this.setData({
-      userInfo:e.detail.userInfo,
-      //needauth:false
-      });
-    app.globalData.userInfo = e.detail.userInfo;
-    //console.log(app.globalData)
-    this.getOpenID();
+    console.log(e)
+    if(e.detail.userInfo){
+      this.setData({
+        userInfo:e.detail.userInfo,
+        //needauth:false
+        });
+      app.globalData.userInfo = e.detail.userInfo;
+      //console.log(app.globalData)
+      this.getOpenID();
+    }else{
+
+    }
+    
   },
   getOpenID:function(){
     //console.log(app.globalData)
