@@ -14,7 +14,7 @@ public interface ItemDao {
     @Options(useGeneratedKeys = true,keyProperty = "itemId",keyColumn = "itemId")
     Integer addItem(Item item);
 
-    @Select("select startPrice,markupRange,itemTag,telephoneNumber,finalPrice,itemInfo,itemImg1,itemLocation,type,item.itemId itemId,sellerId,itemHead,DATE_FORMAT(startTime,'%Y-%m-%d %H:%i:%s') startTime,DATE_FORMAT(endTime,'%Y-%m-%d %H:%i:%s') endTime,status from (item left join type1 on item.itemId=type1.itemId) left join type2 on item.itemId=type2.itemId where item.item.itemId=#{itemId};")
+    @Select("select startPrice,markupRange,itemTag,telephoneNumber,finalPrice,itemInfo,itemImg1,itemLocation,type,item.itemId itemId,sellerId,itemHead,DATE_FORMAT(startTime,'%Y-%m-%d %H:%i:%s') startTime,DATE_FORMAT(endTime,'%Y-%m-%d %H:%i:%s') endTime,status from (item left join type1 on item.itemId=type1.itemId) left join type2 on item.itemId=type2.itemId where item.itemId=#{itemId};")
     JSONObject getItemById(int itemId);
 
     @Update("UPDATE item SET itemInfo=#{itemInfo},itemLocation=#{itemLocation},itemImg1=#{itemImg1},itemImg2=#{itemImg2},itemImg3=#{itemImg3},itemImg4=#{itemImg4},telephoneNumber=#{telephoneNumber},itemHead=#{itemHead},itemTag=#{itemTag} where itemId=#{itemId};")

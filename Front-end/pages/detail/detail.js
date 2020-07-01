@@ -507,7 +507,7 @@ Page({
     this.iPhoneNum();
   },
   iPhoneNum: function(e) {
-    //console.log(e.detail.value);
+    console.log(e.detail.value);
     this.setData({
      phone : e.detail.value
     })
@@ -1173,6 +1173,7 @@ Page({
           },
           success: function (res) {
         //    if(res.data.obj[records_length-1]!=null){
+            console.log(res)
             var records_length = res.data.obj.length;
             var records_count = 0;
             var current_price = 'item.current_price';
