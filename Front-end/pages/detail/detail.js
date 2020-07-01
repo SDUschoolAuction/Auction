@@ -615,6 +615,7 @@ Page({
       }
       else if (this.data.item.item_type  == 2){//一口价
         var that = this;
+        console.log(this.data.item.item_buyout_price)
         wx.request({
           url: app.globalData.apiurl + '/purchase',
           method: 'POST',
@@ -908,16 +909,16 @@ Page({
                   }
                 }
                 else if(that.data.item.item_type == 2){//一口价
-                  if(res.data.obj[itemlist_count].itemPrice!=null){
+                  if(res.data.obj[itemlist_count].finalPrice!=null){
                     that.setData({ 
-                      [item_buyout_price]: res.data.obj[itemlist_count].itemPrice,
-                      //[current_price]: res.data.obj[itemlist_count].itemPrice
+                      [item_buyout_price]: res.data.obj[itemlist_count].finalPrice,
+                      [current_price]: res.data.obj[itemlist_count].finalPrice
                     });
-                    if(that.data.item.current_price != res.data.obj[itemlist_count].itemPrice){
-                      that.setData({ 
-                        [current_price]: res.data.obj[itemlist_count].itemPrice
-                      });
-                    }
+                    // if(that.data.item.current_price != res.data.obj[itemlist_count].itemPrice){
+                    //   that.setData({ 
+                    //     [current_price]: res.data.obj[itemlist_count].itemPrice
+                    //   });
+                    // }
                   }
                 }
               }
@@ -988,6 +989,72 @@ Page({
     })
 
 
+
+
+
+
+
+
+    // wx.request({//获取此商品所有的评论
+    //   url: app.globalData.apiurl+'/comments/getcomments?itemId='+itemID,
+    //   method: 'GET',
+    //   header: {
+    //     'content-type': 'application/json'
+    //   },
+    //   success: function (res) {
+    //     var length = res.data.obj.data.length;
+    //     var list='';
+    //     // console.log("length:"+length);
+    //     var count = 0;
+    //     that.setData({ 
+    //       comments: res.data.obj.data,
+    //     });    
+    //     while(length>0){
+    //       list = 'commentList['+count+']';
+    //       //console.log("list:"+list);
+    //       that.setData({
+    //         [list]:{ 
+    //           item_id: that.data.item.item_id, 
+    //           id:res.data.obj.data[count].commentId,
+    //           user_id:res.data.obj.data[count].userId,
+    //           name:res.data.obj.data[count].userName,
+    //           text:res.data.obj.data[count].content,
+    //           url:res.data.obj.data[count].userIcon,
+    //           role:'buyer',
+    //           time:res.data.obj.data[count].time,
+    //           sub_comments:[
+    //           // { name:'我是用户1号',
+    //           //   target:'我是用户2号',
+    //           //   text:'你是不是傻，不喜欢评论啥',
+    //           //   role:'buyer',
+    //           //   father:'2',
+    //           //   time:'2010-08-01 10:30:00'}
+    //           ]}}
+    //           ,function() {
+                
+    //             // var subsub_comments_subsub = 'subsub_comments_subsub['+count+']';
+    //             // console.log("subsub_comments_subsub"+subsub_comments_subsub);
+    //             // console.log("subsub_comments_subsub_list"+list);
+    //             // wx.request({//获取全部的子评论
+    //             //     url: app.globalData.apiurl+'/comments/getReviewsForComments?commentId='+count,
+    //             //     method: 'GET',
+    //             //     header: {
+    //             //       'content-type': 'application/json'
+    //             //     },
+    //             //     success: function (res) {
+    //             //       that.setData({
+    //             //         [subsub_comments_subsub]:res.data.obj
+    //             //       },function(){});
+    //             //     },
+    //             //     fail: function () {
+    //             //       // fail
+    //             //       console.log("fffffffff");
+    //             //     },
+    //             //     complete: function () {
+    //             //       // console.log("d");
+    //             //     }
+    //             //   })
+
     wx.request({//获取此商品所有的评论
         url: app.globalData.apiurl+'/comments/getcomments?itemId='+itemID,
         method: 'GET',
@@ -1025,7 +1092,80 @@ Page({
                         complete: function () {
                           //// console.log("d");
                       }
-                   })                   
+                   })   
+                        
+
+
+    //               wx.request({//获取全部的子评论
+    //                 url: app.globalData.apiurl+'/comments/getAllReviews',
+    //                 method: 'GET',
+    //                 header: {
+    //                   'content-type': 'application/json'
+    //                 },
+    //                 success: function (res) {
+    //                   that.setData({
+    //                     subsub_comments_subsub:res.data.obj
+    //                   },function(){
+    //                    var comments = that.data.commentList;
+    //                    var subsub = that.data.subsub_comments_subsub;
+    //                    var comments_length = comments.length;
+    //                    var subsub_length = subsub.length;
+    //                    var comments_count = 0;
+    //                    var subsub_count = 0;
+    //                   for(var i = 0 ; i < comments_length ; i++){
+    //                      // console.log("A");
+    //                       var count = 0;
+    //                       for(var aa = 0 ; aa < subsub_length ; aa++){
+    //                         var subsubsub = 'commentList['+i+'].sub_comments['+count+']';
+    //                         // console.log("i"+i);
+    //                         // console.log("aa"+aa);
+    //                         if(comments[i].id == subsub[aa].commentId){
+    //                           var time = Time.formatTime(new Date(subsub[aa].time));
+    //                           // console.log("找到了id相等的");
+    //                           that.setData({
+    //                             [subsubsub]:{
+    //                               name:subsub[aa].fromUserName,
+    //                               fromUserId:subsub[aa].fromUser,
+    //                               target:subsub[aa].toUserName,
+    //                               toUserId:subsub[aa].toUser,
+    //                               text:subsub[aa].content,
+    //                               role:'buyer',
+    //                               father:subsub[aa].commentId,
+    //                               time:time,
+    //                               id:subsub[aa].reviewId,
+    //                               show:true
+    //                             }
+    //                           });
+    //                           count = count + 1;
+    //                         }
+    //                       }
+    //                   }
+    //                   });
+    //                 },
+    //                 fail: function () {
+    //                   // fail
+    //                   console.log("fffffffff");
+    //                 },
+    //                 complete: function () {
+    //                   //// console.log("d");
+    //                 }
+    //               })   
+    //           }
+    //           );
+    //           length--;
+    //           count++;
+    //     }
+    //         //console.log("项目传来的数据"+res.data);
+    //         return count;
+    //       },
+    //       fail: function () {
+    //         // fail
+    //       },
+    //       complete: function () {
+    //         // console.log("d");
+    //       }
+    //     })
+
         wx.request({
           url: app.globalData.apiurl+'/records/getRecordsByItemId/'+itemID,
           method: 'GET',
@@ -1063,8 +1203,7 @@ Page({
             }
             that.setData({ 
               [price]:temp_price,
-              getRecordsByItemId: res.data,
-              records_count: records_count
+              getRecordsByItemId: res.data
           });  
         //  }
           },
@@ -1100,6 +1239,7 @@ Page({
           'content-type': 'application/json'
           },
           success: function (res) {
+            console.log(res)
             var sellerID = res.data.sellerId;
             wx.request({
               url: app.globalData.apiurl+'/orders/getItemListBySellerId/'+sellerID,
@@ -1124,16 +1264,19 @@ Page({
                       }
                     }
                     else if(that.data.item.item_type == 2){//一口价
-                      if(res.data.obj[itemlist_count].itemPrice!=null){
+                      console.log(res)
+                      console.log(res.data.obj[itemlist_count].finalPrice)
+                      console.log(111111111111111)
+                      if(res.data.obj[itemlist_count].finalPrice!=null){
                         that.setData({ 
-                          [item_buyout_price]: res.data.obj[itemlist_count].itemPrice,
-                          //[current_price]: res.data.obj[itemlist_count].itemPrice
+                          [item_buyout_price]: res.data.obj[itemlist_count].finalPrice,
+                          [current_price]: res.data.obj[itemlist_count].finalPrice
                         });
-                        if(that.data.item.current_price != res.data.obj[itemlist_count].itemPrice){
-                          that.setData({ 
-                            [current_price]: res.data.obj[itemlist_count].itemPrice
-                          });
-                        }
+                        // if(that.data.item.current_price != res.data.obj[itemlist_count].finalPrice){
+                        //   that.setData({ 
+                        //     [current_price]: res.data.obj[itemlist_count].finalPrice
+                        //   });
+                        // }
                       }
                     }
                   }
@@ -1184,7 +1327,6 @@ Page({
                     records_length--;
                   } 
                 } 
-
               },
               fail: function () {
                 // fail
